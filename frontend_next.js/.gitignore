@@ -15,14 +15,21 @@
 
 # next.js
 /.next/
+/\.next/dev/
+/\.next/cache/
 /out/
 
 # production
 /build
+dist
 
 # misc
 .DS_Store
 *.pem
+*.log
+*.tgz
+.cache
+.turbo
 
 # debug
 npm-debug.log*
