@@ -4,7 +4,7 @@ const expertiseAreas = [
     title: 'Social strategy',
     subtitle: 'Slimme strategie. Sterke start.',
     description:
-      'We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die echt impact maken. Zo weet je precies waarom het werkt.',
+      'We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die écht impact maken. Zo weet je precies waarom het werkt.',
     cta: 'Meer over social strategie',
     color: '#f7f2ea',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=600&auto=format&fit=crop',
@@ -25,7 +25,7 @@ const expertiseAreas = [
     subtitle: 'Zichtbaar waar en wanneer het telt.',
     description:
       'De juiste content verdient het om gezien te worden. We verspreiden de content waar jouw doelgroep is. Zo raakt jouw merk de juiste mensen, precies waar en wanneer het telt.',
-    cta: 'Meer over activation',
+    cta: 'Meer over activatie',
     color: '#33C791',
     image: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?q=80&w=600&auto=format&fit=crop',
   },
@@ -34,7 +34,7 @@ const expertiseAreas = [
     title: 'Data',
     subtitle: 'Inzichten die impact maken.',
     description:
-      'We duiken in de cijfers om te snappen wat echt werkt. En sturen jouw content scherp bij.',
+      'We duiken in de cijfers om te snappen wat écht werkt. En sturen jouw content scherp bij.',
     cta: 'Meer over data',
     color: '#0D8DFF',
     image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=600&auto=format&fit=crop',

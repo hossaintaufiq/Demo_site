@@ -1,40 +1,14 @@
-import { useEffect } from 'react'
-import FooterMain from '../components/layout/FooterMain'
-import Navbar from '../components/layout/Navbar'
-import AfterHeroSection from '../components/sections/AfterHeroSection'
-import ExpertiseSection from '../components/sections/ExpertiseSection'
-import HeroSection from '../components/sections/HeroSection'
-import ResultsSection from '../components/sections/ResultsSection'
-import WorkSection from '../components/sections/WorkSection'
+import cloneHtml from '../../gethyped_source.html?raw'
 
 function Home() {
-  useEffect(() => {
-    const nodes = document.querySelectorAll('.reveal-on-scroll')
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.14 }
-    )
-
-    nodes.forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <div className="min-h-screen bg-[#FAF4EC] text-[#161616]">
-      <Navbar />
-      <HeroSection />
-      <AfterHeroSection />
-      <ExpertiseSection />
-      <WorkSection />
-      <ResultsSection />
-      <FooterMain />
+    <div className="h-screen w-full overflow-hidden bg-[#faf4ec]">
+      <iframe
+        title="Get Hyped clone"
+        srcDoc={cloneHtml}
+        className="h-full w-full border-0"
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+      />
     </div>
   )
 }
