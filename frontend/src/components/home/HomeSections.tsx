@@ -132,13 +132,13 @@ export function IntroSection() {
         <div className="padding-global">
           <div className="container-col-12">
             <div className="grid-col-12">
-              <div className="margin-bottom margin-96px">
+              <div id="w-node-faa2305a-1600-624b-3553-a5629475cb11-23544b6d" className="margin-bottom margin-96px">
                 <h2 className="heading-m">
                   Wij maken content die opvalt. Die blijft hangen. Die jouw doelgroep raakt en jouw merk in beweging brengt. Snel,
                   krachtig en energiek.
                 </h2>
               </div>
-              <div data-video="playpause" className="small-image">
+              <div id="w-node-faa2305a-1600-624b-3553-a5629475cb14-23544b6d" data-video="playpause" className="small-image">
                 <div className="show-mobile">
                   <video
                     muted
@@ -163,7 +163,7 @@ export function IntroSection() {
               <div className="show-mobile">
                 <div className="padding-bottom padding-96px" />
               </div>
-              <div className="content-wrap">
+              <div id="w-node-faa2305a-1600-624b-3553-a5629475cb19-23544b6d" className="content-wrap">
                 <p className="paragraph-l">
                   We stoppen niet bij mooie plaatjes en vette beelden. We maken het meetbaar. Zo weet je precies wat werkt en wat
                   niet. Nooit meer content zonder strategie. Nooit meer content zonder resultaat.
@@ -178,7 +178,7 @@ export function IntroSection() {
                   </Link>
                 </div>
               </div>
-              <div className="hide-mobile">
+              <div id="w-node-faa2305a-1600-624b-3553-a5629475cb1f-23544b6d" className="hide-mobile">
                 <a href="#expertises" className="button-default is-icon w-inline-block">
                   <span className="button-default__inner is-icon">
                     <span className="button-default__background is-button-icon is-arrow" />

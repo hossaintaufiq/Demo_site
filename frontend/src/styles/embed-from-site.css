@@ -793,6 +793,26 @@ input,select,textarea {
     cursor: grab;
 }
 
+.section_clients .mwg_effect008 .card {
+    flex: 0 0 clamp(11rem, 14vw, 16rem);
+}
+
+.section_clients .mwg_effect008 .client-card {
+    min-height: clamp(4.25rem, 5.5vw, 6rem);
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section_clients .mwg_effect008 .client-card .image {
+    width: auto;
+    max-width: 82%;
+    height: auto;
+    max-height: clamp(1.9rem, 2.7vw, 2.8rem);
+    object-fit: contain;
+}
+
 
 
 .mwg_effect020 img {

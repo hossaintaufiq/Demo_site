@@ -28,8 +28,6 @@ function initLenis() {
     wheelMultiplier: 0.7,
     infinite: isInfinite,
     gestureOrientation: "vertical",
-    normalizeWheel: false,
-    smoothTouch: false,
   });
 
   document.querySelectorAll("[data-lenis-start]").forEach((el) => {
@@ -246,9 +244,10 @@ function initExpertiseScroll() {
     if (!contentWrapper || !content || isLast) return;
 
     gsap.to(content, {
-      rotationZ: (Math.random() - 0.5) * 10,
+      rotationZ: index % 2 === 0 ? -4 : 4,
       scale: 0.7,
       rotationX: 40,
+      transformOrigin: "50% 0%",
       ease: "power1.in",
       scrollTrigger: {
         pin: contentWrapper,
@@ -256,6 +255,7 @@ function initExpertiseScroll() {
         start: "top top",
         end: `+=${window.innerHeight}`,
         scrub: true,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -300,10 +300,10 @@ function initSelectedWorkScroll() {
 }
 
 function initMouseTrail() {
-  const root = document.querySelector<HTMLElement>(".mwg_effect020");
-  if (!root) return;
+  const trailRoot = document.querySelector<HTMLElement>(".mwg_effect020");
+  if (!trailRoot) return;
   const images: string[] = [];
-  root.querySelectorAll<HTMLImageElement>(".medias img").forEach((img) => {
+  trailRoot.querySelectorAll<HTMLImageElement>(".medias img").forEach((img) => {
     images.push(img.getAttribute("src") || "");
   });
   if (images.length === 0) return;
@@ -314,7 +314,7 @@ function initMouseTrail() {
   const resetDist = window.innerWidth / 3;
   let indexImg = 0;
 
-  root.addEventListener(
+  trailRoot.addEventListener(
     "mousemove",
     (e) => {
       oldIncrX = e.clientX;
@@ -323,15 +323,16 @@ function initMouseTrail() {
     { once: true },
   );
 
-  root.addEventListener("mousemove", (e) => {
+  trailRoot.addEventListener("mousemove", (e) => {
     const valX = e.clientX;
     const valY = e.clientY;
     incr += Math.abs(valX - oldIncrX) + Math.abs(valY - oldIncrY);
     if (incr > resetDist) {
       incr = 0;
       createMedia(
+        trailRoot,
         valX,
-        valY - root.getBoundingClientRect().top,
+        valY - trailRoot.getBoundingClientRect().top,
         valX - oldIncrX,
         valY - oldIncrY,
       );
@@ -340,14 +341,14 @@ function initMouseTrail() {
     oldIncrY = valY;
   });
 
-  function createMedia(x: number, y: number, deltaX: number, deltaY: number) {
+  function createMedia(host: HTMLElement, x: number, y: number, deltaX: number, deltaY: number) {
     const image = document.createElement("img");
     image.setAttribute("src", images[indexImg]);
-    root.appendChild(image);
+    host.appendChild(image);
 
     const tl = gsap.timeline({
       onComplete: () => {
-        root.removeChild(image);
+        host.removeChild(image);
         tl.kill();
       },
     });
@@ -402,8 +403,12 @@ function initImagesNoDrag() {
 
 function setCurrentYear() {
   const y = new Date().getFullYear();
+  const text = String(y);
   document.querySelectorAll("[data-current-year]").forEach((el) => {
-    el.textContent = String(y);
+    el.textContent = text;
+  });
+  document.querySelectorAll("#current-year").forEach((el) => {
+    el.textContent = text;
   });
 }
 

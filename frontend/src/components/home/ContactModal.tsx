@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useId, useRef } from "react";
+import { useCallback, useEffect, useId, useRef } from "react";
 
 type Props = {
   open: boolean;
@@ -8,8 +8,12 @@ type Props = {
 };
 
 export function ContactModal({ open, onClose }: Props) {
-  const formStart = useRef(Date.now());
+  const formStart = useRef<number | null>(null);
   const clipId = useId().replace(/:/g, "");
+
+  useEffect(() => {
+    if (open) formStart.current = Date.now();
+  }, [open]);
 
   const handleOverlay = useCallback(
     (e: React.MouseEvent) => {
@@ -39,7 +43,8 @@ export function ContactModal({ open, onClose }: Props) {
             className="form"
             onSubmit={(e) => {
               e.preventDefault();
-              if (Date.now() - formStart.current < 5000) {
+              const start = formStart.current ?? 0;
+              if (Date.now() - start < 5000) {
                 alert("Form submitted too quickly. Please try again.");
                 return;
               }
@@ -117,7 +122,7 @@ export function ContactModal({ open, onClose }: Props) {
                   maxLength={5000}
                   name="Bericht"
                   data-name="Bericht"
-                  min={3}
+                  minLength={3}
                   placeholder="Vertel ons wat je zoekt (of gewoon iets leuks)."
                   id="Bericht"
                   required

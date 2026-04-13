@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "sync:webflow": "node scripts/sync-from-live.mjs"
+    "lint": "eslint"
   },
   "dependencies": {
     "gsap": "^3.15.0",
