@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const LOGOS = Array.from({ length: 11 }, (_, i) => `/home/client-${i + 1}.svg`);
 
 export function ClientsMarquee() {
@@ -18,9 +20,16 @@ export function ClientsMarquee() {
             >
               {row.map((src, i) => (
                 <div key={`${src}-${i}`} className="card inline-flex shrink-0">
-                  <div className="client-card flex h-[4.5rem] w-[10rem] items-center justify-center rounded-2xl bg-gh-white/80 px-6 shadow-sm min-[768px]:h-[5rem] min-[768px]:w-[12rem]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={src} alt="" className="max-h-full max-w-full object-contain" draggable={false} loading="lazy" />
+                  <div className="client-card flex h-[305px] w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
+                    <Image
+                      src={src}
+                      alt=""
+                      width={190}
+                      height={70}
+                      className="max-h-full max-w-full object-contain"
+                      draggable={false}
+                      loading="lazy"
+                    />
                   </div>
                 </div>
               ))}

@@ -43,7 +43,6 @@ function MobileMenuLink({
   return (
     <Link
       href={href}
-      prefetch
       onClick={onNavigate}
       className="w-full max-w-md rounded-full bg-gh-white px-10 py-3 text-center text-xl font-bold tracking-tight text-gh-black no-underline active:opacity-80"
     >
@@ -103,7 +102,6 @@ function GetResultsButtonMobileOverlay({ onNavigate }: { onNavigate: () => void 
   return (
     <Link
       href="/contact"
-      prefetch
       onClick={onNavigate}
       aria-label="Get Results — contact"
       className="inline-flex max-w-full items-center gap-4 rounded-full bg-gh-black py-2 pl-8 pr-2 text-white no-underline active:opacity-90"

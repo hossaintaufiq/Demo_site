@@ -1,11 +1,17 @@
 "use client";
 
-import { ButtonDefault } from "@/components/ui/ButtonDefault";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const arrowIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 22 21" fill="none" className="h-[0.85em] w-[0.85em]" aria-hidden>
+    <path d="M11.2832 20.9176L9.14509 18.8002L15.5491 12.3962H0V9.30322H15.5491L9.14509 2.9096L11.2832 0.78186L21.3511 10.8497L11.2832 20.9176Z" fill="currentColor" />
+  </svg>
+);
 
 const ITEMS = [
   {
@@ -14,7 +20,7 @@ const ITEMS = [
     n: "1",
     video: "/home/expertise-social.mp4",
     h3: "Slimme strategie. Sterke start.",
-    body: "We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die écht impact maken. Zo weet je precies waarom het werkt.",
+    body: "We duiken diep in jouw merk, doelgroep en doelen. En vertalen data naar een duidelijk plan met formats die echt impact maken. Zo weet je precies waarom het werkt.",
     href: "/expertises/social-strategie",
     cta: "Meer over social strategie",
   },
@@ -44,7 +50,7 @@ const ITEMS = [
     n: "4",
     video: "/home/expertise-data.mp4",
     h3: "Inzichten die impact maken.",
-    body: "We duiken in de cijfers om te snappen wat écht werkt. En sturen jouw content scherp bij.",
+    body: "We duiken in de cijfers om te snappen wat echt werkt. En sturen jouw content scherp bij.",
     href: "/expertises/data",
     cta: "Meer over data",
   },
@@ -87,129 +93,136 @@ export function ExpertisesSection() {
     const root = rootRef.current;
     if (!root) return;
 
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    let idleId: number | undefined;
-
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
       mm.add("(min-width: 992px)", () => {
-        const slides = root.querySelectorAll<HTMLElement>(".mwg_effect031 .expertise-slide");
+        const pinShell = root.querySelector<HTMLElement>(".expertises-pin-shell");
+        if (!pinShell) return;
 
-        slides.forEach((slide, index) => {
-          const isLast = index === slides.length - 1;
-          const contentWrapper = slide.querySelector<HTMLElement>(".expertise-wrap");
-          const content = slide.querySelector<HTMLElement>(".expertise-content");
-          if (!contentWrapper || !content || isLast) return;
-          gsap.set(content, {
-            autoAlpha: 1,
-            rotationZ: 0,
-            rotationX: 0,
-            scale: 1,
-            yPercent: 0,
-            transformPerspective: 1200,
-            transformOrigin: "50% 50%",
-          });
+        const cards = Array.from(
+          root.querySelectorAll<HTMLElement>(".expertise-content")
+        );
+        if (!cards.length) return;
 
-          gsap.to(content, {
-            rotationZ: (Math.random() - 0.5) * 10,
-            scale: 0.7,
-            rotationX: 40,
-            ease: "power1.in",
-            scrollTrigger: {
-              pin: contentWrapper,
-              trigger: slide,
-              start: "top top",
-              end: () => `+=${window.innerHeight}`,
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          const pinDuration = window.innerHeight;
-          gsap.to(content, {
-            autoAlpha: 0,
-            ease: "power1.inOut",
-            scrollTrigger: {
-              trigger: slide,
-              start: () => `top+=${pinDuration * 0.75} top`,
-              end: () => `top+=${pinDuration} top`,
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
+        cards.forEach((card, i) => {
+          gsap.set(card, {
+            autoAlpha: i === 0 ? 1 : 0,
+            yPercent: i === 0 ? 0 : 102,
+            scale: i === 0 ? 1 : 1,
+            zIndex: ITEMS.length - i,
           });
         });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinShell,
+            start: "top top",
+            end: `+=${Math.max(1, cards.length - 1) * 100}%`,
+            scrub: 1.1,
+            pin: pinShell,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        cards.forEach((card, i) => {
+          if (i === 0) return;
+
+          // Bring the next card in from below while the previous one subtly
+          // shifts upward, matching the stacked overlap behavior.
+          tl.set(card, { autoAlpha: 1 }, `step-${i}`)
+            .to(
+              cards[i - 1],
+              {
+                yPercent: -5,
+                scale: 0.99,
+                duration: 1.12,
+                ease: "power3.inOut",
+              },
+              `step-${i}`
+            )
+            .to(
+              card,
+              {
+                yPercent: 0,
+                scale: 1,
+                duration: 1.12,
+                ease: "power3.inOut",
+              },
+              `step-${i}`
+            )
+            .set(cards[i - 1], { autoAlpha: 0 }, `step-${i}+=0.98`);
+        });
       });
+
       return () => mm.revert();
     }, root);
 
-    const initExpertiseScrollEffect = () => ScrollTrigger.refresh();
-    const w = window as Window & {
-      requestIdleCallback?: (callback: IdleRequestCallback) => number;
-      cancelIdleCallback?: (handle: number) => void;
-    };
-    if (typeof w.requestIdleCallback === "function") {
-      idleId = w.requestIdleCallback(initExpertiseScrollEffect);
-    } else {
-      timeoutId = setTimeout(initExpertiseScrollEffect, 500);
-    }
-
-    const onResize = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-      if (idleId && typeof w.cancelIdleCallback === "function") {
-        w.cancelIdleCallback(idleId);
-      }
-      window.removeEventListener("resize", onResize);
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section id="expertises" className="section_expertises bg-gh-page">
-      <div className="px-10 pb-8 pt-8 max-[479px]:px-5">
-        <div className="mx-auto w-full max-w-[120em]">
-          <div ref={rootRef} className="mwg_effect031">
-            <div className="expertises-list flex flex-col gap-0">
+      <div ref={rootRef} className="mwg_effect031">
+        <div className="expertises-pin-shell min-[992px]:h-screen min-[992px]:overflow-hidden">
+          <div className="expertises-list relative flex flex-col gap-6 min-[992px]:h-screen">
               {ITEMS.map((item, index) => (
                 <div
                   key={item.href}
-                  className={`expertise-slide relative ${index < ITEMS.length - 1 ? "min-[992px]:pb-[43.5em]" : ""}`.trim()}
+                  className="expertise-slide relative min-[992px]:absolute min-[992px]:inset-0"
                 >
-                  <div className="expertise-wrap [perspective:1200px] min-[992px]:h-[37.05em]">
+                  <div className="expertise-wrap [perspective:1200px] min-[992px]:h-full min-[992px]:w-full">
                     <div
-                      className={`expertise-content relative overflow-hidden rounded-[2rem] p-6 [transform-style:preserve-3d] min-[768px]:p-8 min-[992px]:h-full min-[992px]:rounded-[2.5em] min-[992px]:p-[2.5em] ${themeClasses(item.theme)}`}
+                      className={`expertise-content relative overflow-hidden rounded-[2rem] p-6 [transform-style:preserve-3d] min-[768px]:p-8 min-[992px]:mx-auto min-[992px]:mt-9 min-[992px]:h-[calc(100vh-6.25rem)] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1560px] min-[992px]:rounded-[1.5rem] min-[992px]:px-[2rem] min-[992px]:py-[1.85rem] ${themeClasses(item.theme)}`}
                     >
-                      <div className="grid grid-cols-1 gap-8 min-[992px]:h-full min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-8 min-[992px]:gap-y-3">
+                      <div className="grid grid-cols-1 gap-8 min-[992px]:mx-auto min-[992px]:h-full min-[992px]:w-full min-[992px]:max-w-[1600px] min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-12 min-[992px]:gap-y-4">
                         <div className="expertise-content_top min-[992px]:col-span-8 min-[992px]:row-start-1">
                           <div className="label mb-3">
-                            <div className="paragraph-m inline-flex rounded-md bg-[#e8e3d7] px-2 py-1 text-[0.9rem] opacity-100">Expertise</div>
+                            <div className="paragraph-m inline-flex rounded-md bg-[#e8e3d7] px-2 py-1 text-[0.9rem] opacity-100">
+                              Expertise
+                            </div>
                           </div>
-                          <h2 className="expertise-content_heading text-[2.2rem] leading-[0.95] font-semibold tracking-[-0.045em] min-[768px]:text-[3.5rem] min-[992px]:text-[5rem]">
+                          <h2 className="expertise-content_heading text-[2.2rem] leading-[0.95] font-semibold tracking-[-0.045em] min-[768px]:text-[3.5rem] min-[992px]:text-[6.5rem]">
                             {item.title}
                           </h2>
                         </div>
                         <div className="expertise-content_number flex items-start justify-end gap-0.5 font-semibold leading-none opacity-20 select-none min-[992px]:col-span-4 min-[992px]:row-start-1">
-                          <span className="expertise-content_heading text-[3rem] min-[992px]:text-[5.3rem]">0</span>
-                          <span className="expertise-content_heading text-[3rem] min-[992px]:text-[5.3rem]">{item.n}</span>
+                          <span className="expertise-content_heading text-[3rem] min-[992px]:text-[7rem]">
+                            0
+                          </span>
+                          <span className="expertise-content_heading text-[3rem] min-[992px]:text-[7rem]">
+                            {item.n}
+                          </span>
                         </div>
 
                         <div className="expertise-content_bottom flex flex-col gap-4 min-[992px]:col-span-7 min-[992px]:row-start-2 min-[992px]:self-end">
                           <h3 className="heading-xs">{item.h3}</h3>
-                          <p className={`paragraph-m max-w-[31ch] ${item.theme === "blue" ? "text-white/90" : "text-gh-black/85"}`}>
+                          <p
+                            className={`paragraph-m max-w-[31ch] ${
+                              item.theme === "blue"
+                                ? "text-white/90"
+                                : "text-gh-black/85"
+                            }`}
+                          >
                             {item.body}
                           </p>
                           <div className="button-wrap relative z-20 pt-1">
-                            <ButtonDefault href={item.href} variant="solid">
-                              {item.cta}
-                            </ButtonDefault>
+                            <Link
+                              href={item.href}
+                              className="group/cta inline-flex items-center gap-2 rounded-[0.75rem] bg-white px-3 py-2 text-[0.98rem] font-semibold text-gh-black no-underline [transition:transform_250ms_ease] hover:translate-x-[2px]"
+                            >
+                              <span>{item.cta}</span>
+                              <span className="inline-flex h-7 w-7 items-center justify-center rounded-[0.45rem] bg-gh-black text-white [transition:transform_250ms_ease] group-hover/cta:translate-x-[2px]">
+                                {arrowIcon}
+                              </span>
+                            </Link>
                           </div>
                         </div>
 
                         <div className="expertise-content_img min-[992px]:col-span-5 min-[992px]:row-start-2 min-[992px]:self-center min-[992px]:justify-self-end">
                           <div
-                            className={`medium-image aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-[1.25em] border-[0.25em] min-[992px]:max-w-[16em] min-[992px]:rotate-[3deg] ${mediaFrameClasses(item.theme)}`}
+                            className={`medium-image aspect-[4/5] w-full max-w-[18rem] overflow-hidden rounded-[1.3em] border-[0.27em] min-[992px]:max-w-[22.5rem] min-[992px]:rounded-[1.45em] min-[992px]:border-[0.34em] min-[992px]:rotate-[2deg] ${mediaFrameClasses(item.theme)}`}
                           >
                             <video
                               className="h-full w-full object-cover"
@@ -226,7 +239,6 @@ export function ExpertisesSection() {
                   </div>
                 </div>
               ))}
-            </div>
           </div>
         </div>
       </div>

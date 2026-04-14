@@ -22,6 +22,7 @@ export function IntroSection() {
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   src="/home/new-reach-loop.mp4"
                 />
               </div>
@@ -34,7 +35,6 @@ export function IntroSection() {
                   alt=""
                   draggable={false}
                   sizes="(min-width: 992px) 60vw, 0"
-                  priority
                 />
               </div>
             </div>

@@ -71,7 +71,6 @@ export function ButtonDefault({
   return (
     <Link
       href={href}
-      prefetch
       className={`button-default ${variant === "outline" ? "is-outline" : ""} ${className}`.trim()}
     >
       <span className="button-default__inner">

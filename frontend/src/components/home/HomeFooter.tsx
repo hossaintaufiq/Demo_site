@@ -1,7 +1,27 @@
-import { Logo } from "@/components/Logo";
-import { SwooshNavLink } from "@/components/SwooshNavLink";
-import { ButtonDefault } from "@/components/ui/ButtonDefault";
+"use client";
+
+import gsap from "gsap";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+
+const TRAIL_LOGOS = [
+  {
+    src: "https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg",
+    alt: "Get Hyped logo blauw",
+  },
+  {
+    src: "https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3415233f03ab6c1143fa_gh-logo-pink.svg",
+    alt: "Get Hyped logo roze",
+  },
+  {
+    src: "https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3415e192971624995445_gh-logo-green.svg",
+    alt: "Get Hyped logo groen",
+  },
+  {
+    src: "https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3415b3eecf81e4b1d9a7_gh-logo-red.svg",
+    alt: "Get Hyped logo rood",
+  },
+];
 
 const fireIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" fill="none" className="h-[1.125em] w-auto" aria-hidden>
@@ -12,11 +32,61 @@ const fireIcon = (
   </svg>
 );
 
+const envelopeIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 16" fill="none" className="h-[0.9em] w-auto" aria-hidden>
+    <path d="M18 0H2C0.9 0 0.01 0.9 0.01 2L0 14C0 15.1 0.9 16 2 16H18C19.1 16 20 15.1 20 14V2C20 0.9 19.1 0 18 0ZM18 4L10 9L2 4V2L10 7L18 2V4Z" fill="currentColor" />
+  </svg>
+);
+
+const LinkedInIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-[0.9rem] w-[0.9rem]" aria-hidden>
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
+
+const TikTokIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-[0.9rem] w-[0.9rem]" aria-hidden>
+    <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.78a4.85 4.85 0 01-1.02-.09z" />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-[0.9rem] w-[0.9rem]" aria-hidden>
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+  </svg>
+);
+
+const YouTubeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-[0.9rem] w-[0.9rem]" aria-hidden>
+    <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+  </svg>
+);
+
+function GhSticker() {
+  return (
+    <div className="footer-sticker absolute right-[3.2em] top-[-3.85em] z-[3] h-[5.25rem] w-[5.25rem] rounded-full bg-[#f6aaf0]" style={{ animation: "ghStickerFloat 3s ease-in-out infinite alternate" }}>
+      <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden>
+        <defs>
+          <path id="circlePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
+        </defs>
+        <text fill="#1a1a1a" fontSize="9.2" fontWeight="700" letterSpacing="1.8" textAnchor="middle" fontFamily="inherit" style={{ textTransform: "uppercase" }}>
+          <textPath href="#circlePath" startOffset="50%">
+            GET RESULTS - GET HYPED - GET NOTICED -
+          </textPath>
+        </text>
+      </svg>
+      <div className="relative flex h-full w-full items-center justify-center rounded-full border border-gh-black/20 text-gh-black">
+        <span className="text-[1.75rem] font-black leading-none">GH</span>
+        <span className="absolute inset-[0.28rem] rounded-full border border-gh-black/25" />
+      </div>
+    </div>
+  );
+}
+
 function GetResultsCta({ className = "" }: { className?: string }) {
   return (
     <Link
       href="/contact"
-      prefetch
       aria-label="Get Results — contact"
       className={
         `button-default group/cta relative inline-flex max-w-full items-center justify-start no-underline ` +
@@ -57,200 +127,313 @@ function GetResultsCta({ className = "" }: { className?: string }) {
   );
 }
 
-const social = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/company/gethypednl/",
-    svg: (
-      <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 31 30" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M27.1421 25.8926H22.4746V18.5839C22.4746 16.8414 22.4396 14.5989 20.0446 14.5989C17.6134 14.5989 17.2421 16.4951 17.2421 18.4551V25.8926H12.5784V10.8639H17.0584V12.9126H17.1184C17.5673 12.1461 18.2157 11.5156 18.9944 11.0882C19.7731 10.6607 20.6531 10.4523 21.5409 10.4851C26.2659 10.4851 27.1396 13.5951 27.1396 17.6426V25.8926H27.1421ZM7.31211 8.80764C6.77626 8.80838 6.25224 8.65017 5.80632 8.35304C5.3604 8.0559 5.01263 7.63319 4.807 7.13837C4.60137 6.64355 4.54712 6.09885 4.65111 5.5732C4.7551 5.04754 5.01267 4.56453 5.39122 4.18528C5.76977 3.80603 6.2523 3.54758 6.77776 3.44261C7.30323 3.33765 7.84802 3.3909 8.34322 3.59561C8.83842 3.80033 9.26178 4.14732 9.55973 4.59269C9.85769 5.03805 10.0169 5.56179 10.0171 6.09764C10.0176 6.45324 9.94801 6.80545 9.81231 7.13414C9.6766 7.46282 9.47745 7.76155 9.22624 8.01323C8.97502 8.26491 8.67667 8.46461 8.34823 8.60092C8.01979 8.73723 7.66771 8.80747 7.31211 8.80764ZM9.64961 25.8926H4.97336V10.8639H9.64961V25.8926Z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@gethyped.nl",
-    svg: (
-      <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 31 30" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M16.5688 2.28883C17.9338 2.26758 19.2876 2.27758 20.6413 2.26758C20.683 3.89272 21.3335 5.44296 22.4638 6.61133C23.686 7.70925 25.2409 8.36588 26.8801 8.47633V12.6738C25.3684 12.6367 23.88 12.2931 22.5051 11.6638C21.9192 11.3835 21.3551 11.0596 20.8176 10.6951C20.8076 13.7363 20.8288 16.7776 20.7976 19.8088C20.7178 21.2809 20.231 22.702 19.3913 23.9138C18.699 24.9146 17.7811 25.7386 16.7117 26.3194C15.6424 26.9003 14.4515 27.2216 13.2351 27.2576C11.7437 27.3249 10.2655 26.9514 8.98508 26.1838C7.93117 25.5579 7.03836 24.694 6.37809 23.6613C5.71781 22.6286 5.30839 21.4556 5.18258 20.2363C5.16258 19.7151 5.15133 19.1951 5.17258 18.6838C5.27891 17.6157 5.60341 16.5808 6.12599 15.6432C6.64857 14.7055 7.35809 13.8852 8.21061 13.2329C9.06312 12.5807 10.0405 12.1104 11.0821 11.8513C12.1238 11.5921 13.2076 11.5496 14.2663 11.7263C14.2863 13.2676 14.2238 14.8088 14.2238 16.3513C13.7794 16.1955 13.3085 16.129 12.8383 16.1557C12.3681 16.1823 11.9077 16.3017 11.4838 16.5068C11.0598 16.7119 10.6805 16.9988 10.3678 17.351C10.055 17.7031 9.81496 18.1136 9.66133 18.5588C9.49818 19.1021 9.44882 19.6731 9.51633 20.2363C9.65144 21.095 10.0974 21.8741 10.7695 22.4254C11.4416 22.9767 12.2928 23.2617 13.1613 23.2263C13.7441 23.2092 14.3133 23.0468 14.8173 22.7539C15.3214 22.4609 15.7443 22.0467 16.0476 21.5488C16.2796 21.2222 16.4261 20.8428 16.4738 20.4451C16.5788 18.5801 16.5363 16.7263 16.5476 14.8613C16.5588 10.6638 16.5376 6.47633 16.5688 2.28883Z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/gethyped.nl/",
-    svg: (
-      <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 31 30" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M28.4426 9.61758C28.4183 8.58045 28.224 7.55433 27.8676 6.58008C27.553 5.74483 27.0579 4.98935 26.4176 4.36758C25.7958 3.72728 25.0403 3.23216 24.2051 2.91758C23.2308 2.56113 22.2047 2.36689 21.1676 2.34258C19.8426 2.26758 19.4176 2.26758 16.0176 2.26758C12.6176 2.26758 12.1926 2.26758 10.8676 2.34258C9.83045 2.36689 8.80433 2.56113 7.83008 2.91758C6.99483 3.23216 6.23935 3.72728 5.61758 4.36758C4.97686 4.98655 4.4853 5.74313 4.18008 6.58008C3.81278 7.55176 3.61409 8.57902 3.59258 9.61758C3.51758 10.9426 3.51758 11.3676 3.51758 14.7676C3.51758 18.1676 3.51758 18.5926 3.59258 19.9176C3.61409 20.9561 3.81278 21.9834 4.18008 22.9551C4.4853 23.792 4.97686 24.5486 5.61758 25.1676C6.23935 25.8079 6.99483 26.303 7.83008 26.6176C8.80433 26.974 9.83045 27.1683 10.8676 27.1926C12.1926 27.2676 12.6176 27.2676 16.0176 27.2676C19.4176 27.2676 19.8426 27.2676 21.1676 27.1926C22.2047 27.1683 23.2308 26.974 24.2051 26.6176C25.0344 26.2914 25.7876 25.7978 26.4177 25.1677C27.0478 24.5376 27.5414 23.7844 27.8676 22.9551C28.224 21.9808 28.4183 20.9547 28.4426 19.9176C28.4426 18.5926 28.5176 18.1676 28.5176 14.7676C28.5176 11.3676 28.5176 10.9426 28.4426 9.61758ZM26.1926 19.7676C26.1835 20.561 26.0398 21.3472 25.7676 22.0926C25.5584 22.6317 25.2392 23.1213 24.8303 23.5303C24.4213 23.9392 23.9317 24.2584 23.3926 24.4676C22.6472 24.7398 21.861 24.8835 21.0676 24.8926C19.8176 24.9551 19.3551 24.9676 16.0676 24.9676C12.7801 24.9676 12.3176 24.9676 11.0676 24.8926C10.2435 24.9111 9.42259 24.7841 8.64258 24.5176C8.10344 24.3084 7.61381 23.9892 7.20489 23.5803C6.79598 23.1713 6.47676 22.6817 6.26758 22.1426C5.98976 21.3814 5.84597 20.5779 5.84258 19.7676C5.84258 18.5176 5.76758 18.0551 5.76758 14.7676C5.76758 11.4801 5.76758 11.0176 5.84258 9.76758C5.84597 8.9573 5.98976 8.15375 6.26758 7.39258C6.47676 6.85344 6.79598 6.36381 7.20489 5.95489C7.61381 5.54598 8.10344 5.22676 8.64258 5.01758C9.40375 4.73976 10.2073 4.59597 11.0176 4.59258C12.2676 4.59258 12.7301 4.51758 16.0176 4.51758C19.3051 4.51758 19.7676 4.51758 21.0176 4.59258C21.811 4.60168 22.5972 4.74539 23.3426 5.01758C23.8817 5.22676 24.3713 5.54598 24.7803 5.95489C25.1892 6.36381 25.5084 6.85344 25.7176 7.39258C26.0125 8.1507 26.1732 8.95435 26.1926 9.76758C26.2551 11.0176 26.2676 11.4801 26.2676 14.7676C26.2676 18.0551 26.2551 18.5176 26.1926 19.7676Z"
-          fill="currentColor"
-        />
-        <path
-          d="M16.0178 8.34229C14.747 8.34229 13.5048 8.7191 12.4482 9.42509C11.3917 10.1311 10.5681 11.1345 10.0819 12.3085C9.59556 13.4826 9.46832 14.7744 9.71623 16.0207C9.96414 17.2671 10.5761 18.4119 11.4746 19.3104C12.3732 20.209 13.518 20.8209 14.7643 21.0688C16.0106 21.3167 17.3025 21.1895 18.4765 20.7032C19.6505 20.2169 20.654 19.3934 21.36 18.3368C22.066 17.2802 22.4428 16.038 22.4428 14.7673C22.4428 13.0633 21.7659 11.429 20.5609 10.2241C19.356 9.0192 17.7218 8.34229 16.0178 8.34229ZM16.0178 18.9298C15.1945 18.9298 14.3897 18.6857 13.7052 18.2283C13.0207 17.7709 12.4872 17.1208 12.1721 16.3602C11.8571 15.5996 11.7746 14.7627 11.9353 13.9552C12.0959 13.1478 12.4923 12.4061 13.0744 11.824C13.6566 11.2418 14.3983 10.8454 15.2057 10.6848C16.0132 10.5242 16.8501 10.6066 17.6107 10.9216C18.3713 11.2367 19.0214 11.7702 19.4788 12.4547C19.9362 13.1392 20.1803 13.944 20.1803 14.7673C20.1803 15.3139 20.0726 15.8552 19.8634 16.3602C19.6542 16.8652 19.3476 17.3241 18.9611 17.7106C18.5746 18.0971 18.1157 18.4037 17.6107 18.6129C17.1057 18.8221 16.5644 18.9298 16.0178 18.9298Z"
-          fill="currentColor"
-        />
-        <path
-          d="M22.6914 6.59253C22.3947 6.59253 22.1047 6.6805 21.8581 6.84533C21.6114 7.01015 21.4191 7.24441 21.3056 7.5185C21.1921 7.79259 21.1624 8.09419 21.2202 8.38516C21.2781 8.67614 21.421 8.94341 21.6307 9.15319C21.8405 9.36297 22.1078 9.50583 22.3988 9.56371C22.6897 9.62158 22.9913 9.59188 23.2654 9.47835C23.5395 9.36482 23.7738 9.17256 23.9386 8.92588C24.1034 8.67921 24.1914 8.3892 24.1914 8.09253C24.1914 7.6947 24.0334 7.31317 23.7521 7.03187C23.4708 6.75056 23.0892 6.59253 22.6914 6.59253Z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@gethypednl",
-    svg: (
-      <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 31 30" fill="none" className="h-6 w-6" aria-hidden>
-        <path
-          d="M28.5953 8.42627C28.4431 7.88117 28.1529 7.38456 27.7526 6.98448C27.3523 6.58441 26.8555 6.2944 26.3103 6.14252C24.2641 5.59377 16.0303 5.59377 16.0303 5.59377C16.0303 5.59377 7.81658 5.58252 5.74908 6.14252C5.20389 6.2944 4.70713 6.58441 4.30683 6.98448C3.90654 7.38456 3.61626 7.88117 3.46408 8.42627C3.07592 10.5213 2.88467 12.6481 2.89283 14.7788C2.88556 16.9011 3.07639 19.0194 3.46283 21.1063C3.61475 21.652 3.90505 22.1492 4.3056 22.5497C4.70615 22.9503 5.20337 23.2406 5.74908 23.3925C7.79283 23.9425 16.0303 23.9425 16.0303 23.9425C16.0303 23.9425 24.2428 23.9425 26.3103 23.3925C26.8555 23.2406 27.3523 22.9506 27.7526 22.5506C28.1529 22.1505 28.4431 21.6539 28.5953 21.1088C28.9737 19.0211 29.157 16.9028 29.1428 14.7813C29.1584 12.6505 28.9751 10.523 28.5953 8.42627ZM13.4016 18.7075V10.8325L20.2553 14.7738L13.4016 18.7075Z"
-          fill="currentColor"
-        />
-      </svg>
-    ),
-  },
-] as const;
-
 export function HomeFooter() {
   const year = new Date().getFullYear();
+  const trailRootRef = useRef<HTMLElement>(null);
+  const trailLayerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const root = trailRootRef.current;
+    const layer = trailLayerRef.current;
+    if (!root || !layer) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    let incr = 0;
+    let oldIncrX = 0;
+    let oldIncrY = 0;
+    let resetDist = window.innerWidth / 3;
+    let indexImg = 0;
+    let rafId = 0;
+    let nextX = 0;
+    let nextY = 0;
+    let hasPending = false;
+    const maxTrailNodes = 8;
+
+    const onResize = () => {
+      resetDist = window.innerWidth / 3;
+    };
+
+    const createMedia = (x: number, y: number, deltaX: number, deltaY: number) => {
+      if (layer.childElementCount >= maxTrailNodes) return;
+      const pick = TRAIL_LOGOS[indexImg];
+      const image = document.createElement("img");
+      image.setAttribute("src", pick.src);
+      image.setAttribute("alt", pick.alt);
+      image.setAttribute("draggable", "false");
+      image.style.width = "15vw";
+      image.style.position = "absolute";
+      image.style.objectFit = "cover";
+      image.style.zIndex = "5";
+      image.style.pointerEvents = "none";
+
+      layer.appendChild(image);
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          if (image.parentNode === layer) {
+            layer.removeChild(image);
+          }
+          tl.kill();
+        },
+      });
+
+      tl.fromTo(
+        image,
+        {
+          xPercent: -50 + (Math.random() - 0.5) * 80,
+          yPercent: -50 + (Math.random() - 0.5) * 10,
+          scaleX: 1.3,
+          scaleY: 1.3,
+        },
+        {
+          scaleX: 1,
+          scaleY: 1,
+          ease: "elastic.out(2, 0.6)",
+          duration: 0.6,
+        }
+      );
+
+      tl.fromTo(
+        image,
+        {
+          x,
+          y,
+          rotation: (Math.random() - 0.5) * 20,
+        },
+        {
+          x: `+=${deltaX * 4}`,
+          y: `+=${deltaY * 4}`,
+          rotation: (Math.random() - 0.5) * 20,
+          ease: "power4.out",
+          duration: 1.5,
+        },
+        "<"
+      );
+
+      tl.to(image, {
+        duration: 0.3,
+        scale: 0.5,
+        delay: 0.1,
+        ease: "back.in(1.5)",
+      });
+
+      indexImg = (indexImg + 1) % TRAIL_LOGOS.length;
+    };
+
+    const initOnce = (e: MouseEvent) => {
+      oldIncrX = e.clientX;
+      oldIncrY = e.clientY;
+    };
+
+    const processMove = () => {
+      hasPending = false;
+      rafId = 0;
+      const valX = nextX;
+      const valY = nextY;
+      incr += Math.abs(valX - oldIncrX) + Math.abs(valY - oldIncrY);
+
+      if (incr > resetDist) {
+        incr = 0;
+        createMedia(valX, valY, valX - oldIncrX, valY - oldIncrY);
+      }
+
+      oldIncrX = valX;
+      oldIncrY = valY;
+    };
+
+    const onMove = (e: MouseEvent) => {
+      nextX = e.clientX;
+      nextY = e.clientY;
+      if (hasPending) return;
+      hasPending = true;
+      rafId = window.requestAnimationFrame(processMove);
+    };
+
+    root.addEventListener("mousemove", initOnce, { once: true });
+    root.addEventListener("mousemove", onMove);
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      root.removeEventListener("mousemove", onMove);
+      window.removeEventListener("resize", onResize);
+      if (rafId) window.cancelAnimationFrame(rafId);
+      layer.querySelectorAll("img").forEach((img) => img.remove());
+    };
+  }, []);
 
   return (
-    <div className="footer bg-gh-page">
-      <section className="section_footer relative overflow-hidden">
-        <div className="px-10 pb-12 pt-16 max-[479px]:px-5">
-          <div className="mx-auto w-full max-w-[120em]">
-            <div className="cs-footer flex flex-col gap-14 min-[992px]:gap-16">
-              <div className="cs-footer-cta flex flex-col gap-8">
-                <h2 className="heading-xxl max-w-[20ch] text-gh-black">Let’s Get Hyped!</h2>
-                <div className="button-group is-footer flex flex-wrap items-center gap-4">
-                  <ButtonDefault href="mailto:info@gethyped.nl" variant="outline" icon="mail">
-                    Mail ons direct
-                  </ButtonDefault>
-                  <GetResultsCta />
-                </div>
-              </div>
-
-              <div className="cs-footer-bottom grid gap-10 min-[992px]:grid-cols-[1fr_2fr] min-[992px]:items-end min-[992px]:gap-12">
-                <div className="footer-mobile-logo max-w-[min(100%,20rem)] min-[992px]:hidden">
-                  <Logo className="h-auto w-full" />
-                </div>
-
-                <div className="relative rounded-[2rem] bg-[#eae4d8] p-8 min-[992px]:rounded-[2.5rem] min-[992px]:p-10">
-                  <div className="footer-logo mb-8 max-w-[14rem] text-gh-black min-[992px]:mb-10">
-                    <Logo className="h-auto w-full" />
-                  </div>
-                  <div
-                    className="footer-sticker pointer-events-none absolute -right-4 top-4 h-28 w-28 opacity-90 min-[992px]:-right-2 min-[992px]:top-8 min-[992px]:h-36 min-[992px]:w-36"
-                    aria-hidden
-                  >
-                    <div className="flex h-full w-full items-center justify-center rounded-full border-2 border-dashed border-gh-black/20 bg-gh-pink text-center text-xs font-bold leading-tight text-gh-black">
-                      Get
-                      <br />
-                      Hyped
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="cs-footer-info-wrapper border-t border-gh-black/10 pt-10 min-[992px]:pt-12">
-                <div className="footer-info grid gap-10 min-[992px]:grid-cols-2 min-[992px]:items-start min-[992px]:gap-14 lg:grid-cols-[1.2fr_1fr_1fr]">
-                  <div className="footer_links flex flex-col gap-8">
-                    <div className="min-[992px]:hidden">
-                      <GetResultsCta className="scale-95" />
-                      <span className="mt-4 block text-sm text-gh-black/60">Get Hyped! Neem contact op</span>
-                    </div>
-                    <div className="footer_sitemap flex flex-wrap gap-3">
-                      <SwooshNavLink href="/expertises" label="Expertises" />
-                      <SwooshNavLink href="/work" label="Work" />
-                      <SwooshNavLink href="/about" label="About" />
-                      <SwooshNavLink href="/contact" label="Contact" />
-                    </div>
-                    <div className="footer-col is-socials">
-                      <div className="footer-label mb-3">
-                        <div className="paragraph-regular font-bold text-gh-black">Follow us</div>
-                      </div>
-                      <div className="social-icon-group flex flex-wrap gap-4 text-gh-black">
-                        {social.map((s) => (
-                          <a
-                            key={s.href}
-                            href={s.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="social-icon inline-flex rounded-lg p-2 transition-opacity hover:opacity-70"
-                            aria-label={s.label}
-                          >
-                            {s.svg}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="hidden min-[992px]:block">
-                      <div className="footer-credits flex flex-wrap gap-6 text-sm text-gh-black/60">
-                        <div className="footer-legal is-copyright">
-                          © {year} Get Hyped
-                        </div>
-                        <a
-                          href="https://dylanbrouwer.design/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="footer-legal transition-opacity hover:opacity-70"
-                        >
-                          © Design by Dylan
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="footer_contact grid gap-8 sm:grid-cols-2">
-                    <div className="footer-col">
-                      <div className="footer-label mb-3">
-                        <div className="paragraph-regular font-bold text-gh-black">Contact</div>
-                      </div>
-                      <a href="mailto:info@gethyped.nl" className="footer-link block text-gh-black no-underline hover:underline">
-                        info@gethyped.nl
-                      </a>
-                      <a href="tel:+31615337496" className="footer-link mt-2 block text-gh-black no-underline hover:underline">
-                        +31 6 1533 7496
-                      </a>
-                    </div>
-                    <div className="footer-col">
-                      <div className="footer-label mb-3">
-                        <div className="paragraph-regular font-bold text-gh-black">Adres</div>
-                      </div>
-                      <a
-                        href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="footer-link block text-gh-black no-underline hover:underline"
+    <div className="footer bg-[#f3efeb]">
+      <section
+        ref={trailRootRef}
+        className="section_footer pointer-events-none relative overflow-hidden"
+      >
+        <div className="section-padding-96px padding-top px-10 pb-8 pt-24 max-[479px]:px-5">
+          <div className="padding-global mx-auto w-full max-w-[120em]">
+            <div className="container-col-12">
+              <div className="cs-footer flex h-screen flex-col items-stretch justify-end">
+                <div className="cs-footer-cta flex h-full flex-col items-center justify-center gap-[3em] text-center">
+                  <h2 className="text-[clamp(2.8rem,8vw,6.2rem)] leading-[0.92] font-semibold tracking-[-0.05em] text-gh-black">
+                    Let&apos;s Get Hyped!
+                  </h2>
+                  <div className="button-group is-footer pointer-events-auto flex flex-wrap items-center justify-center gap-3">
+                    <a
+                      href="mailto:info@gethyped.nl"
+                      className={
+                        "button-default group/mail relative inline-flex max-w-full items-center justify-start no-underline " +
+                        "text-[1.125em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none"
+                      }
+                    >
+                      <span
+                        className={
+                          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
+                          "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
+                          "group-hover/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
+                          "group-focus-visible/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
+                          "group-active/mail:scale-95"
+                        }
                       >
-                        Beltrumsestraat 6,
-                        <br />
-                        7141 AL Groenlo
-                      </a>
+                        <span
+                          className={
+                            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
+                            "rounded-[1.25rem] border border-gh-black bg-transparent " +
+                            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
+                            "group-hover/mail:rounded-[0.5em] group-focus-visible/mail:rounded-[0.5em]"
+                          }
+                          aria-hidden
+                        />
+                        <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Mail ons direct</span>
+                        <span
+                          className={
+                            "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
+                            "bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform " +
+                            "group-hover/mail:scale-[0.92] group-focus-visible/mail:scale-[0.92]"
+                          }
+                        >
+                          {envelopeIcon}
+                        </span>
+                      </span>
+                    </a>
+                    <GetResultsCta />
+                  </div>
+                </div>
+
+                <div className="cs-footer-bottom absolute inset-x-0 bottom-0 z-10 flex items-end justify-between px-[2em]">
+                  <div className="footer-bg absolute inset-x-0 bottom-0 w-full">
+                    <svg viewBox="0 0 1860 386" className="footer-bg-svg h-auto w-full" preserveAspectRatio="none" aria-hidden>
+                      <path
+                        d="M1859.06 34.8264V349.463C1859.06 365.199 1859.06 380.122 1859.06 385.962L0.642595 385.955C0.642578 383.021 0.642769 379.682 0.642769 371.941V290.843C0.642769 283.856 5.67717 277.887 12.5466 276.741L1819.04 0.740997C1840 -2.74446 1859.06 13.489 1859.06 34.8184"
+                        fill="#e6e0d6"
+                      />
+                    </svg>
+                    <div className="footer-logo absolute bottom-0 left-0 pb-[0.3em] pl-[0.6em]">
+                      <img
+                        src="https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg"
+                        alt="Get Hyped logo"
+                        className="h-[5.8rem] w-[14.6rem] -rotate-[7deg] min-[992px]:h-[6.9rem] min-[992px]:w-[17.6rem]"
+                      />
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-5 min-[992px]:items-end">
-                    <a href="#" className="footer-legal text-sm text-gh-black/70 no-underline hover:underline">
-                      Privacyvoorwaarden
-                    </a>
-                    <div className="min-[992px]:hidden">
-                      <div className="footer-credits flex flex-col gap-2 text-sm text-gh-black/60">
-                        <div>© {year} Get Hyped</div>
+                  <GhSticker />
+                </div>
+
+                <div className="cs-footer-info-wrapper absolute inset-x-0 bottom-0 z-[12] flex items-end justify-end pb-[1.1em] pr-[1.7em]">
+                  <div className="footer-info flex h-full items-end justify-end gap-[6em] pr-[4em]">
+                    <div className="footer_links flex flex-col gap-[2em]">
+                      <div className="footer_sitemap pointer-events-auto flex flex-wrap gap-[.75em]">
+                        <Link href="/expertises" className="button-color-swoosh is-footer w-inline-block">
+                          <span className="button-color-swoosh_bg">
+                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
+                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
+                          </span>
+                          <span data-text="Expertises" className="button-color-swoosh_inner is-footer">
+                            <span className="button-color-swoosh_text">Expertises</span>
+                          </span>
+                        </Link>
+                        <Link href="/work" className="button-color-swoosh is-footer w-inline-block">
+                          <span className="button-color-swoosh_bg">
+                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
+                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
+                          </span>
+                          <span data-text="Work" className="button-color-swoosh_inner is-footer">
+                            <span className="button-color-swoosh_text">Work</span>
+                          </span>
+                        </Link>
+                        <Link href="/about" className="button-color-swoosh is-footer w-inline-block">
+                          <span className="button-color-swoosh_bg">
+                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
+                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
+                          </span>
+                          <span data-text="About" className="button-color-swoosh_inner is-footer">
+                            <span className="button-color-swoosh_text">About</span>
+                          </span>
+                        </Link>
+                        <Link href="/contact" className="button-color-swoosh is-footer w-inline-block">
+                          <span className="button-color-swoosh_bg">
+                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
+                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
+                          </span>
+                          <span data-text="Contact" className="button-color-swoosh_inner is-footer">
+                            <span className="button-color-swoosh_text">Contact</span>
+                          </span>
+                        </Link>
+                      </div>
+                      <div className="footer-col is-socials">
+                        <div className="footer-label mb-2 font-bold text-gh-black">Follow us</div>
+                        <div className="social-icon-group flex flex-wrap gap-[.5em] text-gh-black">
+                          <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
+                            <LinkedInIcon />
+                          </a>
+                          <a href="https://www.tiktok.com/@gethyped.nl" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="TikTok">
+                            <TikTokIcon />
+                          </a>
+                          <a href="https://www.instagram.com/gethyped.nl/" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="Instagram">
+                            <InstagramIcon />
+                          </a>
+                          <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
+                            <YouTubeIcon />
+                          </a>
+                        </div>
+                      </div>
+                      <div className="footer-credits flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
+                        <div className="footer-legal">© {year} Get Hyped</div>
                         <a
                           href="https://dylanbrouwer.design/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="footer-legal w-fit transition-opacity hover:opacity-70"
+                          className="footer-legal pointer-events-auto hover:opacity-75"
                         >
                           © Design by Dylan
                         </a>
                       </div>
+                    </div>
+                    <div className="footer_contact flex flex-col gap-[1em] text-left text-[0.95rem] leading-snug text-gh-black">
+                      <div className="footer-col">
+                        <div className="footer-label font-bold">Contact</div>
+                        <a href="mailto:info@gethyped.nl" className="footer-link pointer-events-auto mt-1 block text-[0.86rem] hover:underline">
+                          info@gethyped.nl
+                        </a>
+                        <a href="tel:+31615337496" className="footer-link pointer-events-auto block text-[0.86rem] hover:underline">
+                          +31 6 1533 7496
+                        </a>
+                      </div>
+                      <div className="footer-col">
+                        <div className="footer-label font-bold">Adres</div>
+                        <a
+                          href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="footer-link pointer-events-auto mt-1 block text-[0.86rem] hover:underline"
+                        >
+                          Beltrumsestraat 6,
+                          <br />
+                          7141 AL Groenlo
+                        </a>
+                      </div>
+                      <a href="#" className="footer-legal pointer-events-auto block text-[0.82rem] text-gh-black/65 hover:underline">
+                        Privacyvoorwaarden
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -258,6 +441,38 @@ export function HomeFooter() {
             </div>
           </div>
         </div>
+
+        <section className="pointer-events-none fixed inset-0 z-40 h-screen w-full overflow-hidden">
+          <div ref={trailLayerRef} className="relative h-full w-full" />
+        </section>
+
+        <div className="pointer-events-none hidden">
+          {TRAIL_LOGOS.map((logo) => (
+            <img
+              key={logo.src}
+              src={logo.src}
+              loading="lazy"
+              alt={logo.alt}
+              draggable={false}
+              className="absolute left-0 top-0 h-px w-px invisible object-cover"
+            />
+          ))}
+        </div>
+        <style jsx>{`
+          @keyframes ghStickerFloat {
+            from {
+              transform: translateY(-50%) rotate(8deg);
+            }
+            to {
+              transform: translateY(-50%) rotate(14deg);
+            }
+          }
+
+          .section_footer .container-col-12 {
+            position: relative;
+            width: 100%;
+          }
+        `}</style>
       </section>
     </div>
   );

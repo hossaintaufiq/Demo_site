@@ -17,7 +17,6 @@ export function SwooshNavLink({
   return (
     <Link
       href={href}
-      prefetch
       aria-label={ariaLabel ?? `${label} link`}
       className={
         "group/swoosh relative grid max-w-full select-none text-black no-underline " +

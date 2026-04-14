@@ -82,6 +82,52 @@ body {
   color: var(--color-gh-black);
 }
 
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+video,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a,
+button,
+[role="button"] {
+  transition:
+    color 0.2s var(--ease-gh-smooth),
+    background-color 0.2s var(--ease-gh-smooth),
+    border-color 0.2s var(--ease-gh-smooth),
+    opacity 0.2s var(--ease-gh-smooth),
+    transform 0.2s var(--ease-gh-smooth);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gh-red);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-gh-pink) 70%, white 30%);
+  color: var(--color-gh-black);
+}
+
 /* Hero heading / paragraph scales (fluid rem = × --size-font on html) */
 .heading-xxl {
   margin: 0;
@@ -297,6 +343,19 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
   .gh-marquee-track {
     animation: none;
   }
