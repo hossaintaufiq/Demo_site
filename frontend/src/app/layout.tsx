@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
-  title: "Frontend",
-  description: "Clean scaffold — rebuild from here.",
+  title: {
+    default: "Get Hyped - Social-first content agency",
+    template: "%s | Get Hyped",
+  },
+  description:
+    "Get Hyped brengt als short form content agency jouw merk in beweging met krachtige video's en foto's. Niks zonder strategie: alleen resultaatgerichte content.",
 };
 
 export default function RootLayout({
@@ -12,8 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="min-h-dvh antialiased">{children}</body>
+    <html lang="nl" className={inter.variable}>
+      <body
+        className={`min-h-dvh bg-gh-page font-sans antialiased text-gh-black ${inter.className}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

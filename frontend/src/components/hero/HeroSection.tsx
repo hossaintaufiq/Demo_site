@@ -1,0 +1,33 @@
+import { HeroCardsMWG } from "@/components/hero/HeroCardsMWG";
+
+export function HeroSection() {
+  return (
+    <header
+      id="section_hero"
+      className="section_hero relative w-full bg-gh-page pb-[4em] pt-[calc(7.5rem+1.5em)] text-gh-black min-[992px]:pb-[6em] min-[992px]:pt-[calc(7.5rem+2em)]"
+    >
+      {/* Horizontal page padding 2.5em (fluid rem) */}
+      <div className="w-full px-10 max-[479px]:px-5">
+        <div className="mx-auto w-full max-w-[120em]">
+          <div className="hero text-balance">
+            <div className="hero-title">
+              <h1 className="heading-xxl max-w-[min(100%,48rem)] min-[992px]:max-w-[min(100%,52rem)]">
+                Get Hyped. Get Noticed. Get Results.
+              </h1>
+              <div className="mt-[1.5em] max-w-[60ch] min-[992px]:mt-[2em]">
+                <p className="paragraph-l text-gh-black">
+                  Klaar met gokken op content <br />
+                  die niets oplevert?
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-[2.5em] min-[992px]:mt-[3.5em]">
+              <HeroCardsMWG />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

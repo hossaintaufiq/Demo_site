@@ -4,9 +4,10 @@
   },
   "local": {
     "favicon": "/favicon.ico",
+    "wordmark": "/assets/icons/get-hyped-wordmark.svg",
     "starterIcons": [
       "/assets/icons/next.svg",
-      "/assets/icons/vercel.svg",
+      "/assets/icons/get-hyped-wordmark.svg",
       "/assets/icons/globe.svg",
       "/assets/icons/window.svg",
       "/assets/icons/file.svg"

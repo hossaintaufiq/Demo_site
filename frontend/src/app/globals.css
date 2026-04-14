@@ -1,7 +1,309 @@
 @import "tailwindcss";
 
+/*
+  Fluid root font-size (Osmo-style scaling). Sizes in rem/em scale with viewport.
+*/
+html {
+  --size-unit: 16;
+  --size-container-ideal: 1920;
+  --size-container-min: 992px;
+  --size-container-max: 1920px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+  font-size: var(--size-font);
+}
+
+@media screen and (max-width: 991px) {
+  html {
+    --size-container-ideal: 991;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  html {
+    --size-container-ideal: 767;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  html {
+    --size-container-ideal: 479;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+  }
+}
+
+/* Design tokens for Get Hyped navbar (used via Tailwind utilities: bg-gh-pink, ease-gh-elastic, …) */
+@theme {
+  --color-gh-black: #161616;
+  --color-gh-pink: #fcb8fa;
+  --color-gh-red: #fa5424;
+  --color-gh-off-white: #fffef7;
+  --color-gh-white: #ffffff;
+  --color-gh-cream-text: #f0ece5;
+  --color-gh-page: #faf4ec;
+  --color-gh-hero-blue: #0d8dff;
+  --color-gh-hero-green: #33c791;
+
+  --ease-gh-elastic: linear(
+    0,
+    0.5737 7.6%,
+    0.8382 11.87%,
+    0.9463 14.19%,
+    1.0292 16.54%,
+    1.0886 18.97%,
+    1.1258 21.53%,
+    1.137 22.97%,
+    1.1424 24.48%,
+    1.1423 26.1%,
+    1.1366 27.86%,
+    1.1165 31.01%,
+    1.0507 38.62%,
+    1.0219 42.57%,
+    0.9995 46.99%,
+    0.9872 51.63%,
+    0.9842 58.77%,
+    1.0011 81.26%,
+    1
+  );
+  --ease-gh-smooth: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-gh-color: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-gh-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --ease-gh-radius: cubic-bezier(0.34, 1.37, 0.64, 1);
+}
+
 html,
 body {
-  background: #fafafa;
-  color: #0a0a0a;
+  background: var(--color-gh-page);
+  color: var(--color-gh-black);
+}
+
+/* Hero heading / paragraph scales (fluid rem = × --size-font on html) */
+.heading-xxl {
+  margin: 0;
+  font-size: 8rem;
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+}
+
+.paragraph-l {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.section_hero .hero-title {
+  max-width: 120em;
+}
+
+/* Section typography (homepage sections) */
+.heading-m {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.6vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.heading-xl {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 5rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.heading-xs {
+  margin: 0;
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.paragraph-m {
+  margin: 0;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.paragraph-regular {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Jellybelly buttons (reference: button-default) */
+.button-default {
+  --bounce-ease: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --border-radius-ease: cubic-bezier(0.34, 1.37, 0.64, 1);
+  --speed: 0.45s;
+  --speed-faster: 0.15s;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button-default .button-default__inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: 0.75em 1em 0.75em 1.25em;
+  transition: transform var(--speed) var(--bounce-ease);
+  will-change: transform;
+}
+
+.button-default .button-default__background {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75em;
+  background: var(--color-gh-pink);
+  transition:
+    border-radius var(--speed) var(--border-radius-ease),
+    width var(--speed) var(--bounce-ease);
+}
+
+.button-default.is-outline .button-default__background.is-outline {
+  background: var(--color-gh-white);
+  box-shadow: inset 0 0 0 2px var(--color-gh-black);
+}
+
+.button-default .button-default__text {
+  position: relative;
+  z-index: 1;
+  font-size: 1.125em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--color-gh-black);
+}
+
+.button-default.is-outline .button-default__text {
+  color: var(--color-gh-black);
+}
+
+.button-default .button-default__icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 1.25em;
+  height: 1.25em;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gh-red);
+  transition: transform var(--speed-faster) ease-out;
+  will-change: transform;
+}
+
+.button-default .button-default__icon.is-black {
+  color: var(--color-gh-black);
+}
+
+.button-default .button-default__icon-wrap {
+  transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
+  will-change: transform;
+  transform: translateY(0%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button-default:hover .button-default__background,
+  .button-default:focus-visible .button-default__background {
+    border-radius: 0.5em;
+    width: calc(100% - 0.5em);
+  }
+
+  .button-default:hover .button-default__inner,
+  .button-default:focus-visible .button-default__inner {
+    transform: skewY(-4deg) rotate(-1deg) scale(1.02);
+  }
+
+  .button-default:active .button-default__inner {
+    transform: scale(0.95);
+  }
+
+  .button-default:hover .button-default__icon,
+  .button-default:focus-visible .button-default__icon {
+    transform: scale(0.92);
+  }
+
+  .button-default.is-icon:hover .button-default__inner,
+  .button-default.is-icon:focus-visible .button-default__inner {
+    transform: skewY(-1deg) rotate(-1deg) scale(1.02) !important;
+  }
+
+  .button-default.is-icon:hover .button-default__background,
+  .button-default.is-icon:focus-visible .button-default__background {
+    width: 100% !important;
+  }
+
+  .button-default.is-icon:hover .button-default__icon-wrap,
+  .button-default.is-icon:focus-visible .button-default__icon-wrap {
+    transform: translateY(100%);
+  }
+}
+
+.button-default.is-icon .button-default__inner.is-icon {
+  width: 3.5em;
+  height: 3.5em;
+  padding: 0;
+}
+
+.button-default.is-icon .button-default__background.is-button-icon {
+  width: 100%;
+  background: var(--color-gh-pink);
+}
+
+.button-default.is-icon .button-default__icons {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  overflow: hidden;
+  height: 1.5em;
+}
+
+.button-default.is-icon .button-default__icon.is-button-icon {
+  width: 1.5em;
+  height: 1.5em;
+  color: var(--color-gh-black);
+}
+
+/* Infinite marquee */
+@keyframes gh-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gh-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: gh-marquee 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-marquee-track {
+    animation: none;
+  }
+}
+
+.section-divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(22, 22, 22, 0.12);
 }
