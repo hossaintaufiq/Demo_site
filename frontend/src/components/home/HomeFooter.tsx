@@ -205,9 +205,8 @@ export function HomeFooter() {
         ease: "power2.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 80%",
-          end: "top 20%",
-          scrub: true,
+          start: "top 75%",
+          toggleActions: "play none none reverse",
         },
       });
 
@@ -369,11 +368,11 @@ export function HomeFooter() {
       >
         <section
           ref={trailRootRef}
-          className="section_footer pointer-events-none relative min-h-[100dvh] overflow-hidden"
+          className="section_footer relative min-h-[100dvh] overflow-hidden"
         >
           <div className="flex min-h-[100dvh] flex-col">
             {/* ═══ UPPER FOOTER — Title + CTA Buttons ═══ */}
-            <div className="cs-footer-cta flex flex-1 flex-col items-center justify-center gap-8 px-10 text-center max-[479px]:px-5">
+            <div className="cs-footer-cta relative z-10 flex flex-1 flex-col items-center justify-center gap-8 px-10 text-center max-[479px]:px-5 pointer-events-auto">
               <h2 className="text-[clamp(2.8rem,8vw,6.8rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-gh-black">
                 Let&apos;s Get Hyped!
               </h2>
@@ -384,7 +383,29 @@ export function HomeFooter() {
             </div>
 
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
-            <div className="cs-footer-bottom relative w-full">
+            <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto">
+              {/* Massive slanted backdrop logo - rests behind the wave */}
+              <div 
+                className="absolute origin-bottom-left -rotate-[5deg] select-none pointer-events-none"
+                style={{
+                  left: "-1vw",
+                  bottom: "35%", // Sits across the wave boundary
+                  zIndex: -1
+                }}
+              >
+                <div 
+                  className="font-black uppercase leading-none block"
+                  style={{
+                    fontSize: "clamp(6rem, 16vw, 15rem)",
+                    letterSpacing: "-0.05em",
+                    color: "#1a1a1a",
+                    WebkitTextStroke: "6px #fff",
+                  }}
+                >
+                  GETHYPED
+                </div>
+              </div>
+
               <svg
                 viewBox="0 0 1860 386"
                 className="block h-auto w-full"
@@ -398,13 +419,8 @@ export function HomeFooter() {
               </svg>
 
               <div className="absolute inset-0 flex items-end">
-                {/* Logo bottom-left */}
-                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6">
-                  <img
-                    src="https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg"
-                    alt="Get Hyped logo"
-                    className="h-[5.8rem] w-auto -rotate-[7deg] min-[992px]:h-[6.9rem]"
-                  />
+                {/* Logo bottom-left - REMOVED small blue logo */}
+                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6 hidden">
                 </div>
 
                 {/* GH Sticker */}
@@ -486,7 +502,7 @@ export function HomeFooter() {
           </div>
 
           {/* Mouse trail layer */}
-          <section className="pointer-events-none fixed inset-0 z-40 h-screen w-full overflow-hidden">
+          <section className="pointer-events-none fixed inset-0 z-0 h-screen w-full overflow-hidden">
             <div ref={trailLayerRef} className="relative h-full w-full" />
           </section>
 
