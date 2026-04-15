@@ -20,7 +20,7 @@ const mail12 = (
 );
 
 const downArrow = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 26 27" fill="none" className="button-default__icon is-button-icon" aria-hidden>
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 26 27" fill="none" className="h-6 w-6 text-gh-black" aria-hidden>
     <path
       d="M0.876668 14.4267L3.42629 11.852L11.1376 19.5634L11.1376 0.828689L14.8621 0.828689L14.8621 19.5634L22.5609 11.852L25.123 14.4267L12.9999 26.5498L0.876668 14.4267Z"
       fill="currentColor"
@@ -47,38 +47,54 @@ export function ButtonDefault({
     return (
       <Link
         href={href}
-        className={`button-default is-icon ${className}`.trim()}
+        className={`group/btn relative inline-block no-underline text-inherit [-webkit-tap-highlight-color:transparent] ${className}`.trim()}
         aria-label="Scroll naar expertises"
       >
-        <span className="button-default__inner is-icon">
-          <span className="button-default__background is-button-icon is-arrow" aria-hidden />
-          <span className="button-default__icons">
-            <span className="button-default__icon-wrap">{downArrow}</span>
-            <span className="button-default__icon-wrap">{downArrow}</span>
+        <span className="relative inline-flex h-14 w-14 items-center justify-center p-0 will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] group-hover/btn:[transform:skewY(-1deg)_rotate(-1deg)_scale(1.02)] group-focus-visible/btn:[transform:skewY(-1deg)_rotate(-1deg)_scale(1.02)] group-active/btn:scale-95">
+          <span className="absolute inset-0 rounded-[0.75em] bg-gh-pink [transition:border-radius_450ms_var(--ease-gh-radius)]" aria-hidden />
+          <span className="relative z-[1] grid h-6 overflow-hidden">
+            <span className="col-start-1 row-start-1 will-change-transform [transition:transform_400ms_cubic-bezier(0.7,0,0.3,1)] group-hover/btn:translate-y-full group-focus-visible/btn:translate-y-full">
+              {downArrow}
+            </span>
+            <span className="col-start-1 row-start-1 will-change-transform [transition:transform_400ms_cubic-bezier(0.7,0,0.3,1)] group-hover/btn:translate-y-full group-focus-visible/btn:translate-y-full">
+              {downArrow}
+            </span>
           </span>
         </span>
       </Link>
     );
   }
 
+  const bgClass = variant === "outline"
+    ? "bg-gh-white shadow-[inset_0_0_0_2px_var(--color-gh-black)]"
+    : "bg-gh-pink";
+
   const endIcon =
     icon === "none" ? null : icon === "mail" ? (
-      <span className="button-default__icon is-black">{mail12}</span>
+      <span className="relative z-[1] flex h-5 w-5 items-center justify-center text-gh-black [transition:transform_150ms_ease-out] will-change-transform group-hover/btn:scale-[0.92] group-focus-visible/btn:scale-[0.92]">
+        {mail12}
+      </span>
     ) : (
-      <span className="button-default__icon is-black">{arrow14}</span>
+      <span className="relative z-[1] flex h-5 w-5 items-center justify-center text-gh-black [transition:transform_150ms_ease-out] will-change-transform group-hover/btn:scale-[0.92] group-focus-visible/btn:scale-[0.92]">
+        {arrow14}
+      </span>
     );
 
   return (
     <Link
       href={href}
-      className={`button-default ${variant === "outline" ? "is-outline" : ""} ${className}`.trim()}
+      className={`group/btn relative inline-block no-underline text-inherit [-webkit-tap-highlight-color:transparent] ${className}`.trim()}
     >
-      <span className="button-default__inner">
+      <span className="relative inline-flex items-center justify-center gap-2 py-3 pr-4 pb-3 pl-5 will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] group-hover/btn:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-focus-visible/btn:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-active/btn:scale-95">
         <span
-          className={`button-default__background ${variant === "outline" ? "is-outline" : ""}`.trim()}
+          className={`absolute inset-0 rounded-[0.75em] ${bgClass} [transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] group-hover/btn:w-[calc(100%-0.5em)] group-hover/btn:rounded-[0.5em] group-focus-visible/btn:w-[calc(100%-0.5em)] group-focus-visible/btn:rounded-[0.5em]`}
           aria-hidden
         />
-        {children ? <span className="button-default__text">{children}</span> : null}
+        {children ? (
+          <span className="relative z-[1] text-[1.125em] font-semibold tracking-[-0.02em] whitespace-nowrap text-gh-black">
+            {children}
+          </span>
+        ) : null}
         {endIcon}
       </span>
     </Link>

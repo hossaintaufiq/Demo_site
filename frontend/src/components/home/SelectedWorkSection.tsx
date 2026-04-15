@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 
 const arrowIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 27" fill="none" className="h-5 w-5">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 27" fill="none" className="h-4 w-4 -rotate-[45deg]">
     <path
       d="M14.9554 26.0653L12.2003 23.337L20.4522 15.0851L0.404297 15.0851L0.404297 11.0996L20.4522 11.0996L12.2003 2.86109L14.9554 0.119385L27.9284 13.0923L14.9554 26.0653Z"
       fill="currentColor"
@@ -68,98 +68,104 @@ function WorkCard({ item, index }: { item: (typeof CASES)[number]; index: number
   const t = cardTheme(item.theme);
 
   const offsets = [
-    "md:translate-y-10",
-    "md:translate-y-0",
-    "md:-translate-y-10",
+    "min-[992px]:translate-y-10",
+    "min-[992px]:-translate-y-4",
+    "min-[992px]:-translate-y-14",
   ];
 
   return (
-    <div className={`w-full md:max-w-[300px] ${offsets[index]}`}>
-      <Link
-        href={item.href}
-        className={`group relative block overflow-hidden rounded-[24px] border-[4px] transition-transform duration-300 hover:-translate-y-1 ${t.border}`}
-        onMouseEnter={() => videoRef.current?.play().catch(() => {})}
-        onMouseLeave={() => {
-          if (videoRef.current) {
-            videoRef.current.pause();
-            videoRef.current.currentTime = 0;
-          }
-        }}
-      >
-        {/* MEDIA */}
-        <div className="relative aspect-[3/4] w-full overflow-hidden">
-          <img
-            src={item.poster}
-            className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
-            alt=""
-          />
-          <video
-            ref={videoRef}
-            src={item.video}
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover scale-100 transition-transform duration-300 group-hover:scale-105"
-          />
-        </div>
-
-        {/* CONTENT */}
-        <div className="absolute bottom-0 left-0 right-0 p-3">
-          <div className={`relative rounded-xl p-4 ${t.overlay}`}>
-            
-            {/* angled top */}
-            <div
-              className={`absolute -top-6 left-0 right-0 h-10 ${t.overlay}`}
-              style={{ clipPath: "polygon(0 70%, 100% 20%, 100% 100%, 0 100%)" }}
+    <div className={`mx-auto w-full max-w-[22rem] min-[768px]:max-w-none ${offsets[index]}`}>
+      <div>
+        <Link
+          href={item.href}
+          className={`group relative block overflow-hidden rounded-3xl border-[5px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
+          onMouseEnter={() => videoRef.current?.play().catch(() => {})}
+          onMouseLeave={() => {
+            if (videoRef.current) {
+              videoRef.current.pause();
+              videoRef.current.currentTime = 0;
+            }
+          }}
+        >
+          <div className="relative aspect-[3/4] w-full overflow-hidden">
+            <img
+              src={item.poster}
+              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+              alt=""
             />
-
-            {/* arrow */}
-            <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
-              {arrowIcon}
-            </div>
-
-            <h3 className="mb-2 text-lg font-semibold leading-tight max-w-[14ch]">
-              {item.title}
-            </h3>
-
-            <span className={`inline-block rounded-md px-2 py-1 text-sm font-semibold ${t.label}`}>
-              {item.label}
-            </span>
+            <video
+              ref={videoRef}
+              src={item.video}
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
           </div>
-        </div>
-      </Link>
+
+          <div className="absolute inset-x-0 bottom-0 p-3">
+            <div className={`relative rounded-xl p-4 ${t.overlay}`}>
+              <div
+                className={`absolute -top-6 inset-x-0 h-10 ${t.overlay}`}
+                style={{ clipPath: "polygon(0 70%, 100% 20%, 100% 100%, 0 100%)" }}
+              />
+
+              <div className="absolute right-3 top-3 grid h-8 w-8 overflow-hidden rounded-full bg-white text-black">
+                <span className="col-start-1 row-start-1 flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-8 group-hover:-translate-y-8">
+                  {arrowIcon}
+                </span>
+                <span className="col-start-1 row-start-1 flex items-center justify-center -translate-x-8 translate-y-8 transition-transform duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0">
+                  {arrowIcon}
+                </span>
+              </div>
+
+              <h3 className="mb-2 max-w-[14ch] text-lg font-semibold leading-tight">
+                {item.title}
+              </h3>
+
+              <span className={`inline-block rounded-md px-2 py-1 text-sm font-semibold ${t.label}`}>
+                {item.label}
+              </span>
+            </div>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }
 
 export function SelectedWorkSection() {
   return (
-    <section className="bg-[#f5f1ea] md:min-h-screen">
-      <div className="mx-auto max-w-[1100px] px-6 py-20 md:flex md:min-h-screen md:flex-col md:justify-center md:px-8 md:py-20">
-
-        {/* TEXT */}
-        <div className="max-w-[520px]">
-          <h2 className="max-w-[8ch] text-[64px] leading-[0.95] tracking-[-0.03em] font-bold">
-            Content dat scoort.
-          </h2>
-
-          <p className="mt-5 max-w-[22ch] text-gray-700">
-            Wij vertellen jouw verhaal. Op een manier die écht past bij jouw doelgroep.
-            Met creatieve content die werkt en het verschil maakt.
-          </p>
-
-          <div className="mt-6">
-            <ButtonDefault href="/work" variant="outline">
-              Bekijk al ons werk
-            </ButtonDefault>
+    <section className="bg-gh-page">
+      <div className="px-10 py-16 min-[992px]:py-24 max-[479px]:px-5">
+        <div className="mx-auto w-full max-w-[120em]">
+          {/* 1 — Title */}
+          <div className="mb-6 min-[992px]:mb-8">
+            <h2 className="m-0 max-w-[8ch] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+              Content dat scoort.
+            </h2>
           </div>
-        </div>
 
-        {/* CARDS */}
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3 md:items-end md:gap-10">
-          {CASES.map((item, index) => (
-            <WorkCard key={item.href} item={item} index={index} />
-          ))}
+          {/* 2 — Description + button */}
+          <div className="mb-12 max-w-[40rem] min-[992px]:mb-16">
+            <p className="m-0 max-w-[30ch] text-[clamp(1rem,1.2vw,1.125rem)] font-medium leading-normal tracking-[-0.01em] text-gh-black/70">
+              Wij vertellen jouw verhaal. Op een manier die écht past bij jouw doelgroep.
+              Met creatieve content die werkt en het verschil maakt.
+            </p>
+
+            <div className="mt-8">
+              <ButtonDefault href="/work" variant="outline">
+                Bekijk al ons werk
+              </ButtonDefault>
+            </div>
+          </div>
+
+          {/* 3 — Cards */}
+          <div className="grid grid-cols-1 gap-6 min-[768px]:grid-cols-2 min-[992px]:aspect-[1344/502] min-[992px]:grid-cols-3 min-[992px]:items-end min-[992px]:gap-10 min-[992px]:px-16">
+            {CASES.map((item, index) => (
+              <WorkCard key={item.href} item={item} index={index} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

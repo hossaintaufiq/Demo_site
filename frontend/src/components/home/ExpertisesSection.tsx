@@ -119,21 +119,21 @@ export function ExpertisesSection() {
 
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 992px)", () => {
+
+      const setupCards = () => {
         const pinShell = root.querySelector<HTMLElement>(".expertises-pin-shell");
         if (!pinShell) return;
 
-        const cards = Array.from(
-          root.querySelectorAll<HTMLElement>(".expertise-content")
+        const slides = Array.from(
+          root.querySelectorAll<HTMLElement>(".expertise-slide")
         );
-        if (!cards.length) return;
+        if (!slides.length) return;
 
-        cards.forEach((card, i) => {
-          gsap.set(card, {
+        slides.forEach((slide, i) => {
+          gsap.set(slide, {
             autoAlpha: i === 0 ? 1 : 0,
-            yPercent: i === 0 ? 0 : 102,
-            scale: i === 0 ? 1 : 1,
-            zIndex: ITEMS.length - i,
+            yPercent: i === 0 ? 0 : 100,
+            zIndex: i + 1,
           });
         });
 
@@ -141,7 +141,7 @@ export function ExpertisesSection() {
           scrollTrigger: {
             trigger: pinShell,
             start: "top top",
-            end: `+=${Math.max(1, cards.length - 1) * 100}%`,
+            end: `+=${Math.max(1, slides.length - 1) * 100}%`,
             scrub: 1.1,
             pin: pinShell,
             anticipatePin: 1,
@@ -150,32 +150,39 @@ export function ExpertisesSection() {
           },
         });
 
-        cards.forEach((card, i) => {
+        slides.forEach((slide, i) => {
           if (i === 0) return;
 
-          tl.set(card, { autoAlpha: 1 }, `step-${i}`)
+          tl.set(slide, { autoAlpha: 1 }, `step-${i}`)
             .to(
-              cards[i - 1],
+              slides[i - 1],
               {
                 yPercent: -5,
-                scale: 0.99,
+                scale: 0.97,
                 duration: 1.12,
                 ease: "power3.inOut",
               },
               `step-${i}`
             )
             .to(
-              card,
+              slide,
               {
                 yPercent: 0,
-                scale: 1,
                 duration: 1.12,
                 ease: "power3.inOut",
               },
               `step-${i}`
             )
-            .set(cards[i - 1], { autoAlpha: 0 }, `step-${i}+=0.98`);
+            .set(slides[i - 1], { autoAlpha: 0 }, `step-${i}+=0.98`);
         });
+      };
+
+      mm.add("(max-width: 991px)", () => {
+        setupCards();
+      });
+
+      mm.add("(min-width: 992px)", () => {
+        setupCards();
       });
 
       return () => mm.revert();
@@ -187,19 +194,20 @@ export function ExpertisesSection() {
   return (
     <section id="expertises" className="bg-gh-page">
       <div ref={rootRef}>
-        <div className="expertises-pin-shell min-[992px]:h-screen min-[992px]:overflow-hidden">
-          <div className="relative flex flex-col gap-6 min-[992px]:h-screen">
+        <div className="expertises-pin-shell h-[100dvh] overflow-hidden">
+          <div className="relative h-full">
             {ITEMS.map((item) => (
               <div
                 key={item.href}
-                className="relative min-[992px]:absolute min-[992px]:inset-0 min-[992px]:pointer-events-none"
+                className="expertise-slide absolute inset-0 pointer-events-none"
               >
-                <div className="[perspective:1200px] min-[992px]:h-full min-[992px]:w-full min-[992px]:pointer-events-none">
+                <div className="[perspective:1200px] h-full w-full pointer-events-none flex items-center justify-center">
                   <div
-                    className={`expertise-content relative overflow-hidden rounded-[2rem] p-6 [transform-style:preserve-3d] min-[768px]:p-8 min-[992px]:pointer-events-auto min-[992px]:mx-auto min-[992px]:mt-9 min-[992px]:h-[calc(100vh-6.25rem)] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1560px] min-[992px]:rounded-3xl min-[992px]:px-8 min-[992px]:py-[1.85rem] ${themeClasses(item.theme)}`}
+                    className={`expertise-content pointer-events-auto relative overflow-hidden rounded-[2rem] p-8 [transform-style:preserve-3d] aspect-[9/16] w-[calc(100%-1rem)] min-[768px]:p-10 min-[992px]:mt-9 min-[992px]:aspect-[1472/593] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1560px] min-[992px]:rounded-3xl min-[992px]:px-8 min-[992px]:py-[1.85rem] ${themeClasses(item.theme)}`}
                   >
-                    <div className="grid grid-cols-1 gap-8 min-[992px]:mx-auto min-[992px]:h-full min-[992px]:w-full min-[992px]:max-w-[1600px] min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-12 min-[992px]:gap-y-4">
-                      <div className="min-[992px]:col-span-8 min-[992px]:row-start-1">
+                    <div className="grid grid-cols-2 gap-4 min-[992px]:mx-auto min-[992px]:h-full min-[992px]:w-full min-[992px]:max-w-[1600px] min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-12 min-[992px]:gap-y-4">
+                      {/* Title + label */}
+                      <div className="order-1 col-span-1 min-[992px]:col-span-8 min-[992px]:row-start-1">
                         <div className="mb-3">
                           <span className="m-0 inline-flex rounded-md bg-[#e8e3d7] px-2 py-1 text-[clamp(1rem,1.2vw,1.125rem)] font-medium leading-normal tracking-[-0.01em]">
                             Expertise
@@ -209,7 +217,9 @@ export function ExpertisesSection() {
                           {item.title}
                         </h2>
                       </div>
-                      <div className="flex items-start justify-end gap-0.5 font-semibold leading-none opacity-20 select-none min-[992px]:col-span-4 min-[992px]:row-start-1">
+
+                      {/* Number */}
+                      <div className="order-2 col-span-1 flex items-start justify-end gap-0.5 font-semibold leading-none opacity-20 select-none min-[992px]:col-span-4 min-[992px]:row-start-1">
                         <span className="text-[3rem] min-[992px]:text-[7rem]">
                           0
                         </span>
@@ -218,7 +228,24 @@ export function ExpertisesSection() {
                         </span>
                       </div>
 
-                      <div className="flex flex-col gap-4 min-[992px]:col-span-7 min-[992px]:row-start-2 min-[992px]:self-end">
+                      {/* Video */}
+                      <div className="order-3 col-span-2 min-[992px]:order-4 min-[992px]:col-span-5 min-[992px]:row-start-2 min-[992px]:self-center min-[992px]:justify-self-end">
+                        <div
+                          className={`aspect-[4/5] w-full max-w-72 -rotate-2 overflow-hidden rounded-[1.3em] border-[0.27em] min-[992px]:max-w-[22.5rem] min-[992px]:rounded-[1.45em] min-[992px]:border-[0.34em] min-[992px]:rotate-[2deg] ${mediaFrameClasses(item.theme)}`}
+                        >
+                          <video
+                            className="h-full w-full object-cover"
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            src={item.video}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Details + button */}
+                      <div className="order-4 col-span-2 flex flex-col gap-4 min-[992px]:order-3 min-[992px]:col-span-7 min-[992px]:row-start-2 min-[992px]:self-end">
                         <h3 className="m-0 text-[clamp(1.125rem,1.5vw,1.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
                           {item.h3}
                         </h3>
@@ -236,32 +263,17 @@ export function ExpertisesSection() {
                             href={item.href}
                             className={`group/cta relative inline-flex items-center justify-start no-underline text-[0.98rem] font-semibold leading-none tracking-[-0.02em] select-none ${ctaTextClass(item.theme)}`}
                           >
-                            <div className="relative flex items-center gap-2 px-3 py-2 will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] group-hover/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-focus-visible/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-active/cta:scale-95">
+                            <div className="relative flex items-center gap-2 px-3 py-2 will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] group-hover/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-focus-visible/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] group-active/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)]">
                               <span
                                 className={`absolute inset-0 -z-10 rounded-xl ${ctaBgClass(item.theme)}`}
                                 aria-hidden
                               />
                               <span className="relative z-[1]">{item.cta}</span>
-                              <span className="relative z-[1] inline-flex h-7 w-7 flex-none items-center justify-center rounded-lg bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform group-hover/cta:scale-[0.92] group-focus-visible/cta:scale-[0.92]">
+                              <span className="relative z-[1] inline-flex h-7 w-7 flex-none items-center justify-center rounded-lg bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform group-hover/cta:scale-[0.92] group-focus-visible/cta:scale-[0.92] group-active/cta:scale-[0.92]">
                                 {arrowIcon}
                               </span>
                             </div>
                           </Link>
-                        </div>
-                      </div>
-
-                      <div className="min-[992px]:col-span-5 min-[992px]:row-start-2 min-[992px]:self-center min-[992px]:justify-self-end">
-                        <div
-                          className={`aspect-[4/5] w-full max-w-72 overflow-hidden rounded-[1.3em] border-[0.27em] min-[992px]:max-w-[22.5rem] min-[992px]:rounded-[1.45em] min-[992px]:border-[0.34em] min-[992px]:rotate-[2deg] ${mediaFrameClasses(item.theme)}`}
-                        >
-                          <video
-                            className="h-full w-full object-cover"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            src={item.video}
-                          />
                         </div>
                       </div>
                     </div>

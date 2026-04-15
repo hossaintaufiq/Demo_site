@@ -109,7 +109,7 @@ function MailCta() {
     <a
       href="mailto:info@gethyped.nl"
       className={
-        "button-default group/mail relative inline-flex max-w-full items-center justify-start no-underline " +
+        "group/mail relative inline-flex max-w-full items-center justify-start no-underline [-webkit-tap-highlight-color:transparent] " +
         "text-[1.125em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none"
       }
     >
@@ -153,7 +153,7 @@ function GetResultsCta({ className = "" }: { className?: string }) {
       href="/contact"
       aria-label="Get Results — contact"
       className={
-        `button-default group/cta relative inline-flex max-w-full items-center justify-start no-underline ` +
+        `group/cta relative inline-flex max-w-full items-center justify-start no-underline [-webkit-tap-highlight-color:transparent] ` +
         `text-[1.125em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none ${className}`
       }
     >
