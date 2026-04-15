@@ -459,6 +459,36 @@ button,
   }
 }
 
+/* Jellybelly hover animation — add .btn-pill to any button/link */
+a.btn-pill,
+button.btn-pill,
+.btn-pill {
+  --pill-bounce: cubic-bezier(0.34, 2.27, 0.64, 1);
+  --pill-radius-ease: cubic-bezier(0.34, 1.37, 0.64, 1);
+  --pill-speed: 0.45s;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+  transition:
+    transform var(--pill-speed) var(--pill-bounce),
+    border-radius var(--pill-speed) var(--pill-radius-ease),
+    color 0.2s var(--ease-gh-smooth),
+    background-color 0.2s var(--ease-gh-smooth),
+    opacity 0.2s var(--ease-gh-smooth);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-pill:hover,
+  .btn-pill:focus-visible {
+    transform: skewY(-4deg) rotate(-1deg) scale(1.02);
+    border-radius: 0.75em;
+  }
+
+  .btn-pill:active {
+    transform: scale(0.95);
+    border-radius: 9999px;
+  }
+}
+
 .section-divider {
   height: 1px;
   width: 100%;

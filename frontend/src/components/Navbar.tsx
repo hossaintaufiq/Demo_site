@@ -4,6 +4,7 @@ import { Logo } from "@/components/Logo";
 import { SwooshNavLink } from "@/components/SwooshNavLink";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
@@ -22,6 +23,9 @@ const fireIcon = (
   </svg>
 );
 
+const swooshInnerBase =
+  "col-start-1 row-start-1 block h-full min-h-full w-[120%] origin-[100%_0] [translate:-10%_100%_0] [rotate:0_0_1_-12deg] transition-[translate,rotate] duration-500 [transition-timing-function:var(--ease-gh-smooth)] delay-[calc(var(--index,0)*-1*0.042s)] group-hover/swoosh:[translate:-10%_0_0] group-hover/swoosh:[rotate:0_0_1_0deg] group-hover/swoosh:delay-[calc(var(--index,0)*0.064s)]";
+
 function MobileMenuLink({
   href,
   label,
@@ -37,10 +41,7 @@ function MobileMenuLink({
 }) {
   const delay = 200 + index * 80;
   return (
-    <Link
-      href={href}
-      onClick={onNavigate}
-      className="inline-flex w-auto max-w-max items-center justify-center rounded-full bg-gh-white px-8 py-3 text-center text-[1.25em] font-semibold tracking-[-0.03em] text-gh-black no-underline [font-family:Inter,sans-serif] active:opacity-80"
+    <div
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(1.5rem)",
@@ -49,25 +50,90 @@ function MobileMenuLink({
           : "opacity 200ms cubic-bezier(0.32,0.72,0,1), transform 250ms cubic-bezier(0.32,0.72,0,1)",
       }}
     >
-      {label}
-    </Link>
+      <Link
+        href={href}
+        onClick={onNavigate}
+        aria-label={`${label} link`}
+        className={
+          "group/swoosh relative grid max-w-full select-none text-black no-underline " +
+          "[transform-style:preserve-3d] [-webkit-tap-highlight-color:transparent] " +
+          "text-[1.25em] font-semibold leading-none tracking-[-0.02em] " +
+          "[transition:transform_450ms_var(--ease-gh-elastic)] " +
+          "active:[transform:scaleX(0.955)_scaleY(0.954)]"
+        }
+      >
+        <span
+          className={
+            "col-start-1 row-start-1 grid min-h-full self-stretch overflow-clip rounded-[0.625em] bg-gh-white " +
+            "[transition:scale_450ms_var(--ease-gh-smooth),background-color_0.2s_var(--ease-gh-color)] " +
+            "group-hover/swoosh:[scale:1.065_1.095]"
+          }
+        >
+          <span
+            className={`${swooshInnerBase} bg-gh-red`}
+            style={{ "--index": 0 } as CSSProperties}
+            aria-hidden
+          />
+          <span
+            className={`${swooshInnerBase} bg-gh-black`}
+            style={{ "--index": 1 } as CSSProperties}
+            aria-hidden
+          />
+        </span>
+        <span
+          data-text={label}
+          className={
+            "relative z-10 col-start-1 row-start-1 grid overflow-clip p-[0.625em_0.75em] " +
+            "after:col-start-1 after:row-start-1 after:grid after:block after:content-[attr(data-text)] " +
+            "after:text-gh-cream-text after:opacity-0 " +
+            "after:[translate:0_2em_0] after:[rotate:1_1_0.5_-30deg] after:origin-top-right " +
+            "after:[transition:translate_0.75s_var(--ease-gh-elastic),rotate_0.5s_var(--ease-gh-smooth),opacity_0.2s_ease-out] " +
+            "group-hover/swoosh:after:opacity-100 group-hover/swoosh:after:[translate:0_0_0] " +
+            "group-hover/swoosh:after:[rotate:1_1_0.45_0deg] group-hover/swoosh:after:delay-100"
+          }
+        >
+          <span
+            className={
+              "col-start-1 row-start-1 transition-[translate,rotate,opacity,color] duration-[750ms] " +
+              "[transition-timing-function:var(--ease-gh-elastic)] " +
+              "group-hover/swoosh:[translate:0_-2em_0] group-hover/swoosh:[rotate:1_1_0.45_-60deg] " +
+              "group-hover/swoosh:opacity-0"
+            }
+          >
+            {label}
+          </span>
+        </span>
+      </Link>
+    </div>
   );
 }
 
-function GetResultsButtonDesktop() {
+function GetResultsCta({
+  onNavigate,
+  bgColor = "bg-gh-pink",
+  textColor = "text-gh-black",
+  iconBg = "bg-gh-off-white",
+}: {
+  onNavigate?: () => void;
+  bgColor?: string;
+  textColor?: string;
+  iconBg?: string;
+}) {
   return (
     <Link
       href="/contact"
+      onClick={onNavigate}
       aria-label="Get Results — contact"
       prefetch
       className={
         "group/cta relative z-10 flex max-w-full items-center justify-start no-underline " +
-        "text-[1.25em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none"
+        `text-[1.25em] font-semibold leading-none tracking-[-0.02em] ${textColor} select-none`
       }
     >
       <div
         className={
-          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
+          "relative flex h-[2.75em] items-center justify-center " +
+          "py-[0.75em] pr-[1em] pb-[0.75em] pl-[1.25em] " +
           "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
           "group-hover/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
           "group-focus-visible/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
@@ -76,18 +142,16 @@ function GetResultsButtonDesktop() {
       >
         <span
           className={
-            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
-            "rounded-[1.25rem] bg-gh-pink " +
-            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
-            "group-hover/cta:rounded-[0.5em] group-focus-visible/cta:rounded-[0.5em]"
+            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.5em)] -translate-y-1/2 " +
+            `rounded-[0.5em] ${bgColor}`
           }
           aria-hidden
         />
         <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Get Results</span>
         <span
           className={
-            "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
-            "bg-gh-off-white text-gh-red " +
+            `relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] ` +
+            `${iconBg} text-gh-red ` +
             "[transition:transform_150ms_ease-out] will-change-transform " +
             "group-hover/cta:scale-[0.92] group-focus-visible/cta:scale-[0.92]"
           }
@@ -99,19 +163,18 @@ function GetResultsButtonDesktop() {
   );
 }
 
+function GetResultsButtonDesktop() {
+  return <GetResultsCta />;
+}
+
 function GetResultsButtonMobileOverlay({ onNavigate }: { onNavigate: () => void }) {
   return (
-    <Link
-      href="/contact"
-      onClick={onNavigate}
-      aria-label="Get Results — contact"
-      className="inline-flex max-w-full items-center gap-4 rounded-full bg-gh-black py-2 pl-8 pr-2 text-white no-underline active:opacity-90"
-    >
-      <span className="text-lg font-bold tracking-tight">Get Results</span>
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gh-white text-gh-red">
-        {fireIcon}
-      </span>
-    </Link>
+    <GetResultsCta
+      onNavigate={onNavigate}
+      bgColor="bg-gh-black"
+      textColor="text-white"
+      iconBg="bg-gh-white"
+    />
   );
 }
 
