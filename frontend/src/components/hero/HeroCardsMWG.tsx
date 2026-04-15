@@ -9,13 +9,13 @@ const PETROL_VIDEO = "/hero/petrolhead-loop.mp4";
 const THUMB_01 = "/hero/video-thumb-01.avif";
 const THUMB_02 = "/hero/video-thumb-02.avif";
 
-/** Results cards: aspect 4.8/6.2, width 28em, radius 3em, will-change transform. */
+/** Results cards: aspect 4.8/6.2, width 26em, radius 2rem, will-change transform. */
 const cardBase =
-  "results-card will-change-transform relative isolate w-[min(28rem,calc(100vw-2.5rem))] shrink-0 overflow-hidden rounded-[3rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)] min-[480px]:w-[28rem] min-[992px]:max-w-none";
+  "results-card will-change-transform relative isolate w-[min(26rem,calc(100vw-2.5rem))] shrink-0 overflow-hidden rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)] min-[480px]:w-[26rem] min-[992px]:max-w-none";
 
 /** `.mwg_effect025 .results-card:not(:first-child)` overlap margins */
 const overlap =
-  "-ml-[2.5vw] min-[480px]:max-[991px]:-ml-[5vw] min-[992px]:-ml-[10vw] max-[479px]:-z-10";
+  "-ml-[2vw] min-[480px]:max-[991px]:-ml-[3vw] min-[992px]:-ml-[4vw] max-[479px]:-z-10";
 
 export function HeroCardsMWG() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -165,16 +165,16 @@ export function HeroCardsMWG() {
             ref={setCardRef(0)}
             className={`${cardBase} relative z-[1] aspect-[4.8/6.2] bg-gh-hero-blue text-gh-black max-[479px]:z-[1]`}
           >
-            <div className="results-card_content flex h-full w-full flex-col justify-between p-[2em]">
-              <div className="results-card_title text-[5.5rem] font-semibold leading-[0.9] tracking-[-0.05em]">
+            <div className="results-card_content flex h-full w-full flex-col justify-between p-[1.5em]">
+              <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
                 10M+
               </div>
-              <div className="results-card_body flex w-full flex-col gap-[0.5em]">
-                <h2 className="results-card_subtitle text-[2rem] font-semibold leading-[1.1] tracking-[-0.03em]">
+              <div className="results-card_body flex w-full flex-col gap-[0.4em]">
+                <h2 className="results-card_subtitle text-[1.5rem] font-semibold leading-[1.1] tracking-[-0.03em]">
                   Organische views
                 </h2>
                 <div className="results-card_divider h-px w-full bg-gh-black" />
-                <p className="results-card_paragraph max-w-[95%] text-[1.25rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
+                <p className="results-card_paragraph max-w-[95%] text-[1rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
                   Groei door slimme content
                 </p>
               </div>
@@ -201,16 +201,16 @@ export function HeroCardsMWG() {
             ref={setCardRef(2)}
             className={`${cardBase} ${overlap} hidden aspect-[4.8/6.2] bg-gh-hero-green text-gh-black min-[480px]:block`}
           >
-            <div className="results-card_content flex h-full w-full flex-col justify-between p-[2em]">
-              <div className="results-card_title text-[5.5rem] font-semibold leading-[0.9] tracking-[-0.05em]">
+            <div className="results-card_content flex h-full w-full flex-col justify-between p-[1.5em]">
+              <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
                 30+
               </div>
-              <div className="results-card_body flex w-full flex-col gap-[0.5em]">
-                <h2 className="results-card_subtitle text-[2rem] font-semibold leading-[1.1] tracking-[-0.03em]">
+              <div className="results-card_body flex w-full flex-col gap-[0.4em]">
+                <h2 className="results-card_subtitle text-[1.5rem] font-semibold leading-[1.1] tracking-[-0.03em]">
                   Merken geholpen
                 </h2>
                 <div className="results-card_divider h-px w-full bg-gh-black" />
-                <p className="results-card_paragraph max-w-[95%] text-[1.25rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
+                <p className="results-card_paragraph max-w-[95%] text-[1rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
                   Van start-up tot multinational
                 </p>
               </div>

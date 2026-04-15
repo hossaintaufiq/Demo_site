@@ -11,7 +11,7 @@ export function HeroSection() {
         <div className="mx-auto w-full max-w-[120em]">
           <div className="hero text-balance">
             <div className="hero-title">
-              <h1 className="heading-xxl max-w-[min(100%,48rem)] min-[992px]:max-w-[min(100%,52rem)]">
+              <h1 className="heading-xxl max-w-[min(100%,70rem)]">
                 Get Hyped. Get Noticed. Get Results.
               </h1>
               <div className="mt-[1.5em] max-w-[60ch] min-[992px]:mt-[2em]">

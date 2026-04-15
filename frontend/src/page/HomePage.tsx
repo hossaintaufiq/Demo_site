@@ -13,8 +13,8 @@ export function HomePage() {
       <main className="flex-1">
         <HeroSection />
         <IntroSection />
-        <ExpertisesSection />
-        <SelectedWorkSection />
+        {/* <ExpertisesSection /> */}
+        {/* <SelectedWorkSection /> */}
         <ClientsMarquee />
         <HomeFooter />
       </main>

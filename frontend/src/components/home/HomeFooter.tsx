@@ -1,9 +1,13 @@
 "use client";
 
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { SwooshNavLink } from "@/components/SwooshNavLink";
 
+/* ── Trail logos (mousemove effect) ── */
 const TRAIL_LOGOS = [
   {
     src: "https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg",
@@ -23,6 +27,7 @@ const TRAIL_LOGOS = [
   },
 ];
 
+/* ── Icons ── */
 const fireIcon = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" fill="none" className="h-[1.125em] w-auto" aria-hidden>
     <path
@@ -62,27 +67,86 @@ const YouTubeIcon = () => (
   </svg>
 );
 
+/* ── GH Sticker (rotating text badge) ── */
 function GhSticker() {
   return (
-    <div className="footer-sticker absolute right-[3.2em] top-[-3.85em] z-[3] h-[5.25rem] w-[5.25rem] rounded-full bg-[#f6aaf0]" style={{ animation: "ghStickerFloat 3s ease-in-out infinite alternate" }}>
+    <div
+      className="footer-sticker gh-sticker-el absolute z-[15] h-[7rem] w-[7rem] rounded-full bg-[#f6aaf0]"
+      style={{
+        right: "2.5em",
+        top: "-3.5rem",
+      }}
+    >
       <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden>
         <defs>
           <path id="circlePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
         </defs>
-        <text fill="#1a1a1a" fontSize="9.2" fontWeight="700" letterSpacing="1.8" textAnchor="middle" fontFamily="inherit" style={{ textTransform: "uppercase" }}>
+        <text
+          fill="#1a1a1a"
+          fontSize="8.8"
+          fontWeight="700"
+          letterSpacing="2"
+          textAnchor="middle"
+          fontFamily="inherit"
+          style={{ textTransform: "uppercase" }}
+        >
           <textPath href="#circlePath" startOffset="50%">
-            GET RESULTS - GET HYPED - GET NOTICED -
+            GET RESULTS • GET HYPED • GET NOTICED •
           </textPath>
         </text>
       </svg>
       <div className="relative flex h-full w-full items-center justify-center rounded-full border border-gh-black/20 text-gh-black">
-        <span className="text-[1.75rem] font-black leading-none">GH</span>
-        <span className="absolute inset-[0.28rem] rounded-full border border-gh-black/25" />
+        <span className="text-[2rem] font-black leading-none [transform:rotate(180deg)]">GH</span>
+        <span className="absolute inset-[0.2rem] rounded-full border border-gh-black/25" />
       </div>
     </div>
   );
 }
 
+/* ── Mail CTA button ── */
+function MailCta() {
+  return (
+    <a
+      href="mailto:info@gethyped.nl"
+      className={
+        "button-default group/mail relative inline-flex max-w-full items-center justify-start no-underline " +
+        "text-[1.125em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none"
+      }
+    >
+      <span
+        className={
+          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
+          "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
+          "group-hover/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
+          "group-focus-visible/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
+          "group-active/mail:scale-95"
+        }
+      >
+        <span
+          className={
+            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
+            "rounded-[1.25rem] border border-gh-black bg-transparent " +
+            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
+            "group-hover/mail:rounded-[0.5em] group-focus-visible/mail:rounded-[0.5em]"
+          }
+          aria-hidden
+        />
+        <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Mail ons direct</span>
+        <span
+          className={
+            "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
+            "bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform " +
+            "group-hover/mail:scale-[0.92] group-focus-visible/mail:scale-[0.92]"
+          }
+        >
+          {envelopeIcon}
+        </span>
+      </span>
+    </a>
+  );
+}
+
+/* ── Get Results CTA ── */
 function GetResultsCta({ className = "" }: { className?: string }) {
   return (
     <Link
@@ -105,7 +169,7 @@ function GetResultsCta({ className = "" }: { className?: string }) {
         <span
           className={
             "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
-            "rounded-[1.25rem] bg-gh-pink " +
+            "rounded-[1.25rem] bg-gh-red " +
             "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
             "group-hover/cta:rounded-[0.5em] group-focus-visible/cta:rounded-[0.5em]"
           }
@@ -127,11 +191,60 @@ function GetResultsCta({ className = "" }: { className?: string }) {
   );
 }
 
+/* ════════════════════════════════════════════════════════════════
+   HomeFooter — scroll-based section takeover
+   ════════════════════════════════════════════════════════════════ */
 export function HomeFooter() {
   const year = new Date().getFullYear();
   const trailRootRef = useRef<HTMLElement>(null);
   const trailLayerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
 
+  /* ── GSAP scroll-synced content reveal + sticker rotation ── */
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* Stagger-reveal footer content as it enters viewport */
+      const elementsToReveal = gsap.utils.toArray<HTMLElement>(
+        ".cs-footer-cta, .cs-footer-bottom, .cs-footer-info-wrapper"
+      );
+      gsap.set(elementsToReveal, { y: 60, opacity: 0 });
+
+      gsap.to(elementsToReveal, {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          end: "top 20%",
+          scrub: true,
+        },
+      });
+
+      /* GH sticker — rotate only while scrolling */
+      const sticker = containerRef.current?.querySelector(".gh-sticker-el");
+      if (sticker) {
+        gsap.to(sticker, {
+          rotation: 360,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+    },
+    { scope: containerRef }
+  );
+
+  /* ── Mouse trail effect ── */
   useEffect(() => {
     const root = trailRootRef.current;
     const layer = trailLayerRef.current;
@@ -142,7 +255,7 @@ export function HomeFooter() {
     let incr = 0;
     let oldIncrX = 0;
     let oldIncrY = 0;
-    let resetDist = window.innerWidth / 3;
+    let resetDist = window.innerWidth / 6;
     let indexImg = 0;
     let rafId = 0;
     let nextX = 0;
@@ -262,218 +375,160 @@ export function HomeFooter() {
     };
   }, []);
 
+  /* ── Render ── */
   return (
-    <div className="footer bg-[#f3efeb]">
-      <section
-        ref={trailRootRef}
-        className="section_footer pointer-events-none relative overflow-hidden"
+    <div ref={containerRef} className="relative w-full overflow-hidden bg-[#E5E0D8]">
+      <div
+        ref={footerRef}
+        className="relative h-full w-full overflow-hidden bg-[#f3efeb]"
       >
-        <div className="section-padding-96px padding-top px-10 pb-8 pt-24 max-[479px]:px-5">
-          <div className="padding-global mx-auto w-full max-w-[120em]">
-            <div className="container-col-12">
-              <div className="cs-footer flex h-screen flex-col items-stretch justify-end">
-                <div className="cs-footer-cta flex h-full flex-col items-center justify-center gap-[3em] text-center">
-                  <h2 className="text-[clamp(2.8rem,8vw,6.2rem)] leading-[0.92] font-semibold tracking-[-0.05em] text-gh-black">
-                    Let&apos;s Get Hyped!
-                  </h2>
-                  <div className="button-group is-footer pointer-events-auto flex flex-wrap items-center justify-center gap-3">
-                    <a
-                      href="mailto:info@gethyped.nl"
-                      className={
-                        "button-default group/mail relative inline-flex max-w-full items-center justify-start no-underline " +
-                        "text-[1.125em] font-semibold leading-none tracking-[-0.02em] text-gh-black select-none"
-                      }
-                    >
-                      <span
-                        className={
-                          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
-                          "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
-                          "group-hover/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-                          "group-focus-visible/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-                          "group-active/mail:scale-95"
-                        }
-                      >
-                        <span
-                          className={
-                            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
-                            "rounded-[1.25rem] border border-gh-black bg-transparent " +
-                            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
-                            "group-hover/mail:rounded-[0.5em] group-focus-visible/mail:rounded-[0.5em]"
-                          }
-                          aria-hidden
-                        />
-                        <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Mail ons direct</span>
-                        <span
-                          className={
-                            "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
-                            "bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform " +
-                            "group-hover/mail:scale-[0.92] group-focus-visible/mail:scale-[0.92]"
-                          }
-                        >
-                          {envelopeIcon}
-                        </span>
-                      </span>
-                    </a>
-                    <GetResultsCta />
-                  </div>
+        <section
+          ref={trailRootRef}
+          className="section_footer pointer-events-none relative min-h-[100dvh] overflow-hidden"
+        >
+          <div className="flex min-h-[100dvh] flex-col">
+            {/* ─── Top area: CTA centered ── */}
+            <div className="cs-footer-cta flex flex-1 flex-col items-center justify-center gap-[2.5em] px-10 text-center max-[479px]:px-5">
+              <h2 className="text-[clamp(2.8rem,8vw,6.8rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-gh-black">
+                Let&apos;s Get Hyped!
+              </h2>
+              <div className="button-group is-footer pointer-events-auto flex flex-wrap items-center justify-center gap-3">
+                <MailCta />
+                <GetResultsCta />
+              </div>
+            </div>
+
+            {/* ─── Bottom area: diagonal wave footer ── */}
+            <div className="cs-footer-bottom relative w-full">
+              {/* Diagonal SVG background */}
+              <svg
+                viewBox="0 0 1860 386"
+                className="block h-auto w-full"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <path
+                  d="M1859.06 34.8264V349.463C1859.06 365.199 1859.06 380.122 1859.06 385.962L0.642595 385.955C0.642578 383.021 0.642769 379.682 0.642769 371.941V290.843C0.642769 283.856 5.67717 277.887 12.5466 276.741L1819.04 0.740997C1840 -2.74446 1859.06 13.489 1859.06 34.8184"
+                  fill="#e6e0d6"
+                />
+              </svg>
+
+              {/* Content overlay on the diagonal */}
+              <div className="absolute inset-0 flex items-end">
+                {/* Logo bottom-left */}
+                <div className="absolute bottom-0 left-0 z-[2] pb-[0.8em] pl-[1.5em]">
+                  <img
+                    src="https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg"
+                    alt="Get Hyped logo"
+                    className="h-[5.8rem] w-auto -rotate-[7deg] min-[992px]:h-[6.9rem]"
+                  />
                 </div>
 
-                <div className="cs-footer-bottom absolute inset-x-0 bottom-0 z-10 flex items-end justify-between px-[2em]">
-                  <div className="footer-bg absolute inset-x-0 bottom-0 w-full">
-                    <svg viewBox="0 0 1860 386" className="footer-bg-svg h-auto w-full" preserveAspectRatio="none" aria-hidden>
-                      <path
-                        d="M1859.06 34.8264V349.463C1859.06 365.199 1859.06 380.122 1859.06 385.962L0.642595 385.955C0.642578 383.021 0.642769 379.682 0.642769 371.941V290.843C0.642769 283.856 5.67717 277.887 12.5466 276.741L1819.04 0.740997C1840 -2.74446 1859.06 13.489 1859.06 34.8184"
-                        fill="#e6e0d6"
-                      />
-                    </svg>
-                    <div className="footer-logo absolute bottom-0 left-0 pb-[0.3em] pl-[0.6em]">
-                      <img
-                        src="https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg"
-                        alt="Get Hyped logo"
-                        className="h-[5.8rem] w-[14.6rem] -rotate-[7deg] min-[992px]:h-[6.9rem] min-[992px]:w-[17.6rem]"
-                      />
-                    </div>
-                  </div>
-
+                {/* GH Sticker — positioned at right, above the diagonal */}
+                <div className="absolute right-[2.5em] top-[-2rem] z-[15]">
                   <GhSticker />
                 </div>
 
-                <div className="cs-footer-info-wrapper absolute inset-x-0 bottom-0 z-[12] flex items-end justify-end pb-[1.1em] pr-[1.7em]">
-                  <div className="footer-info flex h-full items-end justify-end gap-[6em] pr-[4em]">
-                    <div className="footer_links flex flex-col gap-[2em]">
-                      <div className="footer_sitemap pointer-events-auto flex flex-wrap gap-[.75em]">
-                        <Link href="/expertises" className="button-color-swoosh is-footer w-inline-block">
-                          <span className="button-color-swoosh_bg">
-                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
-                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
-                          </span>
-                          <span data-text="Expertises" className="button-color-swoosh_inner is-footer">
-                            <span className="button-color-swoosh_text">Expertises</span>
-                          </span>
-                        </Link>
-                        <Link href="/work" className="button-color-swoosh is-footer w-inline-block">
-                          <span className="button-color-swoosh_bg">
-                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
-                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
-                          </span>
-                          <span data-text="Work" className="button-color-swoosh_inner is-footer">
-                            <span className="button-color-swoosh_text">Work</span>
-                          </span>
-                        </Link>
-                        <Link href="/about" className="button-color-swoosh is-footer w-inline-block">
-                          <span className="button-color-swoosh_bg">
-                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
-                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
-                          </span>
-                          <span data-text="About" className="button-color-swoosh_inner is-footer">
-                            <span className="button-color-swoosh_text">About</span>
-                          </span>
-                        </Link>
-                        <Link href="/contact" className="button-color-swoosh is-footer w-inline-block">
-                          <span className="button-color-swoosh_bg">
-                            <span style={{ ["--index" as string]: 0 }} className="button-color-swoosh_bg-inner is-first" />
-                            <span style={{ ["--index" as string]: 1 }} className="button-color-swoosh_bg-inner is-second" />
-                          </span>
-                          <span data-text="Contact" className="button-color-swoosh_inner is-footer">
-                            <span className="button-color-swoosh_text">Contact</span>
-                          </span>
-                        </Link>
-                      </div>
-                      <div className="footer-col is-socials">
-                        <div className="footer-label mb-2 font-bold text-gh-black">Follow us</div>
-                        <div className="social-icon-group flex flex-wrap gap-[.5em] text-gh-black">
-                          <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
-                            <LinkedInIcon />
-                          </a>
-                          <a href="https://www.tiktok.com/@gethyped.nl" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="TikTok">
-                            <TikTokIcon />
-                          </a>
-                          <a href="https://www.instagram.com/gethyped.nl/" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="Instagram">
-                            <InstagramIcon />
-                          </a>
-                          <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="social-icon pointer-events-auto inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
-                            <YouTubeIcon />
-                          </a>
-                        </div>
-                      </div>
-                      <div className="footer-credits flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
-                        <div className="footer-legal">© {year} Get Hyped</div>
-                        <a
-                          href="https://dylanbrouwer.design/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="footer-legal pointer-events-auto hover:opacity-75"
-                        >
-                          © Design by Dylan
+                {/* Footer info: links, contact, etc — bottom-right */}
+                <div className="cs-footer-info-wrapper pointer-events-auto z-[12] ml-auto flex w-full items-end justify-end gap-[5em] px-[2.5em] pb-[1.2em] max-[991px]:flex-col max-[991px]:gap-6 max-[991px]:px-5">
+                  {/* Navigation + Socials + Credits */}
+                  <div className="flex flex-col gap-[1.5em]">
+                    <div className="footer_sitemap flex flex-wrap gap-[0.5em]">
+                      <SwooshNavLink href="/expertises" label="Expertises" />
+                      <SwooshNavLink href="/work" label="Work" />
+                      <SwooshNavLink href="/about" label="About" />
+                      <SwooshNavLink href="/contact" label="Contact" />
+                    </div>
+                    <div className="footer-col is-socials">
+                      <div className="footer-label mb-2 font-bold text-gh-black">Follow us</div>
+                      <div className="social-icon-group flex flex-wrap gap-[0.5em] text-gh-black">
+                        <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
+                          <LinkedInIcon />
+                        </a>
+                        <a href="https://www.tiktok.com/@gethyped.nl" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="TikTok">
+                          <TikTokIcon />
+                        </a>
+                        <a href="https://www.instagram.com/gethyped.nl/" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="Instagram">
+                          <InstagramIcon />
+                        </a>
+                        <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
+                          <YouTubeIcon />
                         </a>
                       </div>
                     </div>
-                    <div className="footer_contact flex flex-col gap-[1em] text-left text-[0.95rem] leading-snug text-gh-black">
-                      <div className="footer-col">
-                        <div className="footer-label font-bold">Contact</div>
-                        <a href="mailto:info@gethyped.nl" className="footer-link pointer-events-auto mt-1 block text-[0.86rem] hover:underline">
-                          info@gethyped.nl
-                        </a>
-                        <a href="tel:+31615337496" className="footer-link pointer-events-auto block text-[0.86rem] hover:underline">
-                          +31 6 1533 7496
-                        </a>
-                      </div>
-                      <div className="footer-col">
-                        <div className="footer-label font-bold">Adres</div>
-                        <a
-                          href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="footer-link pointer-events-auto mt-1 block text-[0.86rem] hover:underline"
-                        >
-                          Beltrumsestraat 6,
-                          <br />
-                          7141 AL Groenlo
-                        </a>
-                      </div>
-                      <a href="#" className="footer-legal pointer-events-auto block text-[0.82rem] text-gh-black/65 hover:underline">
-                        Privacyvoorwaarden
+                    <div className="footer-credits flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
+                      <div className="footer-legal">© {year} Get Hyped</div>
+                      <a
+                        href="https://dylanbrouwer.design/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="footer-legal hover:opacity-75"
+                      >
+                        © Design by Dylan
                       </a>
                     </div>
+                  </div>
+
+                  {/* Contact + Address */}
+                  <div className="flex flex-col gap-[1.2em] text-left text-[0.95rem] leading-snug text-gh-black">
+                    <div className="footer-col">
+                      <div className="footer-label font-bold">Contact</div>
+                      <a href="mailto:info@gethyped.nl" className="footer-link mt-1 block text-[0.86rem] hover:underline">
+                        info@gethyped.nl
+                      </a>
+                      <a href="tel:+31615337496" className="footer-link block text-[0.86rem] hover:underline">
+                        +31 6 1533 7496
+                      </a>
+                    </div>
+                    <div className="footer-col">
+                      <div className="footer-label font-bold">Adres</div>
+                      <a
+                        href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="footer-link mt-1 block text-[0.86rem] hover:underline"
+                      >
+                        Beltrumsestraat 6,
+                        <br />
+                        7141 AL Groenlo
+                      </a>
+                    </div>
+                    <a href="#" className="footer-legal block text-[0.82rem] text-gh-black/65 hover:underline">
+                      Privacyvoorwaarden
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <section className="pointer-events-none fixed inset-0 z-40 h-screen w-full overflow-hidden">
-          <div ref={trailLayerRef} className="relative h-full w-full" />
+          {/* Mouse trail layer */}
+          <section className="pointer-events-none fixed inset-0 z-40 h-screen w-full overflow-hidden">
+            <div ref={trailLayerRef} className="relative h-full w-full" />
+          </section>
+
+          {/* Preload trail images */}
+          <div className="pointer-events-none hidden">
+            {TRAIL_LOGOS.map((logo) => (
+              <img
+                key={logo.src}
+                src={logo.src}
+                loading="lazy"
+                alt={logo.alt}
+                draggable={false}
+                className="invisible absolute left-0 top-0 h-px w-px object-cover"
+              />
+            ))}
+          </div>
+
+          <style jsx>{`
+            .section_footer .container-col-12 {
+              position: relative;
+              width: 100%;
+            }
+          `}</style>
         </section>
-
-        <div className="pointer-events-none hidden">
-          {TRAIL_LOGOS.map((logo) => (
-            <img
-              key={logo.src}
-              src={logo.src}
-              loading="lazy"
-              alt={logo.alt}
-              draggable={false}
-              className="absolute left-0 top-0 h-px w-px invisible object-cover"
-            />
-          ))}
-        </div>
-        <style jsx>{`
-          @keyframes ghStickerFloat {
-            from {
-              transform: translateY(-50%) rotate(8deg);
-            }
-            to {
-              transform: translateY(-50%) rotate(14deg);
-            }
-          }
-
-          .section_footer .container-col-12 {
-            position: relative;
-            width: 100%;
-          }
-        `}</style>
-      </section>
+      </div>
     </div>
   );
 }
