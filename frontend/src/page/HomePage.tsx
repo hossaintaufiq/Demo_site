@@ -12,7 +12,7 @@ export function HomePage() {
       <Navbar />
       <main className="flex-1">
         <HeroSection />
-        {/* <IntroSection />   done with this section  */}
+        <IntroSection />   
         {/* <ExpertisesSection /> */}
         {/* <SelectedWorkSection /> */}
         {/* <ClientsMarquee /> */}

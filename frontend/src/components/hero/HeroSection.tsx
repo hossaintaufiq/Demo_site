@@ -10,8 +10,10 @@ export function HeroSection() {
         <div className="mx-auto w-full max-w-[120em]">
           {/* 1 — Hero title */}
           <div className="hero-title">
-            <h1 className="heading-xxl text-balance">
-              Get Hyped. Get Noticed. Get Results.
+            <h1 className="heading-xxl max-[991px]:!text-5xl min-[992px]:text-balance">
+              Get Hyped.<span className="hidden min-[992px]:inline"> </span><br className="min-[992px]:hidden" />
+              Get Noticed.<span className="hidden min-[992px]:inline"> </span><br className="min-[992px]:hidden" />
+              Get Results.
             </h1>
           </div>
 
@@ -23,11 +25,16 @@ export function HeroSection() {
             </p>
           </div>
 
-          {/* 3 — Hero cards */}
-          <div className="mt-[2.5em] min-[992px]:mt-[3.5em]">
+          {/* 3 — Hero cards (desktop: inside container) */}
+          <div className="hidden min-[992px]:mt-[3.5em] min-[992px]:block">
             <HeroCardsMWG />
           </div>
         </div>
+      </div>
+
+      {/* 3 — Hero cards (mobile/tablet: full width) */}
+      <div className="w-full min-[992px]:hidden">
+        <HeroCardsMWG />
       </div>
     </header>
   );
