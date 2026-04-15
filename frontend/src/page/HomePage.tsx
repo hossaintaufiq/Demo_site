@@ -11,7 +11,7 @@ export function HomePage() {
     <div className="flex min-h-dvh flex-col bg-gh-page text-gh-black">
       <Navbar />
       <main className="flex-1">
-        {/* <HeroSection /> */}
+        <HeroSection />
         {/* <IntroSection />   done with this section  */}
         {/* <ExpertisesSection /> */}
         {/* <SelectedWorkSection /> */}

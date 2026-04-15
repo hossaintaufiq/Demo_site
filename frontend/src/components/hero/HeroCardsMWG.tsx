@@ -9,13 +9,12 @@ const PETROL_VIDEO = "/hero/petrolhead-loop.mp4";
 const THUMB_01 = "/hero/video-thumb-01.avif";
 const THUMB_02 = "/hero/video-thumb-02.avif";
 
-/** Results cards: aspect 4.8/6.2, width 26em, radius 2rem, will-change transform. */
 const cardBase =
-  "results-card will-change-transform relative isolate w-[min(26rem,calc(100vw-2.5rem))] shrink-0 overflow-hidden rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)] min-[480px]:w-[26rem] min-[992px]:max-w-none";
+  "results-card will-change-transform relative isolate flex-1 overflow-hidden rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)]";
 
 /** `.mwg_effect025 .results-card:not(:first-child)` overlap margins */
 const overlap =
-  "-ml-[2vw] min-[480px]:max-[991px]:-ml-[3vw] min-[992px]:-ml-[4vw] max-[479px]:-z-10";
+  "-ml-[6vw] min-[480px]:max-[991px]:-ml-[3vw] min-[992px]:-ml-[4vw]";
 
 export function HeroCardsMWG() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -151,13 +150,13 @@ export function HeroCardsMWG() {
   };
 
   return (
-    <div className="mwg_effect025 w-full">
-      <div className="mx-auto w-full max-w-[120em]">
+    <div className="mwg_effect025 w-full px-12">
+      <div className="w-full">
         <div
           ref={containerRef}
           className={
-            "is-mwg_effect025 flex w-full touch-pan-x flex-nowrap items-center justify-start gap-0 overflow-x-auto overflow-y-visible pb-[1em] pt-[0.5em] " +
-            "min-[480px]:justify-center min-[992px]:cursor-crosshair min-[992px]:overflow-visible min-[992px]:pb-[2em] min-[992px]:pt-[1em]"
+            "is-mwg_effect025 flex w-full flex-nowrap items-center justify-start gap-0 overflow-visible pb-[1em] pt-[0.5em] " +
+            "min-[480px]:justify-center min-[992px]:pb-[2em] min-[992px]:pt-[1em]"
           }
         >
           {/* 1 — theme-blue stat */}
@@ -165,7 +164,7 @@ export function HeroCardsMWG() {
             ref={setCardRef(0)}
             className={`${cardBase} relative z-[1] aspect-[4.8/6.2] bg-gh-hero-blue text-gh-black max-[479px]:z-[1]`}
           >
-            <div className="results-card_content flex h-full w-full flex-col justify-between p-[1.5em]">
+            <div className="results-card_content flex h-full w-full flex-col justify-between p-6">
               <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
                 10M+
               </div>
@@ -182,7 +181,7 @@ export function HeroCardsMWG() {
           </div>
 
           {/* 2 — video */}
-          <div ref={setCardRef(1)} className={`${cardBase} ${overlap} aspect-[4.8/6.2] bg-black`}>
+          <div ref={setCardRef(1)} className={`${cardBase} ${overlap} z-[2] aspect-[4.8/6.2] bg-black max-[479px]:rotate-[6deg]`}>
             <video
               className="absolute inset-0 z-[1] h-full w-full object-cover"
               muted
@@ -201,7 +200,7 @@ export function HeroCardsMWG() {
             ref={setCardRef(2)}
             className={`${cardBase} ${overlap} hidden aspect-[4.8/6.2] bg-gh-hero-green text-gh-black min-[480px]:block`}
           >
-            <div className="results-card_content flex h-full w-full flex-col justify-between p-[1.5em]">
+            <div className="results-card_content flex h-full w-full flex-col justify-between p-6">
               <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
                 30+
               </div>
