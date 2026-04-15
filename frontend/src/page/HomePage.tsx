@@ -11,12 +11,12 @@ export function HomePage() {
     <div className="flex min-h-dvh flex-col bg-gh-page text-gh-black">
       <Navbar />
       <main className="flex-1">
-        <HeroSection />
-        <IntroSection />
+        {/* <HeroSection /> */}
+        {/* <IntroSection />   done with this section  */}
         {/* <ExpertisesSection /> */}
         {/* <SelectedWorkSection /> */}
-        <ClientsMarquee />
-        <HomeFooter />
+        {/* <ClientsMarquee /> */}
+        {/* <HomeFooter /> */}
       </main>
     </div>
   );

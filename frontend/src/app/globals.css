@@ -342,6 +342,104 @@ button,
   animation: gh-marquee 45s linear infinite;
 }
 
+@keyframes ghNavBgDrop {
+  from {
+    transform: translate3d(-50%, -100%, 0) rotateZ(20deg);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0) rotateZ(0deg);
+  }
+}
+
+@keyframes ghNavBgDropBack {
+  from {
+    transform: translate3d(-50%, -90%, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes ghNavSheetDrop {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ghNavSheetDropBack {
+  from {
+    transform: translate3d(0, -90%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ghNavMenuDrop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -2.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ghNavCtaRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 2.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ghNavSheetExit {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@keyframes ghNavSheetExitBack {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -90%, 0);
+  }
+}
+
+@keyframes ghNavMenuExit {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -2.5rem, 0);
+  }
+}
+
+@keyframes ghNavCtaDrop {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 2.5rem, 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

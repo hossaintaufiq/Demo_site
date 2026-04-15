@@ -22,36 +22,38 @@ const fireIcon = (
   </svg>
 );
 
-function CloseIcon() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-5 w-5 text-gh-black" fill="none" aria-hidden>
-      <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-/** Mobile menu: white pill links (reference layout). */
 function MobileMenuLink({
   href,
   label,
   onNavigate,
+  visible,
+  index,
 }: {
   href: string;
   label: string;
   onNavigate: () => void;
+  visible: boolean;
+  index: number;
 }) {
+  const delay = 200 + index * 80;
   return (
     <Link
       href={href}
       onClick={onNavigate}
-      className="w-full max-w-md rounded-full bg-gh-white px-10 py-3 text-center text-xl font-bold tracking-tight text-gh-black no-underline active:opacity-80"
+      className="inline-flex w-auto max-w-max items-center justify-center rounded-full bg-gh-white px-8 py-3 text-center text-[1.25em] font-semibold tracking-[-0.03em] text-gh-black no-underline [font-family:Inter,sans-serif] active:opacity-80"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(1.5rem)",
+        transition: visible
+          ? `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 500ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`
+          : "opacity 200ms cubic-bezier(0.32,0.72,0,1), transform 250ms cubic-bezier(0.32,0.72,0,1)",
+      }}
     >
       {label}
     </Link>
   );
 }
 
-/** Desktop header CTA — pink jellybelly. */
 function GetResultsButtonDesktop() {
   return (
     <Link
@@ -97,7 +99,6 @@ function GetResultsButtonDesktop() {
   );
 }
 
-/** Mobile overlay CTA — black pill, white label, flame in white circle (reference). */
 function GetResultsButtonMobileOverlay({ onNavigate }: { onNavigate: () => void }) {
   return (
     <Link
@@ -117,8 +118,11 @@ function GetResultsButtonMobileOverlay({ onNavigate }: { onNavigate: () => void 
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
+  const unmountTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     lastY.current = window.scrollY;
@@ -147,13 +151,13 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!mounted) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [menuOpen]);
+  }, [mounted]);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 992px)");
@@ -173,22 +177,51 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (unmountTimer.current) {
+      clearTimeout(unmountTimer.current);
+      unmountTimer.current = null;
+    }
+
+    if (menuOpen) {
+      setMounted(true);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setVisible(true);
+        });
+      });
+    } else {
+      setVisible(false);
+      unmountTimer.current = setTimeout(() => {
+        setMounted(false);
+        unmountTimer.current = null;
+      }, 1100);
+    }
+
+    return () => {
+      if (unmountTimer.current) {
+        clearTimeout(unmountTimer.current);
+        unmountTimer.current = null;
+      }
+    };
+  }, [menuOpen]);
+
   const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <nav
         className={
-          "fixed inset-x-0 top-0 z-[999] w-full px-0 transition-transform duration-300 ease-out will-change-transform " +
-          "min-[992px]:px-10 " +
-          (hidden ? "-translate-y-full" : "translate-y-0")
+          "fixed inset-x-0 top-0 z-[999] block w-full px-[2.5em] text-balance text-gh-black [text-size-adjust:100%] [text-rendering:optimizeLegibility] [font-family:Inter,sans-serif] [line-height:1.5] [-webkit-tap-highlight-color:transparent] [-webkit-font-smoothing:antialiased] transition-transform duration-300 ease-out will-change-transform " +
+          "max-[991px]:px-0 " +
+          (hidden && !menuOpen ? "-translate-y-full" : "translate-y-0")
         }
         aria-label="Site"
       >
         <div
           className={
-            "navbar relative mx-auto flex h-[7.5rem] max-w-[120rem] items-center justify-between px-8 " +
-            "max-[479px]:px-5"
+            "navbar relative flex h-[7em] w-full max-w-full items-center justify-between px-[1.25em] " +
+            "min-[992px]:mx-auto min-[992px]:h-[7.5rem] min-[992px]:max-w-[120rem] min-[992px]:px-0"
           }
         >
           <Link
@@ -197,14 +230,12 @@ export function Navbar() {
             aria-current={pathname === "/" ? "page" : undefined}
             className={
               "nav_logo relative z-[1000] inline-flex h-[4.75rem] max-w-[min(100%,14rem)] shrink-0 items-center " +
-              "min-[992px]:max-w-none " +
-              (menuOpen ? "max-[991px]:hidden" : "")
+              "min-[992px]:max-w-none"
             }
           >
             <Logo className="h-full w-auto" />
           </Link>
 
-          {/* Desktop: centered pill + swoosh links */}
           <div
             id="navbar_menu"
             className={
@@ -225,17 +256,17 @@ export function Navbar() {
             type="button"
             className={
               "relative z-[1000] flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center " +
-              "rounded-[0.75em] border-0 bg-gh-pink p-0 transition-none min-[992px]:hidden max-[479px]:h-14 max-[479px]:w-14 " +
-              (menuOpen ? "max-[991px]:hidden" : "")
+              "rounded-[0.75em] border-0 p-0 transition-colors duration-200 ease-out min-[992px]:hidden max-[479px]:h-14 max-[479px]:w-14 " +
+              (menuOpen ? "bg-gh-white" : "bg-gh-pink")
             }
             aria-expanded={menuOpen}
-            aria-controls="mobile-menu-overlay"
+            aria-controls="mobile-menu-dropdown"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen((v) => !v)}
           >
             <span
               className={
-                "absolute left-1/2 top-1/2 z-[1] h-0.5 w-5 bg-gh-black transition-none " +
+                "absolute left-1/2 top-1/2 z-[1] h-0.5 w-5 bg-gh-black transition-transform duration-200 ease-out " +
                 (menuOpen
                   ? "-translate-x-1/2 -translate-y-1/2 rotate-45"
                   : "-translate-x-1/2 -translate-y-[calc(50%+4px)]")
@@ -243,7 +274,7 @@ export function Navbar() {
             />
             <span
               className={
-                "absolute left-1/2 top-1/2 z-[1] h-0.5 w-5 bg-gh-black transition-none " +
+                "absolute left-1/2 top-1/2 z-[1] h-0.5 w-5 bg-gh-black transition-transform duration-200 ease-out " +
                 (menuOpen
                   ? "-translate-x-1/2 -translate-y-1/2 -rotate-45"
                   : "-translate-x-1/2 translate-y-[calc(-50%+4px)]")
@@ -257,42 +288,40 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile full-screen menu — outside <nav> so position:fixed is not affected by nav transform */}
-      {menuOpen ? (
+      {mounted ? (
         <div
-          id="mobile-menu-overlay"
-          className="fixed inset-0 z-[1002] flex min-h-0 min-h-dvh flex-col bg-gh-pink min-[992px]:hidden"
+          id="mobile-menu-dropdown"
+          className="fixed left-0 top-0 z-[998] h-[100dvh] w-[100vw] overflow-hidden bg-gh-page p-2 min-[992px]:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
         >
-          <div className="flex shrink-0 items-start justify-between px-6 pt-6">
-            <Link
-              href="/"
-              className="inline-flex h-10 max-w-[min(100%,14rem)] items-center"
-              onClick={closeMenu}
-              aria-label="Home link"
-            >
-              <Logo className="h-full w-auto" />
-            </Link>
-            <button
-              type="button"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gh-white shadow-sm"
-              aria-label="Close menu"
-              onClick={closeMenu}
-            >
-              <CloseIcon />
-            </button>
+          {/* Pink sheet — slides down from top */}
+          <div
+            className="relative h-full w-full overflow-hidden rounded-[1.25rem] bg-gh-pink transition-transform duration-[900ms] ease-[cubic-bezier(0.34,2.2,0.64,1)]"
+            style={{ transform: visible ? "translateY(0)" : "translateY(-105%)" }}
+          >
+            <nav className="pointer-events-none absolute inset-0 z-[1] flex items-center justify-center px-[1.25em]">
+              <div className="pointer-events-auto flex flex-col items-center justify-center gap-4">
+                {links.map((item, i) => (
+                  <MobileMenuLink key={item.href} href={item.href} label={item.label} onNavigate={closeMenu} visible={visible} index={i} />
+                ))}
+              </div>
+            </nav>
           </div>
 
-          <nav className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 px-6 py-8">
-            {links.map((item) => (
-              <MobileMenuLink key={item.href} href={item.href} label={item.label} onNavigate={closeMenu} />
-            ))}
-          </nav>
-
-          <div className="flex shrink-0 justify-center px-6 pb-10 pt-4">
-            <GetResultsButtonMobileOverlay onNavigate={closeMenu} />
+          <div className="absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 justify-center">
+            <div
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? "translateY(0)" : "translateY(5rem)",
+                transition: visible
+                  ? "opacity 800ms cubic-bezier(0.16,1,0.3,1) 550ms, transform 900ms cubic-bezier(0.34,1.56,0.64,1) 550ms"
+                  : "opacity 700ms cubic-bezier(0.32,0.72,0,1), transform 900ms cubic-bezier(0.4,0,0.2,1)",
+              }}
+            >
+              <GetResultsButtonMobileOverlay onNavigate={closeMenu} />
+            </div>
           </div>
         </div>
       ) : null}
