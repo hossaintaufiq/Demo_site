@@ -39,14 +39,14 @@ function MobileMenuLink({
   visible: boolean;
   index: number;
 }) {
-  const delay = 200 + index * 80;
+  const delay = 300 + index * 120;
   return (
     <div
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(1.5rem)",
         transition: visible
-          ? `opacity 500ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 500ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`
+          ? `opacity 700ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`
           : "opacity 200ms cubic-bezier(0.32,0.72,0,1), transform 250ms cubic-bezier(0.32,0.72,0,1)",
       }}
     >
@@ -214,13 +214,13 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!menuOpen) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [mounted]);
+  }, [menuOpen]);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 992px)");
@@ -354,9 +354,12 @@ export function Navbar() {
       {mounted ? (
         <div
           id="mobile-menu-dropdown"
-          className="fixed left-0 top-0 z-[998] h-[100dvh] w-[100vw] overflow-hidden bg-gh-page p-2 min-[992px]:hidden"
+          className={
+            "fixed left-0 top-0 z-[998] h-[100dvh] w-[100vw] overflow-hidden p-2 min-[992px]:hidden transition-[background-color] " +
+            (visible ? "bg-gh-page duration-0" : "bg-transparent duration-0 pointer-events-none")
+          }
           role="dialog"
-          aria-modal="true"
+          aria-modal={visible}
           aria-label="Menu"
         >
           {/* Pink sheet — slides down from top */}

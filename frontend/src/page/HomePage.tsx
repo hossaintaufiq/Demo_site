@@ -15,7 +15,7 @@ export function HomePage() {
         <IntroSection />   
         {/* <ExpertisesSection /> */}
         {/* <SelectedWorkSection /> */}
-        {/* <ClientsMarquee /> */}
+        <ClientsMarquee />
         {/* <HomeFooter /> */}
       </main>
     </div>

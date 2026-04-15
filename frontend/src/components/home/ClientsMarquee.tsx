@@ -6,27 +6,26 @@ export function ClientsMarquee() {
   const row = [...LOGOS, ...LOGOS];
 
   return (
-    <section className="section_clients bg-gh-page">
+    <section className="bg-gh-page">
       <div className="px-10 pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
         <div className="mx-auto w-full max-w-[120em]">
-          <div className="padding-bottom mb-10 max-w-[40rem] min-[992px]:mb-16">
-            <h2 className="heading-m text-gh-black">These brands got hyped.</h2>
+          <div className="mb-10 max-w-[40rem] min-[992px]:mb-16">
+            <h2 className="m-0 text-[clamp(1.75rem,3.6vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black">
+              These brands got hyped.
+            </h2>
           </div>
 
-          <div className="mwg_effect008 overflow-hidden">
-            <div
-              className="gh-marquee-track cursor-grab gap-[1vw] pr-[1vw] select-none"
-              style={{ width: "max-content" }}
-            >
+          <div className="overflow-hidden">
+            <div className="flex w-max animate-[gh-marquee_45s_linear_infinite] cursor-grab gap-[1vw] pr-[1vw] select-none">
               {row.map((src, i) => (
-                <div key={`${src}-${i}`} className="card inline-flex shrink-0">
-                  <div className="client-card flex h-[305px] w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
+                <div key={`${src}-${i}`} className="inline-flex shrink-0">
+                  <div className="flex h-[305px] w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
                     <Image
                       src={src}
                       alt=""
                       width={190}
                       height={70}
-                      className="max-h-full max-w-full object-contain"
+                      className="h-auto w-auto max-h-full max-w-full object-contain"
                       draggable={false}
                       loading="lazy"
                     />
@@ -39,7 +38,7 @@ export function ClientsMarquee() {
       </div>
       <div className="px-10 pb-12 max-[479px]:px-5">
         <div className="mx-auto max-w-[120em]">
-          <div className="section-divider" />
+          <div className="h-px w-full bg-gh-black/12" />
         </div>
       </div>
     </section>
