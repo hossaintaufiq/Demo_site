@@ -115,28 +115,21 @@ function MailCta() {
     >
       <span
         className={
-          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
+          "relative flex h-[2.75em] items-center justify-center px-3.5 py-2.5 " +
           "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
-          "group-hover/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-          "group-focus-visible/mail:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-          "group-active/mail:scale-95"
+          "group-hover/mail:[transform:skewY(-4deg)_rotate(-1deg)] " +
+          "group-focus-visible/mail:[transform:skewY(-4deg)_rotate(-1deg)]"
         }
       >
         <span
-          className={
-            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
-            "rounded-[1.25rem] border border-gh-black bg-transparent " +
-            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
-            "group-hover/mail:rounded-[0.5em] group-focus-visible/mail:rounded-[0.5em]"
-          }
+          className="absolute inset-0 -z-10 rounded-[0.5em] border border-gh-black bg-transparent"
           aria-hidden
         />
-        <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Mail ons direct</span>
+        <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap">Mail ons direct</span>
         <span
           className={
             "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
-            "bg-gh-black text-white [transition:transform_150ms_ease-out] will-change-transform " +
-            "group-hover/mail:scale-[0.92] group-focus-visible/mail:scale-[0.92]"
+            "bg-gh-black text-white"
           }
         >
           {envelopeIcon}
@@ -159,29 +152,21 @@ function GetResultsCta({ className = "" }: { className?: string }) {
     >
       <span
         className={
-          "relative flex h-[2.75em] items-center justify-center py-2 pl-4 " +
+          "relative flex h-[2.75em] items-center justify-center px-3.5 py-2.5 " +
           "will-change-transform [transition:transform_450ms_var(--ease-gh-bounce)] " +
-          "group-hover/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-          "group-focus-visible/cta:[transform:skewY(-4deg)_rotate(-1deg)_scale(1.02)] " +
-          "group-active/cta:scale-95"
+          "group-hover/cta:[transform:skewY(-4deg)_rotate(-1deg)] " +
+          "group-focus-visible/cta:[transform:skewY(-4deg)_rotate(-1deg)]"
         }
       >
         <span
-          className={
-            "absolute top-1/2 left-1 -z-10 h-[calc(100%-0.5rem)] w-[calc(100%-0.25rem)] -translate-y-1/2 " +
-            "rounded-[1.25rem] bg-gh-red " +
-            "[transition:border-radius_450ms_var(--ease-gh-radius),width_450ms_var(--ease-gh-bounce)] " +
-            "group-hover/cta:rounded-[0.5em] group-focus-visible/cta:rounded-[0.5em]"
-          }
+          className="absolute inset-0 -z-10 rounded-[0.5em] bg-gh-red"
           aria-hidden
         />
-        <span className="relative z-[1] mr-2 ml-1 block whitespace-nowrap">Get Results</span>
+        <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap">Get Results</span>
         <span
           className={
             "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
-            "bg-gh-off-white text-gh-red " +
-            "[transition:transform_150ms_ease-out] will-change-transform " +
-            "group-hover/cta:scale-[0.92] group-focus-visible/cta:scale-[0.92]"
+            "bg-gh-off-white text-gh-red"
           }
         >
           {fireIcon}
@@ -387,20 +372,19 @@ export function HomeFooter() {
           className="section_footer pointer-events-none relative min-h-[100dvh] overflow-hidden"
         >
           <div className="flex min-h-[100dvh] flex-col">
-            {/* ─── Top area: CTA centered ── */}
-            <div className="cs-footer-cta flex flex-1 flex-col items-center justify-center gap-[2.5em] px-10 text-center max-[479px]:px-5">
+            {/* ═══ UPPER FOOTER — Title + CTA Buttons ═══ */}
+            <div className="cs-footer-cta flex flex-1 flex-col items-center justify-center gap-8 px-10 text-center max-[479px]:px-5">
               <h2 className="text-[clamp(2.8rem,8vw,6.8rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-gh-black">
                 Let&apos;s Get Hyped!
               </h2>
-              <div className="button-group is-footer pointer-events-auto flex flex-wrap items-center justify-center gap-3">
+              <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-4">
                 <MailCta />
                 <GetResultsCta />
               </div>
             </div>
 
-            {/* ─── Bottom area: diagonal wave footer ── */}
+            {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
             <div className="cs-footer-bottom relative w-full">
-              {/* Diagonal SVG background */}
               <svg
                 viewBox="0 0 1860 386"
                 className="block h-auto w-full"
@@ -413,10 +397,9 @@ export function HomeFooter() {
                 />
               </svg>
 
-              {/* Content overlay on the diagonal */}
               <div className="absolute inset-0 flex items-end">
                 {/* Logo bottom-left */}
-                <div className="absolute bottom-0 left-0 z-[2] pb-[0.8em] pl-[1.5em]">
+                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6">
                   <img
                     src="https://cdn.prod.website-files.com/6848603da8e6ac95794b7498/684c3404e57460370b97757c_7719b29e960423bac19acd325c901392_gh-logo-blue.svg"
                     alt="Get Hyped logo"
@@ -424,45 +407,45 @@ export function HomeFooter() {
                   />
                 </div>
 
-                {/* GH Sticker — positioned at right, above the diagonal */}
-                <div className="absolute right-[2.5em] top-[-2rem] z-[15]">
+                {/* GH Sticker */}
+                <div className="absolute right-10 top-[-2rem] z-[15]">
                   <GhSticker />
                 </div>
 
-                {/* Footer info: links, contact, etc — bottom-right */}
-                <div className="cs-footer-info-wrapper pointer-events-auto z-[12] ml-auto flex w-full items-end justify-end gap-[5em] px-[2.5em] pb-[1.2em] max-[991px]:flex-col max-[991px]:gap-6 max-[991px]:px-5">
+                {/* Footer info grid */}
+                <div className="cs-footer-info-wrapper pointer-events-auto z-[12] ml-auto flex w-full items-end justify-end gap-20 px-10 pb-5 max-[991px]:flex-col max-[991px]:gap-6 max-[991px]:px-5">
                   {/* Navigation + Socials + Credits */}
-                  <div className="flex flex-col gap-[1.5em]">
-                    <div className="footer_sitemap flex flex-wrap gap-[0.5em]">
+                  <div className="flex flex-col gap-6">
+                    <div className="flex flex-wrap gap-2">
                       <SwooshNavLink href="/expertises" label="Expertises" />
                       <SwooshNavLink href="/work" label="Work" />
                       <SwooshNavLink href="/about" label="About" />
                       <SwooshNavLink href="/contact" label="Contact" />
                     </div>
-                    <div className="footer-col is-socials">
-                      <div className="footer-label mb-2 font-bold text-gh-black">Follow us</div>
-                      <div className="social-icon-group flex flex-wrap gap-[0.5em] text-gh-black">
-                        <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
+                    <div>
+                      <div className="mb-2 font-bold text-gh-black">Follow us</div>
+                      <div className="flex flex-wrap gap-2 text-gh-black">
+                        <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
                           <LinkedInIcon />
                         </a>
-                        <a href="https://www.tiktok.com/@gethyped.nl" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="TikTok">
+                        <a href="https://www.tiktok.com/@gethyped.nl" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="TikTok">
                           <TikTokIcon />
                         </a>
-                        <a href="https://www.instagram.com/gethyped.nl/" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="Instagram">
+                        <a href="https://www.instagram.com/gethyped.nl/" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="Instagram">
                           <InstagramIcon />
                         </a>
-                        <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="social-icon inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
+                        <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
                           <YouTubeIcon />
                         </a>
                       </div>
                     </div>
-                    <div className="footer-credits flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
-                      <div className="footer-legal">© {year} Get Hyped</div>
+                    <div className="flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
+                      <div>© {year} Get Hyped</div>
                       <a
                         href="https://dylanbrouwer.design/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="footer-legal hover:opacity-75"
+                        className="hover:opacity-75"
                       >
                         © Design by Dylan
                       </a>
@@ -470,30 +453,30 @@ export function HomeFooter() {
                   </div>
 
                   {/* Contact + Address */}
-                  <div className="flex flex-col gap-[1.2em] text-left text-[0.95rem] leading-snug text-gh-black">
-                    <div className="footer-col">
-                      <div className="footer-label font-bold">Contact</div>
-                      <a href="mailto:info@gethyped.nl" className="footer-link mt-1 block text-[0.86rem] hover:underline">
+                  <div className="flex flex-col gap-5 text-left text-[0.95rem] leading-snug text-gh-black">
+                    <div>
+                      <div className="font-bold">Contact</div>
+                      <a href="mailto:info@gethyped.nl" className="mt-1 block text-[0.86rem] hover:underline">
                         info@gethyped.nl
                       </a>
-                      <a href="tel:+31615337496" className="footer-link block text-[0.86rem] hover:underline">
+                      <a href="tel:+31615337496" className="block text-[0.86rem] hover:underline">
                         +31 6 1533 7496
                       </a>
                     </div>
-                    <div className="footer-col">
-                      <div className="footer-label font-bold">Adres</div>
+                    <div>
+                      <div className="font-bold">Adres</div>
                       <a
                         href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="footer-link mt-1 block text-[0.86rem] hover:underline"
+                        className="mt-1 block text-[0.86rem] hover:underline"
                       >
                         Beltrumsestraat 6,
                         <br />
                         7141 AL Groenlo
                       </a>
                     </div>
-                    <a href="#" className="footer-legal block text-[0.82rem] text-gh-black/65 hover:underline">
+                    <a href="#" className="block text-[0.82rem] text-gh-black/65 hover:underline">
                       Privacyvoorwaarden
                     </a>
                   </div>
