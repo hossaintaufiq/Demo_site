@@ -189,7 +189,21 @@ export function HomeFooter() {
         },
       });
 
-      /* GH sticker — rotation removed; sticker remains static */
+      /* GH sticker — rotate up to 20° while scrolling */
+      const sticker = containerRef.current?.querySelector(".gh-sticker-el");
+      if (sticker) {
+        gsap.set(sticker, { rotation: 0 });
+        gsap.to(sticker, {
+          rotation: 30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
     },
     { scope: containerRef }
   );
