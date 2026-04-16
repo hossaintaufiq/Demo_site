@@ -119,7 +119,8 @@ function GhSticker() {
       <img
         src="/assets/icons/svg38.svg"
         alt="GH sticker"
-        className="absolute inset-0 h-full w-full object-contain"
+        className="sticker absolute inset-0 h-full w-full object-contain"
+        style={{ willChange: "transform", transformStyle: "preserve-3d" }}
       />
     </div>
   );
@@ -236,7 +237,21 @@ export function HomeFooter() {
         },
       });
 
-      /* GH sticker — rotation removed; sticker remains static */
+      /* GH sticker — rotate from ~9.9672° up to +20° (to ~29.9672°) while scrolling */
+      const sticker = containerRef.current?.querySelector(".gh-sticker-el");
+      if (sticker) {
+        gsap.set(sticker, { rotation: 9.9672, transformOrigin: "50% 50%" });
+        gsap.to(sticker, {
+          rotation: 29.9672,
+          ease: "none",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
     },
     { scope: containerRef },
   );
@@ -400,7 +415,7 @@ export function HomeFooter() {
             </div>
 
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
-            <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto">
+            <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto px-6">
               <div className="pointer-events-auto flex flex-wrap items-top justify-center gap-4 pt-6 ">
                 <MailCta />
                 <GetResultsCta />
@@ -421,7 +436,7 @@ export function HomeFooter() {
 
               <div className="absolute inset-0 flex items-end">
                 {/* Logo bottom-left */}
-                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6">
+                <div className="relative bottom-0 left-0 z-[2] pb-3 pl-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="100%"
