@@ -14,9 +14,9 @@ export function HomePage() {
         {/* <HeroSection /> */}
         {/* <IntroSection />    */}
         {/* <ExpertisesSection /> */}
-        {/* <SelectedWorkSection /> */}
+        <SelectedWorkSection />
         {/* <ClientsMarquee /> */}
-        <HomeFooter />
+        {/* <HomeFooter /> */}
       </main>
     </div>
   );

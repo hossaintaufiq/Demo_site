@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { SwooshNavLink } from "@/components/SwooshNavLink";
+import { ButtonDefault } from "../ui/ButtonDefault";
 
 /* ── Trail logos (mousemove effect) ── */
 const TRAIL_LOGOS = [
@@ -188,7 +189,9 @@ function GetResultsCta({ className = "" }: { className?: string }) {
           aria-hidden
         />
         <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap">
-          Get Results
+        
+Get Results
+          
         </span>
         <span
           className={
@@ -417,8 +420,11 @@ export function HomeFooter() {
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
             <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto px-6">
               <div className="pointer-events-auto flex flex-wrap items-top justify-center gap-4 pt-6 ">
-                <MailCta />
+                
+ <MailCta />
                 <GetResultsCta />
+                
+               
               </div>
               {/* /* Massive slanted backdrop logo removed */}
 

@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useRef } from "react";
 
 const arrowIcon = (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 27" fill="none" className="h-4 w-4 -rotate-[45deg]">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 28 27"
+    fill="none"
+    className="h-4 w-4 -rotate-[45deg]"
+  >
     <path
       d="M14.9554 26.0653L12.2003 23.337L20.4522 15.0851L0.404297 15.0851L0.404297 11.0996L20.4522 11.0996L12.2003 2.86109L14.9554 0.119385L27.9284 13.0923L14.9554 26.0653Z"
       fill="currentColor"
@@ -63,22 +68,30 @@ function cardTheme(t: (typeof CASES)[number]["theme"]) {
   }
 }
 
-function WorkCard({ item, index }: { item: (typeof CASES)[number]; index: number }) {
+function WorkCard({
+  item,
+  index,
+}: {
+  item: (typeof CASES)[number];
+  index: number;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const t = cardTheme(item.theme);
 
   const offsets = [
-    "min-[992px]:translate-y-10",
-    "min-[992px]:-translate-y-4",
-    "min-[992px]:-translate-y-14",
+    "min-[992px]:translate-y-0",
+    "min-[992px]:-translate-y-32",
+    "min-[992px]:-translate-y-64",
   ];
 
   return (
-    <div className={`mx-auto w-full max-w-[22rem] min-[768px]:max-w-none ${offsets[index]}`}>
+    <div
+      className={`mx-auto w-full  max-w-[24rem] min-[768px]:max-w-[120em] ${offsets[index]}`}
+    >
       <div>
         <Link
           href={item.href}
-          className={`group relative block overflow-hidden rounded-3xl border-[5px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
+          className={`group relative block overflow-hidden rounded-4xl border-[10px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
           onMouseEnter={() => videoRef.current?.play().catch(() => {})}
           onMouseLeave={() => {
             if (videoRef.current) {
@@ -107,7 +120,9 @@ function WorkCard({ item, index }: { item: (typeof CASES)[number]; index: number
             <div className={`relative rounded-xl p-4 ${t.overlay}`}>
               <div
                 className={`absolute -top-6 inset-x-0 h-10 ${t.overlay}`}
-                style={{ clipPath: "polygon(0 70%, 100% 20%, 100% 100%, 0 100%)" }}
+                style={{
+                  clipPath: "polygon(0 70%, 100% 20%, 100% 100%, 0 100%)",
+                }}
               />
 
               <div className="absolute right-3 top-3 grid h-8 w-8 overflow-hidden rounded-full bg-white text-black">
@@ -123,7 +138,9 @@ function WorkCard({ item, index }: { item: (typeof CASES)[number]; index: number
                 {item.title}
               </h3>
 
-              <span className={`inline-block rounded-md px-2 py-1 text-sm font-semibold ${t.label}`}>
+              <span
+                className={`inline-block rounded-md px-2 py-1 text-sm font-semibold ${t.label}`}
+              >
                 {item.label}
               </span>
             </div>
@@ -136,11 +153,11 @@ function WorkCard({ item, index }: { item: (typeof CASES)[number]; index: number
 
 export function SelectedWorkSection() {
   return (
-    <section className="bg-gh-page">
+    <section className="bg-gh-page p-6">
       <div className="px-10 py-16 min-[992px]:py-24 max-[479px]:px-5">
-        <div className="mx-auto w-full max-w-[120em]">
+        <div className="mx-auto w-full max-w-[120em] md:px-32">
           {/* 1 — Title */}
-          <div className="mb-6 min-[992px]:mb-8">
+          <div className="mb-6 min-[992px]:mb-8 ">
             <h2 className="m-0 max-w-[8ch] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.03em]">
               Content dat scoort.
             </h2>
@@ -149,8 +166,8 @@ export function SelectedWorkSection() {
           {/* 2 — Description + button */}
           <div className="mb-12 max-w-[40rem] min-[992px]:mb-16">
             <p className="m-0 max-w-[30ch] text-[clamp(1rem,1.2vw,1.125rem)] font-medium leading-normal tracking-[-0.01em] text-gh-black/70">
-              Wij vertellen jouw verhaal. Op een manier die écht past bij jouw doelgroep.
-              Met creatieve content die werkt en het verschil maakt.
+              Wij vertellen jouw verhaal. Op een manier die écht past bij jouw
+              doelgroep. Met creatieve content die werkt en het verschil maakt.
             </p>
 
             <div className="mt-8">
@@ -161,7 +178,7 @@ export function SelectedWorkSection() {
           </div>
 
           {/* 3 — Cards */}
-          <div className="grid grid-cols-1 gap-6 min-[768px]:grid-cols-2 min-[992px]:aspect-[1344/502] min-[992px]:grid-cols-3 min-[992px]:items-end min-[992px]:gap-10 min-[992px]:px-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  md:gap-16 place-items-center md:p-20">
             {CASES.map((item, index) => (
               <WorkCard key={item.href} item={item} index={index} />
             ))}
