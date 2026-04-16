@@ -91,7 +91,7 @@ function WorkCard({
       <div>
         <Link
           href={item.href}
-          className={`group relative block overflow-hidden rounded-4xl border-[10px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
+          className={`group relative block overflow-hidden rounded-4xl border-[6px] md:border-[8px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
           onMouseEnter={() => videoRef.current?.play().catch(() => {})}
           onMouseLeave={() => {
             if (videoRef.current) {
@@ -117,15 +117,15 @@ function WorkCard({
           </div>
 
           <div className="absolute inset-x-0 bottom-0 p-3">
-            <div className={`relative rounded-xl p-4 ${t.overlay}`}>
+            <div className={`relative rounded-2xl  p-4 ${t.overlay}`}>
               <div
-                className={`absolute -top-6 inset-x-0 h-10 ${t.overlay}`}
+                className={`absolute -top-7  inset-x-0 h-10  rounded-t-2xl ${t.overlay}`}
                 style={{
-                  clipPath: "polygon(0 70%, 100% 20%, 100% 100%, 0 100%)",
+                  clipPath: "polygon(0 70%, 100% 0, 100% 100%, 0% 100%)",
                 }}
               />
 
-              <div className="absolute right-3 top-3 grid h-8 w-8 overflow-hidden rounded-full bg-white text-black">
+              <div className="absolute right-3 -top-2 grid h-12 w-12 overflow-hidden rounded-full bg-white text-black">
                 <span className="col-start-1 row-start-1 flex items-center justify-center transition-transform duration-300 ease-out group-hover:translate-x-8 group-hover:-translate-y-8">
                   {arrowIcon}
                 </span>
