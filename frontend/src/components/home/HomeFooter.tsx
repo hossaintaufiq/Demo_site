@@ -70,7 +70,13 @@ const YouTubeIcon = () => (
 /* ── GH Sticker (rotating text badge) ── */
 function GhSticker() {
   return (
-    <div className="footer-sticker gh-sticker-el absolute z-[15] h-[9rem] w-[9rem] rounded-full bg-[#f6aaf0]">
+    <div
+      className="footer-sticker gh-sticker-el absolute z-[15] h-[7rem] w-[7rem] rounded-full bg-[#f6aaf0]"
+      style={{
+        right: "2.5em",
+        top: "-3.5rem",
+      }}
+    >
       <img src="/assets/icons/svg38.svg" alt="GH sticker" className="absolute inset-0 h-full w-full object-contain" />
     </div>
   );
@@ -357,7 +363,7 @@ export function HomeFooter() {
             </div>
 
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
-            <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto px-10 max-[991px]:px-5">
+            <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto">
               {/* Massive slanted backdrop logo removed */}
 
               <svg
@@ -401,7 +407,7 @@ export function HomeFooter() {
                 </div>
 
                 {/* GH Sticker */}
-                <div className="absolute right-74 top-[-2rem] z-[15]">
+                <div className="absolute right-10 top-[-2rem] z-[15]">
                   <GhSticker />
                 </div>
 
@@ -416,7 +422,7 @@ export function HomeFooter() {
                       <SwooshNavLink href="/contact" label="Contact" />
                     </div>
                     <div>
-                      <div className="mb-2 font-bold text-gh-black">Follow us
+                      <div className="mb-2 font-bold text-gh-black">Follow us</div>
                       <div className="flex flex-wrap gap-2 text-gh-black">
                         <a href="https://www.linkedin.com/company/gethypednl/" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="LinkedIn">
                           <LinkedInIcon />
@@ -430,7 +436,6 @@ export function HomeFooter() {
                         <a href="https://www.youtube.com/@gethypednl" target="_blank" rel="noopener noreferrer" className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75" aria-label="YouTube">
                           <YouTubeIcon />
                         </a>
-                      </div>
                       </div>
                     </div>
                     <div className="flex w-full flex-row justify-between gap-6 text-[0.65rem] text-gh-black/55">
@@ -447,7 +452,7 @@ export function HomeFooter() {
                   </div>
 
                   {/* Contact + Address */}
-                  <div className="flex flex-col gap-5 text-left text-[0.95rem] leading-snug text-gh-black p-10 px-20">
+                  <div className="flex flex-col gap-5 text-left text-[0.95rem] leading-snug text-gh-black">
                     <div>
                       <div className="font-bold">Contact</div>
                       <a href="mailto:info@gethyped.nl" className="mt-1 block text-[0.86rem] hover:underline">
