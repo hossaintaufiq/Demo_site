@@ -396,19 +396,19 @@ export function HomeFooter() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-[#E5E0D8] text-gh-black"
+      className="relative w-full overflow-hidden bg-[#E5E0D8] text-gh-black "
     >
       <div
         ref={footerRef}
-        className="relative h-full w-full overflow-hidden bg-[#f3efeb]"
+        className="relative h-full w-full overflow-hidden bg-[#f3efeb] "
       >
         <section
           ref={trailRootRef}
-          className="section_footer relative min-h-[100dvh] overflow-hidden"
+          className="section_footer relative min-h-[100dvh] overflow-hidden "
         >
           <div className="flex min-h-[100dvh] flex-col ">
             {/* ═══ UPPER FOOTER — Title + CTA Buttons ═══ */}
-            <div className="cs-footer-cta relative z-10 flex flex-1 flex-col items-bottom justify-center gap-8 px-10 text-center max-[479px]:px-5 pointer-events-auto">
+            <div className="cs-footer-cta relative z-10 flex flex-1  justify-center items-bottom pt-60 px-10 max-[479px]:px-5 pointer-events-auto">
               <h2 className="text-[clamp(2.8rem,8vw,6.8rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-gh-black max-[991px]:hidden ">
                 Let&apos;s Get Hyped!
               </h2>
