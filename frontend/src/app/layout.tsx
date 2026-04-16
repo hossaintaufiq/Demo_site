@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   },
   description:
     "Get Hyped brengt als short form content agency jouw merk in beweging met krachtige video's en foto's. Niks zonder strategie: alleen resultaatgerichte content.",
+  icons: [
+    { rel: "icon", url: "/assets/icons/svg38.svg", type: "image/svg+xml" },
+    // { rel: "apple-touch-icon", url: "/assets/icons/svg38.svg" },
+  ],
 };
 
 export default function RootLayout({

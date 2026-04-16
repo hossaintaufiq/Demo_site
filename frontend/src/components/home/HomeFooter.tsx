@@ -77,28 +77,7 @@ function GhSticker() {
         top: "-3.5rem",
       }}
     >
-      <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden>
-        <defs>
-          <path id="circlePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-        </defs>
-        <text
-          fill="#1a1a1a"
-          fontSize="8.8"
-          fontWeight="700"
-          letterSpacing="2"
-          textAnchor="middle"
-          fontFamily="inherit"
-          style={{ textTransform: "uppercase" }}
-        >
-          <textPath href="#circlePath" startOffset="50%">
-            GET RESULTS • GET HYPED • GET NOTICED •
-          </textPath>
-        </text>
-      </svg>
-      <div className="relative flex h-full w-full items-center justify-center rounded-full border border-gh-black/20 text-gh-black">
-        <span className="text-[2rem] font-black leading-none [transform:rotate(180deg)]">GH</span>
-        <span className="absolute inset-[0.2rem] rounded-full border border-gh-black/25" />
-      </div>
+      <img src="/assets/icons/svg38.svg" alt="GH sticker" className="absolute inset-0 h-full w-full object-contain" />
     </div>
   );
 }
@@ -210,20 +189,7 @@ export function HomeFooter() {
         },
       });
 
-      /* GH sticker — rotate only while scrolling */
-      const sticker = containerRef.current?.querySelector(".gh-sticker-el");
-      if (sticker) {
-        gsap.to(sticker, {
-          rotation: 360,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      }
+      /* GH sticker — rotation removed; sticker remains static */
     },
     { scope: containerRef }
   );
@@ -384,31 +350,11 @@ export function HomeFooter() {
 
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
             <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto">
-              {/* Massive slanted backdrop logo - rests behind the wave */}
-              <div 
-                className="absolute origin-bottom-left -rotate-[5deg] select-none pointer-events-none"
-                style={{
-                  left: "-1vw",
-                  bottom: "35%", // Sits across the wave boundary
-                  zIndex: -1
-                }}
-              >
-                <div 
-                  className="font-black uppercase leading-none block"
-                  style={{
-                    fontSize: "clamp(6rem, 16vw, 15rem)",
-                    letterSpacing: "-0.05em",
-                    color: "#1a1a1a",
-                    WebkitTextStroke: "6px #fff",
-                  }}
-                >
-                  GETHYPED
-                </div>
-              </div>
+              {/* Massive slanted backdrop logo removed */}
 
               <svg
                 viewBox="0 0 1860 386"
-                className="block h-auto w-full"
+                className="relative z-[2] block h-auto w-full pointer-events-none"
                 preserveAspectRatio="none"
                 aria-hidden
               >
@@ -419,8 +365,31 @@ export function HomeFooter() {
               </svg>
 
               <div className="absolute inset-0 flex items-end">
-                {/* Logo bottom-left - REMOVED small blue logo */}
-                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6 hidden">
+                {/* Logo bottom-left */}
+                <div className="absolute bottom-0 left-0 z-[2] pb-3 pl-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 941 382" fill="none" className="footer-mobile-logo_svg">
+                    <path d="M940.689 83.6343V312.664C940.689 350.749 909.95 381.62 872.028 381.62H34.4602C15.8081 381.62 0.689453 366.436 0.689453 347.704V170.798C0.689453 153.889 12.8733 139.442 29.4979 136.669L843.838 1.14395C894.561 -7.29124 940.689 31.9954 940.689 83.6149" fill="#EAE4D8" />
+                    <path d="M855.114 363.741H253.594V117.356L844.9 24.2971C884.869 18.0143 921.014 49.0403 921.014 89.6843V297.558C921.014 334.111 891.511 363.741 855.114 363.741Z" fill="black" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 31 31" fill="none" className="footer-mobile-logo_icon">
+                      <g clipPath="url(#clip0_10010_1223)">
+                        <path d="M27.6895 2.93927L13.9395 16.6893" stroke="currentColor" strokeWidth="1.875" strokeMiterlimit="10" />
+                        <path d="M27.6895 2.93927L18.9395 27.9393L13.9395 16.6893L2.68945 11.6893L27.6895 2.93927Z" stroke="currentColor" strokeWidth="2.5" strokeMiterlimit="10" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_10010_1223">
+                          <rect width="30" height="30" fill="currentColor" transform="translate(0.189453 0.43927)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    <path d="M323.066 121.835V214.7L306.229 216.232V124.337L271.802 129.417V348.81L306.229 348.48V256.585L323.066 255.46V348.325L359.791 347.976V116.406L323.066 121.835Z" fill="white" />
+                    <path d="M429.128 106.148L419.339 194.223L418.875 201.766L417.948 201.863L417.485 194.416L407.85 109.289L368.132 115.164L398.543 264.69V347.607L438.763 347.239V262.363L471.8 99.826L429.128 106.148Z" fill="white" />
+                    <path d="M723.739 113.671V62.556L613.1 78.9223V345.591L723.739 344.543V293.448L666.488 295.425V232.714L720.417 229.146V178.477L666.488 183.402V120.71L723.739 113.671Z" fill="white" />
+                    <path d="M547.354 221.933L526.463 223.523V133.121L547.354 130.503V221.933ZM479.948 98.6237V346.851L526.115 346.405V265.951L547.528 264.807C575.526 263.314 597.46 240.083 597.46 211.927V142.564C597.46 110.258 568.884 85.4764 537.044 90.1885L479.948 98.6431V98.6237Z" fill="white" />
+                    <path d="M826.711 294.262L799.1 295.154V98.934L826.711 95.4629V294.262ZM738.027 60.4424V344.408L841.058 343.438C869.982 343.167 893.287 319.548 893.287 290.5V98.7982C893.287 66.4924 864.711 41.7105 832.871 46.4225L738.008 60.4618L738.027 60.4424Z" fill="white" />
+                    <path d="M98.1596 363.741H157.881V320.169L123.435 321.177V271.943L155.796 269.868V226.625L123.435 229.65V180.397L157.881 175.995V132.423L98.1596 141.808V363.741Z" fill="black" />
+                    <path d="M167.033 130.968V174.831L190.822 171.787V363.741H219.553V168.122L245.079 164.864V118.694L167.033 130.968Z" fill="black" />
+                    <path d="M65.0839 235.099V187.552L39.1138 190.868V324.9L65.0839 324.144V284.838L49.135 285.749V247.665L89.181 244.252V363.722H65.1032V351.253L60.9132 355.383C55.4875 360.735 48.1889 363.722 40.6006 363.722H36.4492C25.5206 363.722 16.6772 354.821 16.6772 343.865V177.275C16.6772 164.244 26.1384 153.133 38.9593 151.116L66.3582 146.811C78.3488 144.93 89.2003 154.238 89.2003 166.416V232.831L65.1224 235.08L65.0839 235.099Z" fill="black" />
+                  </svg>
                 </div>
 
                 {/* GH Sticker */}
@@ -429,7 +398,7 @@ export function HomeFooter() {
                 </div>
 
                 {/* Footer info grid */}
-                <div className="cs-footer-info-wrapper pointer-events-auto z-[12] ml-auto flex w-full items-end justify-end gap-20 px-10 pb-5 max-[991px]:flex-col max-[991px]:gap-6 max-[991px]:px-5">
+                <div className="cs-footer-info-wrapper relative z-[3] pointer-events-auto ml-auto flex w-full items-end justify-end gap-20 px-10 pb-5 max-[991px]:flex-col max-[991px]:gap-6 max-[991px]:px-5">
                   {/* Navigation + Socials + Credits */}
                   <div className="flex flex-col gap-6">
                     <div className="flex flex-wrap gap-2">
