@@ -21,3 +21,6 @@ export function HomePage() {
     </div>
   );
 }
+
+
+// animations are so tweaky that I had to move them to the SelectedWorkSection component, which is a bit sad but whatever
