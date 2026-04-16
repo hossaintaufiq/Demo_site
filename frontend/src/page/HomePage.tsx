@@ -9,7 +9,7 @@ import { Navbar } from "@/components/Navbar";
 export function HomePage() {
   return (
     <div className="flex min-h-dvh flex-col bg-gh-page text-gh-black">
-      <Navbar />
+      {/* <Navbar /> */}
       <main className="flex-1">
         {/* <HeroSection /> */}
         {/* <IntroSection />    */}
