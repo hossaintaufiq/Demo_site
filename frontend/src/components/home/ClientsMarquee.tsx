@@ -10,8 +10,8 @@ export function ClientsMarquee() {
       <div className="px-10 pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
         <div className="mx-auto w-full max-w-[120em]">
           <div className="mb-10 max-w-[40rem] min-[992px]:mb-16">
-            <h2 className="m-0 text-6xl font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black">
-              These brands got hyped.
+            <h2 className="m-0 text-4xl md:text-7xl font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black text-left">
+              These brands <br />got hyped.
             </h2>
           </div>
 
@@ -19,7 +19,7 @@ export function ClientsMarquee() {
             <div className="flex w-max animate-[gh-marquee_45s_linear_infinite] cursor-grab gap-[1vw] pr-[1vw] select-none">
               {row.map((src, i) => (
                 <div key={`${src}-${i}`} className="inline-flex shrink-0">
-                  <div className="flex h-[305px] w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
+                  <div className="flex h-[105px] w-[105px] md:h-[305px] md:w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
                     <Image
                       src={src}
                       alt=""
