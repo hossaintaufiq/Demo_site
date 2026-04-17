@@ -7,10 +7,10 @@ export function ClientsMarquee() {
 
   return (
     <section className="bg-gh-page">
-      <div className="px-10 pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
+      <div className=" pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
         <div className="mx-auto w-full max-w-[120em]">
           <div className="mb-10 max-w-[40rem] min-[992px]:mb-16">
-            <h2 className="m-0 text-4xl md:text-7xl font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black text-left">
+            <h2 className="m-0  px-2 md:px-10 text-4xl md:text-7xl font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black text-left">
               These brands <br />got hyped.
             </h2>
           </div>
