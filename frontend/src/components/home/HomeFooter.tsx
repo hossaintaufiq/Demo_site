@@ -164,7 +164,6 @@ function MailCta() {
     </a>
   );
 }
-
 /* ── Get Results CTA ── */
 function GetResultsCta({ className = "" }: { className?: string }) {
   return (
@@ -188,9 +187,16 @@ function GetResultsCta({ className = "" }: { className?: string }) {
           className="absolute inset-0 -z-10 rounded-[0.5em] bg-gh-red"
           aria-hidden
         />
-        <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap text-white md:text-black font-bold text-xl ">
-          Get Results
+
+        {/* Text wrapper */}
+        <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap text-white font-bold text-xl">
+          {/* Desktop text */}
+          <span className="hidden md:inline">Get Results</span>
+          {/* Mobile text */}
+          <span className="md:hidden">Get Hyped! Neem contact op</span>
         </span>
+
+        {/* Icon */}
         <span
           className={
             "relative z-[1] flex h-9 w-9 flex-none items-center justify-center rounded-[0.625em] " +
@@ -238,19 +244,44 @@ export function HomeFooter() {
         },
       });
 
-      /* GH sticker — rotate from ~9.9672° up to +20° (to ~29.9672°) while scrolling */
+      /* GH sticker — reacts to scroll velocity, resets position when scrolling stops */
       const sticker = containerRef.current?.querySelector(".gh-sticker-el");
       if (sticker) {
-        gsap.set(sticker, { rotation: 9.9672, transformOrigin: "50% 50%" });
-        gsap.to(sticker, {
-          rotation: 29.9672,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
+        // Set initial rotation (9.9672° matches the design)
+        gsap.set(sticker, {
+          rotation: 9.9672,
+          y: 0,
+          transformOrigin: "50% 50%",
+        });
+
+        // High-performance setters for frequent updates during scroll
+        const rotateTo = gsap.quickTo(sticker, "rotation", {
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        const yTo = gsap.quickTo(sticker, "y", {
+          duration: 0.5,
+          ease: "power2.out",
+        });
+
+        ScrollTrigger.create({
+          trigger: containerRef.current, // limit it to footer
+          start: "top bottom",
+          end: "bottom top",
+          onUpdate: (self) => {
+            let velocity = self.getVelocity();
+
+            // Clamp velocity (prevents crazy jumps)
+            velocity = gsap.utils.clamp(-3000, 3000, velocity);
+
+            rotateTo(9.9672 + velocity * 0.01);
+            yTo(Math.max(Math.min(velocity * 0.005, 50), -50));
           },
+        });
+
+        ScrollTrigger.addEventListener("scrollEnd", () => {
+          rotateTo(9.9672); // reset rotation
+          yTo(0); // reset position
         });
       }
     },
@@ -421,7 +452,6 @@ export function HomeFooter() {
 
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
             <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto px-6">
-
               {/* DESKTOP LAYOUT */}
               <div className="max-[991px]:hidden absolute inset-0 flex items-end">
                 <svg
@@ -535,10 +565,9 @@ export function HomeFooter() {
                       <SwooshNavLink href="/contact" label="Contact" />
                     </div>
                     <div className="flex flex-row ">
-                      
                       <div className="flex flex-wrap gap-2 text-gh-black  justify-center items-center">
                         <div className="mb-2 font-bold text-2xl text-gh-black ">
-                        Follow us
+                          Follow us
                         </div>
                         <a
                           href="https://www.linkedin.com/company/gethypednl/"
@@ -736,9 +765,7 @@ export function HomeFooter() {
 
                 {/* 2. CTA Buttons */}
                 <div className="flex  items-center justify-center -top-20 relative z-[2]">
-                  
-                    <GetResultsCta />
-                  
+                  <GetResultsCta />
                 </div>
 
                 {/* 3. Navigation Buttons */}
