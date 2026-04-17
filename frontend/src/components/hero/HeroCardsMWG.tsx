@@ -165,15 +165,15 @@ export function HeroCardsMWG() {
             className={`${cardBase} relative z-[1] aspect-[4.8/6.2] bg-gh-hero-blue text-gh-black max-[479px]:z-[1]`}
           >
             <div className="results-card_content flex h-full w-full flex-col justify-between p-6">
-              <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
+              <div className="results-card_title text-7xl  font-semibold leading-[0.9] tracking-[-0.05em]">
                 10M+
               </div>
               <div className="results-card_body flex w-full flex-col gap-[0.4em]">
-                <h2 className="results-card_subtitle text-[1.5rem] font-semibold leading-[1.1] tracking-[-0.03em]">
+                <h2 className="results-card_subtitle text-2xl font-semibold leading-[1.1] tracking-[-0.03em]">
                   Organische views
                 </h2>
                 <div className="results-card_divider h-px w-full bg-gh-black" />
-                <p className="results-card_paragraph max-w-[95%] text-[1rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
+                <p className="results-card_paragraph max-w-[95%] text-medium  font-base leading-[1.3] tracking-[-0.02em] text-gh-black/90">
                   Groei door slimme content
                 </p>
               </div>
@@ -201,15 +201,15 @@ export function HeroCardsMWG() {
             className={`${cardBase} ${overlap} hidden aspect-[4.8/6.2] bg-gh-hero-green text-gh-black min-[480px]:block`}
           >
             <div className="results-card_content flex h-full w-full flex-col justify-between p-6">
-              <div className="results-card_title text-[4rem] font-semibold leading-[0.9] tracking-[-0.05em]">
+              <div className="results-card_title text-7xl font-semibold leading-[0.9] tracking-[-0.05em]">
                 30+
               </div>
               <div className="results-card_body flex w-full flex-col gap-[0.4em]">
-                <h2 className="results-card_subtitle text-[1.5rem] font-semibold leading-[1.1] tracking-[-0.03em]">
+                <h2 className="results-card_subtitle text-2xl font-semibold leading-[1.1] tracking-[-0.03em]">
                   Merken geholpen
                 </h2>
                 <div className="results-card_divider h-px w-full bg-gh-black" />
-                <p className="results-card_paragraph max-w-[95%] text-[1rem] font-medium leading-[1.3] tracking-[-0.02em] text-gh-black/90">
+                <p className="results-card_paragraph max-w-[95%] text-medium  font-base leading-[1.3] tracking-[-0.02em] text-gh-black/90">
                   Van start-up tot multinational
                 </p>
               </div>

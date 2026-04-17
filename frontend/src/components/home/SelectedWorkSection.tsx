@@ -134,12 +134,12 @@ function WorkCard({
                 </span>
               </div>
 
-              <h3 className="mb-2 max-w-[14ch] text-lg font-semibold leading-tight">
+              <h3 className="mb-2 max-w-[14ch] text-2xl font-semibold leading-tight">
                 {item.title}
               </h3>
 
               <span
-                className={`inline-block rounded-md px-2 py-1 text-sm font-semibold ${t.label}`}
+                className={`inline-block rounded-md px-2 py-1 text-base font-medium ${t.label}`}
               >
                 {item.label}
               </span>
@@ -158,27 +158,27 @@ export function SelectedWorkSection() {
         <div className="mx-auto w-full max-w-[120em] md:px-32">
           {/* 1 — Title */}
           <div className="mb-6 min-[992px]:mb-8 ">
-            <h2 className="m-0 max-w-[8ch] text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+            <h2 className="m-0 max-w-[8ch] text-8xl font-bold leading-[0.95] tracking-[-0.03em]">
               Content dat scoort.
             </h2>
           </div>
 
           {/* 2 — Description + button */}
           <div className="mb-12 max-w-[40rem] min-[992px]:mb-16">
-            <p className="m-0 max-w-[30ch] text-[clamp(1rem,1.2vw,1.125rem)] font-medium leading-normal tracking-[-0.01em] text-gh-black/70">
+            <p className="m-0 max-w-[30ch] text-2xl font-semibold leading-normal tracking-[-0.01em] text-gh-black/70">
               Wij vertellen jouw verhaal. Op een manier die écht past bij jouw
               doelgroep. Met creatieve content die werkt en het verschil maakt.
             </p>
 
             <div className="mt-8">
-              <ButtonDefault href="/work" variant="outline">
+              <ButtonDefault href="/work" variant="outline"  >
                 Bekijk al ons werk
               </ButtonDefault>
             </div>
           </div>
 
           {/* 3 — Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  md:gap-16 place-items-center md:p-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  md:gap-20 place-items-center md:px-2">
             {CASES.map((item, index) => (
               <WorkCard key={item.href} item={item} index={index} />
             ))}

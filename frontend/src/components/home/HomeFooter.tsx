@@ -189,9 +189,7 @@ function GetResultsCta({ className = "" }: { className?: string }) {
           aria-hidden
         />
         <span className="relative z-[1] mr-2.5 ml-1 block whitespace-nowrap">
-        
-Get Results
-          
+          Get Results
         </span>
         <span
           className={
@@ -411,8 +409,8 @@ export function HomeFooter() {
         >
           <div className="flex min-h-[100dvh] flex-col ">
             {/* ═══ UPPER FOOTER — Title + CTA Buttons ═══ */}
-            <div className="cs-footer-cta relative z-10 flex flex-1  justify-center items-bottom pt-60 px-10 max-[479px]:px-5 pointer-events-auto">
-              <h2 className="text-[clamp(2.8rem,8vw,6.8rem)] font-semibold leading-[0.92] tracking-[-0.05em] text-gh-black max-[991px]:hidden ">
+            <div className="cs-footer-cta relative z-10 flex flex-1  justify-center items-bottom pt-60 px-10 max-[479px]:px-5 pointer-events-auto top-18">
+              <h2 className="text-8xl font-bold leading-[0.92] tracking-[-0.05em] text-gh-black max-[991px]:hidden ">
                 Let&apos;s Get Hyped!
               </h2>
             </div>
@@ -420,11 +418,8 @@ export function HomeFooter() {
             {/* ═══ LOWER FOOTER — Wave, Logo, Sticker, Nav, Socials, Contact ═══ */}
             <div className="cs-footer-bottom relative z-10 w-full pointer-events-auto px-6">
               <div className="pointer-events-auto flex flex-wrap items-top justify-center gap-4 pt-6 ">
-                
- <MailCta />
+                <MailCta />
                 <GetResultsCta />
-                
-               
               </div>
               {/* /* Massive slanted backdrop logo removed */}
 
@@ -448,7 +443,6 @@ export function HomeFooter() {
                     width="100%"
                     viewBox="0 0 941 382"
                     fill="none"
-                    
                   >
                     <path
                       d="M940.689 83.6343V312.664C940.689 350.749 909.95 381.62 872.028 381.62H34.4602C15.8081 381.62 0.689453 366.436 0.689453 347.704V170.798C0.689453 153.889 12.8733 139.442 29.4979 136.669L843.838 1.14395C894.561 -7.29124 940.689 31.9954 940.689 83.6149"

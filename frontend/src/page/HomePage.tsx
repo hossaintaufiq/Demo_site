@@ -16,7 +16,7 @@ export function HomePage() {
         <ExpertisesSection />
         <SelectedWorkSection />
         <ClientsMarquee />
-        <HomeFooter />
+        <HomeFooter/>
       </main>
     </div>
   );

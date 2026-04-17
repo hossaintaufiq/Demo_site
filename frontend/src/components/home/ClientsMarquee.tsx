@@ -10,7 +10,7 @@ export function ClientsMarquee() {
       <div className="px-10 pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
         <div className="mx-auto w-full max-w-[120em]">
           <div className="mb-10 max-w-[40rem] min-[992px]:mb-16">
-            <h2 className="m-0 text-[clamp(1.75rem,3.6vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black">
+            <h2 className="m-0 text-6xl font-semibold leading-[1.05] tracking-[-0.03em] text-gh-black">
               These brands got hyped.
             </h2>
           </div>
