@@ -10,11 +10,12 @@ const THUMB_01 = "/hero/video-thumb-01.avif";
 const THUMB_02 = "/hero/video-thumb-02.avif";
 
 const cardBase =
-  "results-card will-change-transform relative isolate flex-1 overflow-hidden rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)]";
+  "results-card will-change-transform relative isolate flex-1 overflow-hidden rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.12)] " +
+  "min-[768px]:max-[991px]:flex-none min-[768px]:max-[991px]:shrink-0 min-[768px]:max-[991px]:w-[clamp(12rem,26vw,15.5rem)]";
 
 /** `.mwg_effect025 .results-card:not(:first-child)` overlap margins */
 const overlap =
-  "-ml-[6vw] min-[480px]:max-[991px]:-ml-[3vw] min-[992px]:-ml-[4vw]";
+  "-ml-[6vw] min-[480px]:max-[767px]:-ml-[3vw] min-[768px]:max-[991px]:-ml-[clamp(0.75rem,2.2vw,1.35rem)] min-[992px]:-ml-[4vw]";
 
 export function HeroCardsMWG() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -156,7 +157,7 @@ export function HeroCardsMWG() {
           ref={containerRef}
           className={
             "is-mwg_effect025 flex w-full flex-nowrap items-center justify-start gap-0 overflow-visible pb-[1em] pt-[0.5em] " +
-            "min-[480px]:justify-center min-[992px]:pb-[2em] min-[992px]:pt-[1em]"
+            "min-[480px]:justify-center min-[768px]:max-[991px]:mx-auto min-[768px]:max-[991px]:max-w-[44rem] min-[992px]:pb-[2em] min-[992px]:pt-[1em]"
           }
         >
           {/* 1 — theme-blue stat */}

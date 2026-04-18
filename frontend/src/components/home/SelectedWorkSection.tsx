@@ -79,15 +79,15 @@ function WorkCard({
   const t = cardTheme(item.theme);
 
   const offsets = [
-    "min-[992px]:translate-y-0 ",
-    "min-[992px]:-translate-y-32",
-    "min-[992px]:-translate-y-64",
+    "min-[768px]:translate-y-0 min-[992px]:translate-y-0",
+    "min-[768px]:-translate-y-16 min-[992px]:-translate-y-32",
+    "min-[768px]:-translate-y-32 min-[992px]:-translate-y-64",
   ];
 
   const mobileTilt = [
-  "rotate-[-2deg] min-[992px]:rotate-0",
-  "rotate-[2deg] min-[992px]:rotate-0",
-  "rotate-[-2deg] min-[992px]:rotate-0",
+  "rotate-[-2deg] min-[768px]:rotate-0",
+  "rotate-[2deg] min-[768px]:rotate-0",
+  "rotate-[-2deg] min-[768px]:rotate-0",
 ];
 
   return (
@@ -159,12 +159,12 @@ function WorkCard({
 
 export function SelectedWorkSection() {
   return (
-    <section className="bg-gh-page md:p-6">
-      <div className="md:px-10 py-16 min-[992px]:py-24 max-[479px]:px-5">
-        <div className="mx-auto w-full max-w-[120em] md:px-32">
+    <section className="bg-gh-page min-[992px]:p-6">
+      <div className="px-5 min-[768px]:px-8 min-[992px]:px-10 py-16 min-[992px]:py-24">
+        <div className="mx-auto w-full max-w-[120em] min-[992px]:px-32">
           {/* 1 — Title */}
           <div className="mb-6 min-[992px]:mb-8 ">
-            <h2 className="m-0 max-w-[8ch] text-6xl md:text-8xl font-bold leading-[0.95] tracking-[-0.03em]">
+            <h2 className="m-0 max-w-[8ch] text-6xl min-[768px]:text-7xl min-[992px]:text-8xl font-bold leading-[0.95] tracking-[-0.03em]">
               Content dat scoort.
             </h2>
           </div>
@@ -184,7 +184,7 @@ export function SelectedWorkSection() {
           </div>
 
           {/* 3 — Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-20 place-items-center md:px-2">
+          <div className="grid grid-cols-1 min-[768px]:grid-cols-3 gap-8 min-[768px]:gap-6 min-[992px]:gap-20 place-items-center min-[992px]:px-2">
             {CASES.map((item, index) => (
               <WorkCard key={item.href} item={item} index={index} />
             ))}

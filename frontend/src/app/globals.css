@@ -13,6 +13,22 @@ html {
   font-size: var(--size-font);
 }
 
+@media screen and (min-width: 1921px) {
+  html {
+    --size-container-ideal: 1920;
+    --size-container-min: 1920px;
+    --size-container-max: 2560px;
+  }
+}
+
+@media screen and (min-width: 2561px) {
+  html {
+    --size-container-ideal: 1920;
+    --size-container-min: 2560px;
+    --size-container-max: 3840px;
+  }
+}
+
 @media screen and (max-width: 991px) {
   html {
     --size-container-ideal: 991;
