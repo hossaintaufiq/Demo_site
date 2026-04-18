@@ -206,33 +206,33 @@ export function ExpertisesSection() {
               >
                 <div className="[perspective:1200px] h-full w-full pointer-events-none flex items-center justify-center ">
                   <div
-                    className={`expertise-content pointer-events-auto relative overflow-hidden rounded-[2rem] p-8 [transform-style:preserve-3d] aspect-[9/16] w-[calc(100%-1rem)] min-[768px]:mt-6 min-[768px]:aspect-[16/10] min-[768px]:w-[calc(100%-3rem)] min-[768px]:max-w-[1560px] min-[768px]:rounded-3xl min-[768px]:px-6 min-[768px]:py-6 min-[992px]:mt-9 min-[992px]:aspect-[1472/720] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1100px] min-[992px]:px-10 min-[992px]:pt-10 min-[992px]:pb-12 min-[992px]:rounded-[2rem] min-[1280px]:max-w-[1200px] min-[1440px]:max-w-[1320px] min-[1440px]:rounded-[2.25rem] min-[1536px]:max-w-[1400px] min-[1920px]:max-w-[1600px] min-[1920px]:rounded-[2.5rem] min-[2560px]:max-w-[2000px] min-[2560px]:rounded-[3rem] ${themeClasses(item.theme)}`}
+                    className={`expertise-content pointer-events-auto relative overflow-hidden rounded-[2rem] p-8 [transform-style:preserve-3d] aspect-[9/16] w-[calc(100%-1rem)] min-[768px]:mt-6 min-[768px]:aspect-[16/10] min-[768px]:w-[calc(100%-3rem)] min-[768px]:max-w-[1560px] min-[768px]:rounded-3xl min-[768px]:px-6 min-[768px]:py-6 min-[992px]:mt-9 min-[992px]:aspect-[1472/720] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1100px] min-[992px]:max-h-[calc(100dvh-4rem)] min-[992px]:px-10 min-[992px]:pt-10 min-[992px]:pb-12 min-[992px]:rounded-[2rem] min-[1280px]:max-w-[1200px] min-[1440px]:max-w-[1320px] min-[1440px]:rounded-[2.25rem] min-[1536px]:max-w-[1400px] min-[1920px]:max-w-[1500px] min-[1920px]:rounded-[2.5rem] min-[2560px]:max-w-[1700px] min-[2560px]:rounded-[3rem] ${themeClasses(item.theme)}`}
                   >
                     <div className="grid grid-cols-2 gap-x-3 gap-y-8 min-[768px]:mx-auto min-[768px]:h-full min-[768px]:w-full min-[768px]:max-w-[1600px] min-[768px]:grid-cols-12 min-[768px]:grid-rows-[auto_1fr] min-[768px]:gap-x-6 min-[768px]:gap-y-3 min-[992px]:gap-x-12 min-[992px]:gap-y-4">
                       {/* Title + label */}
-                      <div className="order-1 col-span-1 min-[768px]:col-span-8 min-[768px]:row-start-1">
+                      <div className="order-1 col-span-1 min-w-0 min-[768px]:col-span-8 min-[768px]:row-start-1">
                         <div className="mb-3">
                           <span className="m-0 inline-flex rounded-md bg-[#e8e3d7] px-4 py-2 text-xl min-[768px]:text-2xl font-medium leading-normal tracking-[-0.01em]">
                             Expertise
                           </span>
                         </div>
-                        <h2 className="text-4xl min-[768px]:text-5xl min-[992px]:text-9xl font-semibold leading-[0.95] tracking-[-0.045em] ">
+                        <h2 className="text-4xl min-[768px]:text-5xl min-[992px]:text-7xl min-[1280px]:text-8xl min-[1440px]:text-9xl font-semibold leading-[0.95] tracking-[-0.045em] break-words [overflow-wrap:anywhere]">
                           {item.title}
                         </h2>
                       </div>
 
                       {/* Number */}
-                      <div className="order-2 col-span-1 flex items-start justify-end gap-0.5 font-semibold leading-none opacity-20 select-none min-[768px]:col-span-4 min-[768px]:row-start-1">
-                        <span className="text-[3rem] min-[768px]:text-[3.5rem] min-[992px]:text-[7rem]">
+                      <div className="order-2 col-span-1 min-w-0 flex items-start justify-end gap-0.5 font-semibold leading-none opacity-20 select-none min-[768px]:col-span-4 min-[768px]:row-start-1">
+                        <span className="text-[3rem] min-[768px]:text-[3.5rem] min-[992px]:text-[5rem] min-[1280px]:text-[6rem] min-[1440px]:text-[7rem]">
                           0
                         </span>
-                        <span className="text-[3rem] min-[768px]:text-[3.5rem] min-[992px]:text-[7rem]">
+                        <span className="text-[3rem] min-[768px]:text-[3.5rem] min-[992px]:text-[5rem] min-[1280px]:text-[6rem] min-[1440px]:text-[7rem]">
                           {item.n}
                         </span>
                       </div>
 
                       {/* Video */}
-                      <div className="order-3 col-span-2 flex justify-start pl-2 min-[768px]:order-4 min-[768px]:col-span-5 min-[768px]:row-start-2 min-[768px]:self-center min-[768px]:justify-self-end min-[768px]:block min-[768px]:pl-0">
+                      <div className="order-3 col-span-2 min-w-0 flex justify-start pl-2 min-[768px]:order-4 min-[768px]:col-span-5 min-[768px]:row-start-2 min-[768px]:self-center min-[768px]:justify-self-end min-[768px]:block min-[768px]:pl-0">
                         <div
                           className={`aspect-[4/5] w-full max-w-60 -rotate-2 overflow-hidden rounded-[1.3em] border-[0.27em] min-[768px]:max-w-[11rem] min-[768px]:rotate-[2deg] min-[992px]:max-w-[22.5rem] min-[992px]:rounded-[1.45em] min-[992px]:border-[0.34em] ${mediaFrameClasses(item.theme)}`}
                         >
@@ -249,7 +249,7 @@ export function ExpertisesSection() {
                       </div>
 
                       {/* Details + button */}
-                      <div className="order-4 col-span-2 flex flex-col gap-3 min-[768px]:order-3 min-[768px]:col-span-7 min-[768px]:row-start-2 min-[768px]:self-end min-[768px]:gap-2 min-[992px]:pb-2">
+                      <div className="order-4 col-span-2 min-w-0 flex flex-col gap-3 min-[768px]:order-3 min-[768px]:col-span-7 min-[768px]:row-start-2 min-[768px]:self-end min-[768px]:gap-2 min-[992px]:pb-2">
                         <h3 className="m-0 text-xl min-[768px]:text-[1.375rem] min-[992px]:text-2xl font-semibold leading-[1.2] tracking-[-0.02em]">
                           {item.h3}
                         </h3>
