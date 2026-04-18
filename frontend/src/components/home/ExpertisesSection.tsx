@@ -192,20 +192,20 @@ export function ExpertisesSection() {
   }, []);
 
   return (
-    <section id="expertises" className="bg-gh-page">
+    <section id="expertises" className="bg-gh-page ">
       <div ref={rootRef}>
         <div className="expertises-pin-shell h-[100dvh] overflow-hidden">
-          <div className="relative h-full">
+          <div className="relative h-full ">
             {ITEMS.map((item) => (
               <div
                 key={item.href}
                 className="expertise-slide absolute inset-0 pointer-events-none"
               >
-                <div className="[perspective:1200px] h-full w-full pointer-events-none flex items-center justify-center">
+                <div className="[perspective:1200px] h-full w-full pointer-events-none flex items-center justify-center ">
                   <div
                     className={`expertise-content pointer-events-auto relative overflow-hidden rounded-[2rem] p-8 [transform-style:preserve-3d] aspect-[9/16] w-[calc(100%-1rem)] min-[768px]:p-10 min-[992px]:mt-9 min-[992px]:aspect-[1472/593] min-[992px]:w-[calc(100%-7rem)] min-[992px]:max-w-[1560px] min-[992px]:rounded-3xl min-[992px]:px-8 min-[992px]:py-[1.85rem] ${themeClasses(item.theme)}`}
                   >
-                    <div className="grid grid-cols-2 gap-4 p-10 min-[992px]:mx-auto min-[992px]:h-full min-[992px]:w-full min-[992px]:max-w-[1600px] min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-12 min-[992px]:gap-y-4">
+                    <div className="grid grid-cols-2 gap-2 md:py-6  min-[992px]:mx-auto min-[992px]:h-full min-[992px]:w-full min-[992px]:max-w-[1600px] min-[992px]:grid-cols-12 min-[992px]:grid-rows-[auto_1fr] min-[992px]:gap-x-12 min-[992px]:gap-y-4">
                       {/* Title + label */}
                       <div className="order-1 col-span-1 min-[992px]:col-span-8 min-[992px]:row-start-1">
                         <div className="mb-3">
@@ -213,7 +213,7 @@ export function ExpertisesSection() {
                             Expertise
                           </span>
                         </div>
-                        <h2 className="text-7xl font-semibold leading-[0.95] tracking-[-0.045em] min-[768px]:text-[3.5rem] min-[992px]:text-[6.5rem]">
+                        <h2 className="  text-4xl md:text-9xl font-semibold leading-[0.95] tracking-[-0.045em] ">
                           {item.title}
                         </h2>
                       </div>
@@ -245,7 +245,7 @@ export function ExpertisesSection() {
                       </div>
 
                       {/* Details + button */}
-                      <div className="order-4 col-span-2 flex flex-col gap-4 min-[992px]:order-3 min-[992px]:col-span-7 min-[992px]:row-start-2 min-[992px]:self-end">
+                      <div className="order-4 col-span-2 flex flex-col gap-2 min-[992px]:order-3 min-[992px]:col-span-7 min-[992px]:row-start-2 min-[992px]:self-end">
                         <h3 className="m-0 text-2xl font-semibold leading-[1.2] tracking-[-0.02em]">
                           {item.h3}
                         </h3>
