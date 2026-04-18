@@ -493,8 +493,8 @@ export function HomeFooter() {
         >
           <div className="flex min-h-[100dvh] flex-col  ">
             {/* ═══ UPPER FOOTER — Title + CTA Buttons ═══ */}
-            <div className="cs-footer-cta relative z-10 flex flex-1  justify-center items-bottom max-[479px]:px-5 pointer-events-auto top-3 items-center text-center flex-col gap-6">
-              <h2 className="text-6xl min-[992px]:text-9xl font-bold leading-[0.92] tracking-[-0.05em] text-gh-black max-[767px]:hidden ">
+            <div className="cs-footer-cta relative z-10 flex flex-1  justify-center items-bottom max-[479px]:px-5 pointer-events-auto top-3 items-center text-center flex-col gap-6 min-[768px]:max-[991px]:justify-start min-[768px]:max-[991px]:pt-32">
+              <h2 className="text-7xl min-[992px]:text-9xl font-bold leading-[0.92] tracking-[-0.05em] text-gh-black max-[767px]:hidden ">
                 Let&apos;s Get Hyped!
               </h2>
               <div className="pointer-events-auto flex flex-wrap items-top justify-center gap-4 pt-2 max-[767px]:hidden">
@@ -720,35 +720,35 @@ export function HomeFooter() {
 
               {/* bg-[#e6e0d6] */}
 
-              {/* TABLET LAYOUT — 768px to 991px (matches reference picture) */}
-              <div className="hidden min-[768px]:max-[991px]:block absolute inset-y-0 -left-6 -right-6 z-10 pointer-events-none">
-                {/* Wave background */}
+              {/* TABLET LAYOUT — 768px to 991px (wave reduced to lower 60%, hero gets upper 40%) */}
+              <div className="hidden min-[768px]:max-[991px]:block absolute bottom-0 left-0 right-0 h-[60vh] z-10 pointer-events-none">
+                {/* Wave background — taller left wall, gentler slant on top */}
                 <svg
                   viewBox="0 0 1860 386"
-                  className="absolute bottom-3 left-0 z-[1] h-auto w-full px-10"
+                  className="absolute inset-0 z-[1] h-full w-full px-8"
                   preserveAspectRatio="none"
                   aria-hidden
                 >
                   <path
-                    d="M1859.06 34.8264V349.463C1859.06 365.199 1859.06 380.122 1859.06 385.962L0.642595 385.955C0.642578 383.021 0.642769 379.682 0.642769 371.941V290.843C0.642769 283.856 5.67717 277.887 12.5466 276.741L1819.04 0.740997C1840 -2.74446 1859.06 13.489 1859.06 34.8184"
+                    d="M1859.06 34.8264V349.463C1859.06 365.199 1859.06 380.122 1859.06 385.962L0.642595 385.955C0.642578 383.021 0.642769 379.682 0.642769 371.941V120C0.642769 113.014 5.67717 107.044 12.5466 105.898L1819.04 0.740997C1840 -2.74446 1859.06 13.489 1859.06 34.8184"
                     fill="#e6e0d6"
                   />
                 </svg>
 
-                {/* Logo — upper-left of wave */}
-                <div className="absolute left-10 top-[38%] z-[2] w-[20%]">
+                {/* Logo — anchored at top-left corner of the (shorter) wave */}
+                <div className="absolute left-10 top-[14%] z-[2] w-[22%]">
                   <GetHypedLogoSvg />
                 </div>
 
-                {/* GH Sticker — upper-right, overlapping wave top */}
-                <div className="absolute right-16 top-[18%] z-[20] scale-[0.85] origin-top-right pointer-events-none">
+                {/* GH Sticker — anchored at top-right corner of the (shorter) wave */}
+                <div className="absolute right-10 top-[6%] z-[20] scale-[0.9] origin-top-right pointer-events-none">
                   <GhSticker />
                 </div>
 
-                {/* Info content — bottom of wave */}
-                <div className="absolute left-0 right-0 bottom-0 z-[3] px-10 pb-5 flex flex-col gap-5 pointer-events-auto">
-                  {/* Row 1 — Nav + Socials column (left)  |  Contact + Address column (right) */}
-                  <div className="flex items-end justify-between gap-6">
+                {/* Info content — sits inside the lower half of the wave */}
+                <div className="absolute left-0 right-0 bottom-0 z-[3] pl-14 pr-32 pb-10 flex flex-col gap-6 pointer-events-auto">
+                  {/* Row 1 — Nav + Socials (left)  |  Contact + Address (right) */}
+                  <div className="flex items-start justify-between gap-8">
                     {/* Navigation + Socials */}
                     <div className="flex flex-col gap-5">
                       <div className="flex flex-wrap gap-2">
@@ -758,14 +758,14 @@ export function HomeFooter() {
                         <SwooshNavLink href="/contact" label="Contact" />
                       </div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <div className="mr-1 font-bold text-2xl text-gh-black">
+                        <div className="mr-1 font-bold text-xl text-gh-black">
                           Follow us
                         </div>
                         <a
                           href="https://www.linkedin.com/company/gethypednl/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
                           aria-label="LinkedIn"
                         >
                           <LinkedInIcon />
@@ -774,7 +774,7 @@ export function HomeFooter() {
                           href="https://www.tiktok.com/@gethyped.nl"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
                           aria-label="TikTok"
                         >
                           <TikTokIcon />
@@ -783,7 +783,7 @@ export function HomeFooter() {
                           href="https://www.instagram.com/gethyped.nl/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
                           aria-label="Instagram"
                         >
                           <InstagramIcon />
@@ -792,7 +792,7 @@ export function HomeFooter() {
                           href="https://www.youtube.com/@gethypednl"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
+                          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-gh-off-white hover:opacity-75"
                           aria-label="YouTube"
                         >
                           <YouTubeIcon />
@@ -800,19 +800,19 @@ export function HomeFooter() {
                       </div>
                     </div>
 
-                    {/* Contact + Address */}
-                    <div className="flex flex-col gap-5 text-left text-[1.05rem] leading-snug text-gh-black">
+                    {/* Contact + Address — right column */}
+                    <div className="flex flex-col gap-4 text-left text-[0.95rem] leading-snug text-gh-black">
                       <div>
                         <div className="font-bold">Contact</div>
                         <a
                           href="mailto:info@gethyped.nl"
-                          className="mt-1 block text-[0.95rem] transition-colors duration-200 hover:text-red-600"
+                          className="mt-1 block text-[0.85rem] transition-colors duration-200 hover:text-red-600"
                         >
                           info@gethyped.nl
                         </a>
                         <a
                           href="tel:+31615337496"
-                          className="block text-[0.95rem] transition-colors duration-200 hover:text-red-600"
+                          className="block text-[0.85rem] transition-colors duration-200 hover:text-red-600"
                         >
                           +31 6 1533 7496
                         </a>
@@ -823,7 +823,7 @@ export function HomeFooter() {
                           href="https://www.google.nl/maps/search/Beltrumsestraat+6,+7141+AL+Groenlo/"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-1 block text-[0.95rem] transition-colors duration-200 hover:text-red-600"
+                          className="mt-1 block text-[0.85rem] transition-colors duration-200 hover:text-red-600"
                         >
                           Beltrumsestraat 6,
                           <br />
@@ -831,10 +831,11 @@ export function HomeFooter() {
                         </a>
                       </div>
                     </div>
+
                   </div>
 
                   {/* Row 2 — credits strip */}
-                  <div className="flex w-full flex-row items-center justify-between gap-6 text-[0.85rem] text-gh-black/60">
+                  <div className="flex w-full flex-row items-center justify-between gap-6 text-[0.78rem] text-gh-black/60">
                     <div>© {year} Get Hyped</div>
                     <a
                       href="https://dylanbrouwer.design/"
@@ -854,8 +855,8 @@ export function HomeFooter() {
               {/* MOBILE LAYOUT */}
               <div className="hidden max-[767px]:flex relative flex-col gap-6 px-4 pt-2 pb-10  cs-footer-bottom-mobile bg-[#e6e0d6] rounded-3xl">
 
-                {/* 1. Logo */}
-                <div className="relative z-[2] mx-auto w-full max-w-[26rem] -mt-6">
+                {/* 1. Logo — flush with card sides; lifted so card bg covers only the bottom half of the logo */}
+                <div className="relative z-[2] -mx-4 w-auto max-w-none -mt-20 min-[375px]:-mt-24 min-[425px]:-mt-28 min-[540px]:-mt-32">
                   {/* SVG: Get Hyped Logo Container */}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
