@@ -6,7 +6,7 @@ export function ClientsMarquee() {
   const row = [...LOGOS, ...LOGOS];
 
   return (
-    <section className="bg-gh-page">
+    <section className="cv-auto bg-gh-page">
       <div className=" pb-8 pt-12 min-[992px]:pb-12 min-[992px]:pt-16 max-[479px]:px-5">
         <div className="mx-auto w-full max-w-[120em]">
           <div className="mb-10 max-w-[40rem] min-[992px]:mb-16">
@@ -16,7 +16,7 @@ export function ClientsMarquee() {
           </div>
 
           <div className="overflow-hidden">
-            <div className="flex w-max animate-[gh-marquee_45s_linear_infinite] cursor-grab gap-[1vw] pr-[1vw] select-none">
+            <div className="flex w-max animate-[gh-marquee_45s_linear_infinite] cursor-grab gap-[1vw] pr-[1vw] select-none will-change-transform [transform:translateZ(0)]">
               {row.map((src, i) => (
                 <div key={`${src}-${i}`} className="inline-flex shrink-0">
                   <div className="flex h-[105px] w-[105px] min-[768px]:h-[180px] min-[768px]:w-[180px] min-[992px]:h-[305px] min-[992px]:w-[305px] items-center justify-center rounded-2xl bg-gh-white/80 px-4 shadow-sm">
@@ -28,6 +28,8 @@ export function ClientsMarquee() {
                       className="h-auto w-auto max-h-full max-w-full object-contain"
                       draggable={false}
                       loading="lazy"
+                      decoding="async"
+                      unoptimized
                     />
                   </div>
                 </div>

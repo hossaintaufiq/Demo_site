@@ -191,6 +191,8 @@ export function HeroCardsMWG() {
               autoPlay
               preload="metadata"
               poster={THUMB_01}
+              disableRemotePlayback
+              disablePictureInPicture
             >
               <source src={SALONTOPPER_VIDEO} type="video/mp4" />
             </video>
@@ -230,6 +232,8 @@ export function HeroCardsMWG() {
               autoPlay
               preload="metadata"
               poster={THUMB_02}
+              disableRemotePlayback
+              disablePictureInPicture
             >
               <source src={PETROL_VIDEO} type="video/mp4" />
             </video>

@@ -134,10 +134,13 @@ export function ExpertisesSection() {
             autoAlpha: i === 0 ? 1 : 0,
             yPercent: i === 0 ? 0 : 100,
             zIndex: i + 1,
+            force3D: true,
+            willChange: "transform, opacity",
           });
         });
 
         const tl = gsap.timeline({
+          defaults: { force3D: true, overwrite: "auto" },
           scrollTrigger: {
             trigger: pinShell,
             start: "top top",
@@ -239,6 +242,7 @@ export function ExpertisesSection() {
                             muted
                             loop
                             playsInline
+                            preload="metadata"
                             src={item.video}
                           />
                         </div>

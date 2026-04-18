@@ -120,6 +120,8 @@ function GhSticker() {
       <img
         src="/assets/icons/svg38.svg"
         alt="GH sticker"
+        loading="lazy"
+        decoding="async"
         className="sticker absolute inset-0 h-full w-full object-contain"
         style={{ willChange: "transform", transformStyle: "preserve-3d" }}
       />

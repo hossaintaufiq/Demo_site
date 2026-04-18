@@ -111,6 +111,8 @@ function WorkCard({
               src={item.poster}
               className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
               alt=""
+              loading="lazy"
+              decoding="async"
             />
             <video
               ref={videoRef}
@@ -118,6 +120,8 @@ function WorkCard({
               muted
               loop
               playsInline
+              preload="none"
+              poster={item.poster}
               className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
@@ -159,7 +163,7 @@ function WorkCard({
 
 export function SelectedWorkSection() {
   return (
-    <section className="bg-gh-page min-[992px]:p-6">
+    <section className="cv-auto bg-gh-page min-[992px]:p-6">
       <div className="px-5 min-[768px]:px-8 min-[992px]:px-10 py-16 min-[992px]:py-24">
         <div className="mx-auto w-full max-w-[120em] min-[992px]:px-32">
           {/* 1 — Title */}

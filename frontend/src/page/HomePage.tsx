@@ -1,26 +1,55 @@
 import { HeroSection } from "@/components/hero/HeroSection";
-import { ClientsMarquee } from "@/components/home/ClientsMarquee";
-import { ExpertisesSection } from "@/components/home/ExpertisesSection";
-import { HomeFooter } from "@/components/home/HomeFooter";
 import { IntroSection } from "@/components/home/IntroSection";
-import { SelectedWorkSection } from "@/components/home/SelectedWorkSection";
 import { Navbar } from "@/components/Navbar";
+import dynamic from "next/dynamic";
+
+const ExpertisesSection = dynamic(
+  () =>
+    import("@/components/home/ExpertisesSection").then(
+      (m) => m.ExpertisesSection
+    ),
+  {
+    loading: () => <div className="h-[100dvh]" aria-hidden />,
+  }
+);
+
+const SelectedWorkSection = dynamic(
+  () =>
+    import("@/components/home/SelectedWorkSection").then(
+      (m) => m.SelectedWorkSection
+    ),
+  {
+    loading: () => <div className="min-h-[60vh]" aria-hidden />,
+  }
+);
+
+const ClientsMarquee = dynamic(
+  () =>
+    import("@/components/home/ClientsMarquee").then((m) => m.ClientsMarquee),
+  {
+    loading: () => <div className="min-h-[8rem]" aria-hidden />,
+  }
+);
+
+const HomeFooter = dynamic(
+  () => import("@/components/home/HomeFooter").then((m) => m.HomeFooter),
+  {
+    loading: () => <div className="min-h-[100dvh]" aria-hidden />,
+  }
+);
 
 export function HomePage() {
   return (
     <div className="flex min-h-dvh flex-col bg-gh-page text-gh-black">
-       <Navbar /> 
+      <Navbar />
       <main className="flex-1">
-         <HeroSection />
-         <IntroSection />   
+        <HeroSection />
+        <IntroSection />
         <ExpertisesSection />
         <SelectedWorkSection />
-        <ClientsMarquee />  
-        <HomeFooter/>
+        <ClientsMarquee />
+        <HomeFooter />
       </main>
     </div>
   );
 }
-
-
-// animations are so tweaky that I had to move them to the SelectedWorkSection component, which is a bit sad but whatever

@@ -103,12 +103,22 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  font-feature-settings: "kern", "liga", "calt";
+}
+
+/* Off-screen sections skip rendering work until needed (massive paint cost reduction). */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 100dvh;
 }
 
 body::-webkit-scrollbar {

@@ -23,6 +23,7 @@ export function IntroSection() {
                   loop
                   playsInline
                   preload="metadata"
+                  poster="/home/anniek-bril.webp"
                   src="/home/new-reach-loop.mp4"
                 />
               </div>
@@ -34,6 +35,7 @@ export function IntroSection() {
                   className="block h-auto w-full object-cover"
                   alt=""
                   draggable={false}
+                  loading="lazy"
                   sizes="(min-width: 768px) 60vw, 0"
                 />
               </div>
