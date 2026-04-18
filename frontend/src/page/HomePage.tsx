@@ -9,14 +9,14 @@ import { Navbar } from "@/components/Navbar";
 export function HomePage() {
   return (
     <div className="flex min-h-dvh flex-col bg-gh-page text-gh-black">
-       {/* <Navbar />  */}
+       <Navbar /> 
       <main className="flex-1">
-         {/* <HeroSection /> */}
+         <HeroSection />
          <IntroSection />   
         <ExpertisesSection />
         <SelectedWorkSection />
-        {/* <ClientsMarquee />   */}
-        {/* <HomeFooter/> */}
+        <ClientsMarquee />  
+        <HomeFooter/>
       </main>
     </div>
   );
