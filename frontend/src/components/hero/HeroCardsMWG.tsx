@@ -1,7 +1,7 @@
 "use client";
 
 import gsap from "gsap";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 /** Self-hosted under `public/hero` — native `<video>`, no third-party players. */
 const SALONTOPPER_VIDEO = "/hero/salontopper-loop.mp4";
@@ -20,6 +20,20 @@ const overlap =
 export function HeroCardsMWG() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const heroVideoARef = useRef<HTMLVideoElement>(null);
+  const heroVideoBRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const playMobileVideos = () => {
+      if (!mq.matches) return;
+      heroVideoARef.current?.play().catch(() => {});
+      heroVideoBRef.current?.play().catch(() => {});
+    };
+    playMobileVideos();
+    mq.addEventListener("change", playMobileVideos);
+    return () => mq.removeEventListener("change", playMobileVideos);
+  }, []);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -184,6 +198,7 @@ export function HeroCardsMWG() {
           {/* 2 — video */}
           <div ref={setCardRef(1)} className={`${cardBase} ${overlap} z-[2] aspect-[4.8/6.2] bg-black max-[479px]:rotate-[6deg]`}>
             <video
+              ref={heroVideoARef}
               className="absolute inset-0 z-[1] h-full w-full object-cover"
               muted
               loop
@@ -225,6 +240,7 @@ export function HeroCardsMWG() {
             className={`${cardBase} ${overlap} hidden aspect-[4.8/6.2] bg-black min-[992px]:block`}
           >
             <video
+              ref={heroVideoBRef}
               className="absolute inset-0 z-[1] h-full w-full object-cover"
               muted
               loop

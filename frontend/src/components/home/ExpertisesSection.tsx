@@ -3,7 +3,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -112,6 +112,22 @@ function ctaTextClass(t: (typeof ITEMS)[number]["theme"]) {
 
 export function ExpertisesSection() {
   const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const playMobileExpertVideos = () => {
+      if (!mq.matches || !rootRef.current) return;
+      rootRef.current.querySelectorAll("video").forEach((el) => {
+        (el as HTMLVideoElement).play().catch(() => {});
+      });
+    };
+    const t = window.setTimeout(playMobileExpertVideos, 0);
+    mq.addEventListener("change", playMobileExpertVideos);
+    return () => {
+      clearTimeout(t);
+      mq.removeEventListener("change", playMobileExpertVideos);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
