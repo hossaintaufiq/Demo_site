@@ -2,7 +2,7 @@
 
 import { ButtonDefault } from "@/components/ui/ButtonDefault";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 const arrowIcon = (
   <svg
@@ -76,21 +76,7 @@ function WorkCard({
   index: number;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const t = cardTheme(item.theme);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const sync = () => setIsMobile(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile || !videoRef.current) return;
-    videoRef.current.play().catch(() => {});
-  }, [isMobile, item.video]);
 
   const offsets = [
     "min-[768px]:translate-y-0 min-[992px]:translate-y-0",
@@ -112,11 +98,8 @@ function WorkCard({
         <Link
           href={item.href}
           className={`group relative block overflow-hidden rounded-4xl border-[6px] md:border-[8px] transition-transform duration-700 ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-rotate-[1.5deg] hover:scale-[1.015] ${t.border}`}
-          onMouseEnter={() => {
-            if (!isMobile) videoRef.current?.play().catch(() => {});
-          }}
+          onMouseEnter={() => videoRef.current?.play().catch(() => {})}
           onMouseLeave={() => {
-            if (isMobile) return;
             if (videoRef.current) {
               videoRef.current.pause();
               videoRef.current.currentTime = 0;
@@ -126,7 +109,7 @@ function WorkCard({
           <div className="relative aspect-[3/4] w-full overflow-hidden">
             <img
               src={item.poster}
-              className="absolute inset-0 z-[2] h-full w-full object-cover transition-opacity duration-300 max-md:opacity-0 md:opacity-100 md:group-hover:opacity-0"
+              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
               alt=""
               loading="lazy"
               decoding="async"
@@ -134,13 +117,12 @@ function WorkCard({
             <video
               ref={videoRef}
               src={item.video}
-              autoPlay={isMobile}
               muted
               loop
               playsInline
-              preload={isMobile ? "metadata" : "none"}
+              preload="none"
               poster={item.poster}
-              className="absolute inset-0 z-[1] h-full w-full object-cover transition-transform duration-500 md:group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </div>
 
