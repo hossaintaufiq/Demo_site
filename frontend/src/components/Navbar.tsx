@@ -276,7 +276,7 @@ export function Navbar() {
       <nav
         className={
           "fixed inset-x-0 top-0 z-[999] block w-full px-[2.5em] text-balance text-gh-black [text-size-adjust:100%] [text-rendering:optimizeLegibility] [font-family:Inter,sans-serif] [line-height:1.5] [-webkit-tap-highlight-color:transparent] [-webkit-font-smoothing:antialiased] transition-transform duration-300 ease-out will-change-transform " +
-          "max-[991px]:px-0 " +
+          "max-[991px]:px-4 " +
           (hidden && !menuOpen ? "-translate-y-full" : "translate-y-0")
         }
         aria-label="Site"
@@ -376,7 +376,7 @@ export function Navbar() {
             </nav>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 z-[2] flex -translate-x-1/2 justify-center">
+          <div className="absolute bottom-[max(2rem,env(safe-area-inset-bottom,0px))] left-1/2 z-[2] flex -translate-x-1/2 justify-center px-4">
             <div
               style={{
                 opacity: visible ? 1 : 0,

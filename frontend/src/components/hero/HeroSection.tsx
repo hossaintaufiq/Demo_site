@@ -4,9 +4,9 @@ export function HeroSection() {
   return (
     <header
       id="section_hero"
-      className="relative w-full bg-gh-page pb-16 pt-[calc(7.5rem+1.5em)] text-gh-black min-[768px]:pb-20 min-[768px]:pt-[calc(7.5rem+1.75em)] min-[992px]:pb-24 min-[992px]:pt-[calc(7.5rem+2em)]"
+      className="relative w-full bg-gh-page pb-14 pt-[calc(7em+1.25rem)] text-gh-black min-[768px]:pb-20 min-[768px]:pt-[calc(7.5rem+1.5rem)] min-[992px]:pb-24 min-[992px]:pt-[calc(7.5rem+2rem)]"
     >
-      <div className="w-full px-10 max-[479px]:px-5 min-[768px]:max-[991px]:px-8">
+      <div className="w-full px-5 min-[768px]:max-[991px]:px-8 min-[992px]:px-10">
         <div className="mx-auto w-full max-w-[120em]">
           {/* 1 — Hero title */}
           <div className="max-w-[120em]">

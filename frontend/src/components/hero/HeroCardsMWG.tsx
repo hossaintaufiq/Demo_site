@@ -151,7 +151,7 @@ export function HeroCardsMWG() {
   };
 
   return (
-    <div className="mwg_effect025 w-full md:px-12 py-6 md:py-2 px-4">
+    <div className="mwg_effect025 w-full px-5 py-6 md:px-12 md:py-2">
       <div className="w-full">
         <div
           ref={containerRef}

@@ -55,15 +55,15 @@ function cardTheme(t: (typeof CASES)[number]["theme"]) {
       };
     case "blue":
       return {
-        border: "border-blue-500",
-        overlay: "bg-blue-500 text-white",
-        label: "bg-blue-300/80 text-white",
+        border: "border-gh-hero-blue",
+        overlay: "bg-gh-hero-blue text-white",
+        label: "bg-white/25 text-white",
       };
     case "green":
       return {
-        border: "border-emerald-500",
-        overlay: "bg-emerald-500 text-white",
-        label: "bg-emerald-200/90 text-white",
+        border: "border-gh-hero-green",
+        overlay: "bg-gh-hero-green text-gh-black",
+        label: "bg-white/35 text-gh-black",
       };
   }
 }
@@ -181,7 +181,7 @@ export function SelectedWorkSection() {
             </p>
 
             <div className="mt-8">
-              <ButtonDefault href="/work" variant="outline"  >
+              <ButtonDefault href="/work" variant="outline">
                 Bekijk al ons werk
               </ButtonDefault>
             </div>
